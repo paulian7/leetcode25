@@ -1,51 +1,34 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // ?: want 3 different values that add up to 0
+        // Sort the array to help with avoiding duplicates
+        sort(nums.begin(), nums.end());
 
-       // 1. sort as this helps us avoid duplicates 
-       sort(nums.begin(), nums.end());  
+        vector<vector<int>> resultArray;
 
-       // vector of arrays of triplets to return as answer 
-       vector<vector<int>> resultArray; 
+        // Iterate through the array
+        for (int i = 0; i < nums.size(); i++) {
+            // Skip duplicate elements to avoid duplicate triplets
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
 
-       // 2. iterate thr array using a for-loop & inner while-loop
-            // for-loop deals w/ first element in the triplet 
-            // while loop deals w/ the other 2 elements in the triplet using 2 pointers
+            // Two pointers
+            int leftPtr = i + 1;
+            int rightPtr = nums.size() - 1;
 
-        for(int i = 0; i < nums.size(); i++)
-        {
-            // check 1: if > 0 --> then imposs to have valid triplet 
-            if(nums[i] > 0) break; 
-            // check 2: for dups --> if dup... continue to next iteration 
-            if(i > 0 && nums[i] == nums[i - 1]) continue; 
+            while (leftPtr < rightPtr) {
+                int currSum = nums[i] + nums[leftPtr] + nums[rightPtr];
 
-            // 2 pointers method ----
-                // deals w/ 2 other vals in the triplet 
-            int leftPtr = i + 1; 
-            int rightPtr = nums.size() - 1; 
-            while(leftPtr < rightPtr)
-            {
-                // calc sum first as conditional statement w/ the 2 pointers 
-                int currSum = nums[i] + nums[leftPtr] + nums[rightPtr]; 
-
-                // rightPtr check - if currSum too big --> need to lower val of rightPtr 
-                if(currSum > 0)
-                {
+                if (currSum > 0) {
                     rightPtr--;
-                }
-                else if(currSum < 0) // too small --> need to lower val of leftPtr 
-                {
-                    leftPtr++; 
-                }
-                else // when our currSum actually equates to 0
-                {
-                    resultArray.push_back({nums[i], nums[leftPtr], nums[rightPtr]}); 
-
+                } else if (currSum < 0) {
                     leftPtr++;
-                    // ensure there's no duplicates after the update in pointers 
-                    while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
-                    {
+                } else {
+                    // Found a valid triplet
+                    resultArray.push_back({nums[i], nums[leftPtr], nums[rightPtr]});
+
+                    // Move left pointer and skip duplicates
+                    leftPtr++;
+                    while (leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1]) {
                         leftPtr++;
                     }
                 }
@@ -53,6 +36,5 @@ public:
         }
 
         return resultArray;
-    
     }
 };
