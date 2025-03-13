@@ -15,9 +15,7 @@ public:
 
         for(int i = 0; i < nums.size(); i++)
         {
-            // check 1: if > 0 --> then imposs to have valid triplet 
-            if(nums[i] > 0) break; 
-            // check 2: for dups --> if dup... continue to next iteration 
+            // check: for dups --> if dup... continue to next iteration 
             if(i > 0 && nums[i] == nums[i - 1]) continue; 
 
             // 2 pointers method ----
@@ -34,7 +32,7 @@ public:
                 {
                     rightPtr--;
                 }
-                else if(currSum < 0) // too small --> need to lower val of leftPtr 
+                else if(currSum < 0) // too small --> need to increase val of leftPtr 
                 {
                     leftPtr++; 
                 }
