@@ -1,24 +1,24 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // tech: hash map 
+        // tech: hashing / hash tables --> time comp: o(n) 
+            // key: val 
+            // value: index of that val from the given array 
+        unordered_map<int, int> hashTable; 
 
-        unordered_map<int, int> hashTab; 
-
-        // iterate thr the array 
+        // iterate thr array 
         for(int i = 0; i < nums.size(); i++)
         {
             int diff = target - nums[i]; 
 
-            // look thr hash table 
-            if(hashTab.find(diff) != hashTab.end())
+            if(hashTable.find(diff) != hashTable.end())
             {
-                return {i, hashTab[diff]}; 
+                return {i, hashTable[diff]}; 
             }
 
-            hashTab[nums[i]] = i; 
+            hashTable[nums[i]] = i;
         }
 
-        return {};
+        return {}; 
     }
 };
