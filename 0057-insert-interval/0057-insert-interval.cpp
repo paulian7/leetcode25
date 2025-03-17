@@ -1,46 +1,48 @@
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        // tech: linear search --> time comp: o(n) 
+        // tech: linear search --> time comp: o(n)
 
         int numOfIntervals = intervals.size(); 
         int i = 0; 
 
-        // updated vector of arrays to return w/ the corrected intervals 
+        // updated vector of arrays to return w/ corrected intervals 
         vector<vector<int>> res; 
 
-        // Deal w/ Case 1 - when currInterval's endPt is < start of newInterval.. so currInterval goes first
-            // aka: adds all intervals before the new interval that do not overlap with it
+        // deal w/ case 1 - when currInterval's endPt is < start of newInterval:
+            // aka: normal as usual 
+            // add all intervals before the new interval as nothing overlaps YET
         while(i < numOfIntervals && intervals[i][1] < newInterval[0])
         {
             // add currInterval to final result then :) 
             res.push_back(intervals[i]); 
 
-            // increment iterator to look at next interval in the list 
+            // incremenet iterator to look at next interval in list
             i++;
         }
 
-        // Deal w/ Case 2 - DEALING W/ MERGING
-            // merges all the overlapping intervals w/ the newInterval introduced :(
-            // aka: when start of currInterval is < the endPt of new interval 
-        while(i < numOfIntervals && newInterval[1] >= intervals[i][0])
+        // deal w/ case 2 - DEALING W/ MERGING 
+            // merges all the overlapping intervals w/ the newInterval introduced 
+            // aka when the start of the currInterval is < endPt of new interval 
+        while(i < numOfIntervals && intervals[i][0] <= newInterval[1])
         {
-            // grabs new merged start pt
-            newInterval[0] = min(newInterval[0], intervals[i][0]); 
-            // grabs new merged end pt 
-            newInterval[1] = max(newInterval[1], intervals[i][1]);
-
-            // incr iteratior to look at next interval in list 
-            i++; 
+            // grabs new merged start pt 
+            newInterval[0] = min(intervals[i][0], newInterval[0]); 
+            // grabs new merged end pt
+            newInterval[1] = max(intervals[i][1], newInterval[1]); 
+            
+            // incr iterator to look at next interval in list 
+            i++;
         }
-        res.push_back(newInterval); 
+        // finally now add in the newInterval after resolving any merges 
+        res.push_back(newInterval);
 
-        // Deal w/ Case 3 - handles any non-overlapping intervals leftover
+        // deal 2/ case 3 - handles any non-overlapping intervals leftover 
             // adds remaining intervals after the newInterval 
             // bc we already dealt w/ all the overlapping intervals 
         while(i < numOfIntervals)
         {
-            res.push_back(intervals[i]); 
+            res.push_back(intervals[i]);
             i++;
         }
 
