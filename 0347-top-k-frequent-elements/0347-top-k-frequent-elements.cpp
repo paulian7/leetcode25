@@ -1,42 +1,36 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: hash map, bucket sort 
+        // tech: hash tables & using bucket sort algorithm
             // time comp: o(n)
-            // using hash table to count freq of each element 
         
-        // 1. declare hash table and count freq of each char 
-            // key: val in the given array 
-            // value: freq of that specific val
-        unordered_map<int, int> count; 
-        for(int n : nums)
+        // 1. declare hash table 
+            // key: value; value: freq of that val
+        unordered_map<int, int> countTable;
+        for(int num : nums)
         {
-            count[n]++;
+            countTable[num]++;
         }
 
-        // 2. create our freq bucket array where indices represent the freq
-            // +1 to size of freq vector bc: 
-                // the indices of the freq rep the frequencies...
-                // .. of the elements that lie within them..
-                // so: freq[4] means elements in this bucket appear 4 times 
-                // can't just do nums.size() bc freq[4] would go out of bounds
-        vector<vector<int>> freq(nums.size() + 1); 
-        for(const auto& pair : count) // iterate thr hash table 
+        // 2. create our freq bucket array 
+            // each index represents freq 
+            // so, want to +1 size of freq array as freq[4] needs an index 
+            // doing just the size of the array itself would make freq[4] go out of bounds
+        vector<vector<int>> freq(nums.size() + 1);
+        for(const auto& pair : countTable) // iterate thr hash table 
         {
-            // key: (.first) ==> accesses the element 
-            // val: (.second) ==> freq of that element 
-                // freq[indexWeWantToAddElementTo].push_back(elementToAdd);
-            freq[pair.second].push_back(pair.first); 
+            // pair.second is the index (aka freq) we want to add the val to
+            freq[pair.second].push_back(pair.first);
         }
 
-        // 3. collect top k freq elements to print out
-        vector<int> result;
+        // 3. collect top k freq elements to print out 
+        vector<int> result; 
         for(int i = freq.size() - 1; i > 0; i--)
         {
-            // access the elements within that bucket now! 
-            for(int n : freq[i])
+            // access the elements within that bucket now 
+            for(int val : freq[i])
             {
-                result.push_back(n);
+                result.push_back(val);
 
                 if(result.size() == k)
                 {
