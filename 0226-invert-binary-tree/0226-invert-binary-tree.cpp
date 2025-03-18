@@ -12,10 +12,7 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        // solution:
-            // everytime we visit a node, take a look at its children and swap their positions 
-            // recursively then run the function on both left and right subtrees
-            // want to use depth first search here 
+        // tech: performing depth first search --> time comp: o(n)
 
         // 1. check base case 
         if(root == NULL)
@@ -23,17 +20,16 @@ public:
             return NULL;
         }
 
-        // 2. swap children of our current node 
-        // use temp val to hold left's value 
+        // 2. swap children of our curr node (aka root)
         TreeNode *tempNode = root -> left; 
-        // swap 
         root -> left = root -> right;
-        root -> right = tempNode; 
+        root -> right = tempNode;
 
-        // 3. recursively invert the subtrees now 
-        invertTree(root -> left); 
-        invertTree(root -> right); 
+        // 3. recursively invert the left and right subtrees
+        invertTree(root -> left);
+        invertTree(root -> right);
 
-        return root; 
+        // 4. return the inverted tree 
+        return root;
     }
 };
