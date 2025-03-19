@@ -16,6 +16,9 @@ public:
 
         // call recursive function - arguments are:
             // currNode, left boundary, right boundary
+            // long_min is -infinity -> our left boundary 
+            // long_max is +infinity -> our right boundary
+             
         return isValid(root, LONG_MIN, LONG_MAX);
     }
 
