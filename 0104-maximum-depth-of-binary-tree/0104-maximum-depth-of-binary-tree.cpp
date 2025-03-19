@@ -12,18 +12,18 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // DEPTH FIRST SEARCH RECURSIVE SOLUTION --
-        
+        // tech: depth first search w/ recursion --> time comp: o(n)
+
         // 1. take care of base case 
-            // (when tree is empty... so when root is NULL)
+            // when tree is empty --> so when root is NULL
         if(root == NULL)
         {
-            return 0; 
+            return 0;
         }
 
         // 2. otherwise, perform recursive solution 
-            // 1 (accounts for depth of root node) 
-            // performing depth first search strategy (DFS) here 
+            // we'll have 1 + <-- accounts for root node depth of 1
+            // then recursively call dfs on left and right subtrees
         return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
     }
 };
