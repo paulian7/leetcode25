@@ -1,19 +1,22 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        // tech: hash set --> time comp: o(n) 
+        // tech: hash set --> time & space comp: o(n) 
 
+        // 1. create hash set 
         unordered_set<int> hashSet; 
 
-        for(const auto& val : nums)
+        // 2. iterate thr array 
+        for(int i = 0; i < nums.size(); i++)
         {
-            if(hashSet.find(val) != hashSet.end())
+            // check whether or not element is already in hash set 
+            if(hashSet.find(nums[i]) != hashSet.end())
             {
-                return true; // dup found 
+                return true; // dup found!
             }
 
-            // otherwise, add it to hash set as we haven't seen this element yet
-            hashSet.insert(val);
+            // else, no dup found --> add to hash set for later checkin' 
+            hashSet.insert(nums[i]); 
         }
 
         return false;
