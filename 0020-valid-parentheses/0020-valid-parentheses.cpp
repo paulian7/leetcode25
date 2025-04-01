@@ -1,45 +1,45 @@
 class Solution {
 public:
     bool isValid(string s) {
-        // tech: stacks and hash table as help --> time comp: o(n) 
-            // rmbr - stacks are LIFO (last in first out rule) 
-
+        // tech: stacks & hash table --> time comp: o(n) 
+            // RMBR - stacks are LIFO - (last in first out rule) 
+        
         // 1. declare stack
         stack<char> cStack; 
 
-        // 2. declare hash table to help track closed & opened parenthes: 
+        // 2. declare hash table to help track closed & open parentheses 
         unordered_map<char, char> closeToOpen = {
             {')', '('},
             {']', '['},
             {'}', '{'}
         };
 
-        // 3. FINALLY iterate through string 
-        for(char c : s)
+        // 3. FINALLY iterate thr our string 
+        for(char c : s) 
         {
-            // check if we're dealing with a closing parenthesis 
-                // count(c) --> checks if the key "c" exists in the hash table 
+            // check if we're dealing w/ CLOSING parentheses 
+                // count() - method that checks if the specified val exists as a key in the hash table 
             if(closeToOpen.count(c))
             {
-                // checks that stack is NOT empty and if we have matching open parenthesis
+                // check if we have recently come across the OPENING parentheses 
+                    // AND if stack is NOT empty 
                 if(!cStack.empty() && cStack.top() == closeToOpen[c])
                 {
-                    cStack.pop(); // pops element from top of stack
+                    cStack.pop(); // pop the opening parentheses from top of stack now bc we found match 
                 }
                 else 
                 {
-                    return false; // as we don't have matching pair
+                    return false; // bc no match found for closing parentheses
                 }
             }
             else 
             {
-                // dealing with an OPEN parenthesis as we couldn't find it as a key 
-                    // keys are the closing parenthesis 
-                cStack.push(c);
+                // THEN we're dealing with a OPEN parentheses
+                cStack.push(c); 
             }
         }
 
-        // if stack's empty --> succesfully closed everything! 
-        return cStack.empty();
+        // if empty --> succesfully closed everything! 
+        return cStack.empty(); 
     }
 };
