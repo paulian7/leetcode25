@@ -1,54 +1,39 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        // time comp: o(n * m) 
-            // m - total num of input strings we're given 
-            // n - avg length of each of those strings 
-        
-        // tech - hash table 
-            // key - freq of each char in the entirity of a string (separated by commas)
-            // val - storing list of strings that share that same freq string
-        
-        // 1. declare & initialize the hash table 
-        unordered_map<string, vector<string>> res; 
+        // tech: hash tables 
 
-        // 2. iterate thr each string from the input array 
-        for(const auto& s : strs)
+        unordered_map<string, vector<string>> wordFreqs;
+
+        // iterate thr our array 
+        for(int i = 0; i < strs.size(); i++)
         {
-            // declare / initialize an array of 26 0's 
-                // each 0 indicating freq of a char 
-            vector<int> count(26, 0);
-
-            // initialize the hash table 
-                // see an a --> increment count[0] which reps 'a' by 1
-            for(char c : s)
+            vector<int> count(26, 0); 
+            // iterate thr each string within the array now 
+            for(char c : strs[i])
             {
-                // taking ascii val of curr char subtractin' by 'a' 
-                    // will give us correct index! 
-                    // to incr the val for 
+                // initialize the vals from count appropiately 
                 count[c - 'a']++;
             }
 
-            // 3. then create key after grabbing freq of each char IN THAT STRING
+            // want to get key from this string now 
             string key; 
-            for(int i = 0; i < 26; i++)
+            for(int i = 0; i < count.size(); i++)
             {
-                key += to_string(count[i]) + ","; 
+                key += to_string(count[i]) + ",";
             }
 
-            // take this key-val pair and add it to our hash table 
-            res[key].push_back(s);
+            // actually add this to our hash table now 
+            wordFreqs[key].push_back(strs[i]);
         }
 
-        // 4. create vector to specifically return the VALUES now 
-            // aka group of anagrams
-        vector<vector<string>> resAnagrams;
-        for(const auto& pair : res)
+        // NOW want to deal w/ actual answer
+        vector<vector<string>> ans; 
+        for(const auto& pair : wordFreqs)
         {
-            resAnagrams.push_back(pair.second);
+            ans.push_back(pair.second); 
         }
 
-        // return our answer! :)
-        return resAnagrams;
+        return ans;
     }
 };
