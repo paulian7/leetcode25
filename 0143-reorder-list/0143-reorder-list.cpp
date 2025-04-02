@@ -11,56 +11,56 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        // time comp: o(n); space comp: o(1) 
-            // finding first and second chunk
-                // using fast and slow pointers
-            // then adding each node within the chunks respectively
+        // time comp: o(n), space comp: o(1)
+            // finding first & second half 
+                // can do so by using fast & slow ptrs 
+            // then adding each node from the halves appropriately 
         
-        // 1. initialize our fast and slow pointers
+        // 1. declare & initialize our fast and slow ptrs 
+        ListNode *fastPtr = head -> next; 
         ListNode *slowPtr = head; 
-        ListNode *fastPtr = head;
 
-        // 2. identify the middle part of array
-            // once fastPtr reaches last node / nullptr...
-            // slowPtr will be @ the middle part
+        // 2. find our midPt now (where we can half the array) 
         while(fastPtr != nullptr && fastPtr -> next != nullptr)
         {
-            slowPtr = slowPtr -> next; // slow - shift by 1 
-            fastPtr = fastPtr -> next -> next; // fast - shift by 2
+            // update ptrs appropriately w/ each iteration 
+            slowPtr = slowPtr -> next; 
+            fastPtr = fastPtr -> next -> next;
         }
 
-        // 3. start the reordering w/ all the ptrs :(
-        ListNode *secondPtr = slowPtr -> next; // pts to the beginning of the second half of our list
-        // as we're splitting the linked list (1st part & 2nd part)
+        // 3. reverse the second half of the array now 
+        ListNode *startOfSecHalfPtr = slowPtr -> next; // gets beg of 2nd half of array
+        // make sure to split the 2 arrays now (unlink) 
         slowPtr -> next = nullptr; 
 
-        // 4. reverse now the second half of our list 
-        ListNode *preVal = nullptr;
-        while(secondPtr != nullptr)
+        ListNode *prevVal = nullptr; 
+        while(startOfSecHalfPtr != nullptr)
         {
-            // temp val to track next node to reverse 
-            ListNode *tempPtr = secondPtr -> next; 
-            secondPtr -> next = preVal;
-            preVal = secondPtr;
-            secondPtr = tempPtr; 
+            ListNode *tempNext = startOfSecHalfPtr -> next; 
+            // actual reversing here 
+            startOfSecHalfPtr -> next = prevVal; 
+            prevVal = startOfSecHalfPtr; 
+            startOfSecHalfPtr = tempNext; 
         }
 
-        // 5. start building the reordered array now 
+        // 4. start building the reordered arrray now 
         ListNode *firstPtr = head; // start of 1st part 
-        // initialize ptr to prevPtr bc prevPtr holds last val looked at
-            // secondPtr would've initially been nullptr if not reinitialized
-        secondPtr = preVal; 
-        while(secondPtr != nullptr)
+        
+        // have a pointer for the start of the 2nd part 
+        startOfSecHalfPtr = prevVal; // prevVal holds start of 2nd list 
+        while(startOfSecHalfPtr != nullptr)
         {
+            // want to hold next node to traverse to in each of the lists 
             ListNode *temp1 = firstPtr -> next; 
-            ListNode *temp2 = secondPtr -> next; 
+            ListNode *temp2 = startOfSecHalfPtr -> next; 
 
-            // reorder pointers now
-            firstPtr -> next = secondPtr;
-            secondPtr -> next = temp1; 
+            // reorder our pointers accordingly now 
+            firstPtr -> next = startOfSecHalfPtr; 
+            startOfSecHalfPtr -> next = temp1; 
 
+            // update pointers now for next iteration 
             firstPtr = temp1; 
-            secondPtr = temp2;
-        }
+            startOfSecHalfPtr = temp2;   
+        } 
     }
 };
