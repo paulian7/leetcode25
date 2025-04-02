@@ -18,7 +18,7 @@ public:
         
         // 1. initialize our fast and slow pointers
         ListNode *slowPtr = head; 
-        ListNode *fastPtr = head -> next;
+        ListNode *fastPtr = head;
 
         // 2. identify the middle part of array
             // once fastPtr reaches last node / nullptr...
