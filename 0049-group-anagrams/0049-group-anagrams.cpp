@@ -6,46 +6,49 @@ public:
             // n - avg length of each of those strings 
         
         // tech - hash table 
-            // key - freq of each char in string separated by comma 
-            // val - stores list of strings that share the same freq of char's 
+            // key - freq of each char in the entirity of a string (separated by commas)
+            // val - storing list of strings that share that same freq string
         
-        // 1. declare and initialize hash table 
+        // 1. declare & initialize the hash table 
         unordered_map<string, vector<string>> res; 
 
-        // 2. iterate thr each string from the input array
-        for(const auto& s : strs) 
+        // 2. iterate thr each string from the input array 
+        for(const auto& s : strs)
         {
-            // declare / initialize array of 26 0's 
-                // each 0 indicaing freq of a char 
+            // declare / initialize an array of 26 0's 
+                // each 0 indicating freq of a char 
             vector<int> count(26, 0);
 
-            // iniitializing the hash table 
+            // initialize the hash table 
                 // see an a --> increment count[0] which reps 'a' by 1
             for(char c : s)
             {
-                    // taking ascii val of curr char subtrac. by 'a'
-                        // will give us correct index...
-                        // to incr. the value for 
+                // taking ascii val of curr char subtractin' by 'a' 
+                    // will give us correct index! 
+                    // to incr the val for 
                 count[c - 'a']++;
             }
 
-            // 3. then create key after grabbing freqs of each char 
-            string key;
-            for(int i = 0; i < 26; i++) {
-                key += to_string(count[i]) + ",";  // Ensures separation
+            // 3. then create key after grabbing freq of each char IN THAT STRING
+            string key; 
+            for(int i = 0; i < 26; i++)
+            {
+                key += to_string(count[i]) + ","; 
             }
 
+            // take this key-val pair and add it to our hash table 
             res[key].push_back(s);
         }
 
-        // 4. create vector to return everything now :)
-            // want specifically the values 
+        // 4. create vector to specifically return the VALUES now 
+            // aka group of anagrams
         vector<vector<string>> resAnagrams;
         for(const auto& pair : res)
         {
             resAnagrams.push_back(pair.second);
         }
 
+        // return our answer! :)
         return resAnagrams;
     }
 };
