@@ -17,7 +17,7 @@ public:
                 // which means we found the start of a seq!
             if (numSet.find(num - 1) == numSet.end()) 
             {
-                // start counting seq
+                // start counting longest consec seq
                 int length = 1;
                 while (numSet.find(num + length) != numSet.end()) 
                 {
