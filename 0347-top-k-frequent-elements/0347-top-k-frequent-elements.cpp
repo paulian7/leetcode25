@@ -1,41 +1,35 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: hash tables & using bucket sort algo 
-            // time comp: o(n) 
+        // hash table 
+        unordered_map<int, int> numTable; 
 
-        // 1. declare hash table 
-            // key: value itself from array 
-            // val: freq of that specific val 
-        unordered_map<int, int> countTable;
-        // populate hash table 
-        for(int num : nums) 
+        // populate this table 
+        for(int num : nums)
         {
-            countTable[num]++;
+            numTable[num]++; 
         }
 
-        // 2. create our freq bucket 
-            // each index represents a freq 
-            // so, want to +1 size of freq array to account for ALL poss freqs w/o going out of bounds 
-        vector<vector<int>> freq(nums.size() + 1);
-        for(const auto& pair : countTable)
+        // throw it into buckets (aka a vector)
+            // where each index represents a possible freq from the array 
+        vector<vector<int>> counts(nums.size() + 1); 
+        // populate our vector now :) 
+        for(const auto& pair : numTable)
         {
-            // pair.second is the index (aka freq), we want to add the val to 
-            freq[pair.second].push_back(pair.first);
+            counts[pair.second].push_back(pair.first); 
         }
 
-        // 3. collect top k freq elements to print out now 
+        // actually want to return our answer now 
         vector<int> result; 
-        for(int i = freq.size() - 1; i > 0; i--)
+        for(int i = counts.size() - 1; i > 0; i--)
         {
-            // access the elements within that bucket now 
-            for(int val : freq[i])
+            for(int num : counts[i])
             {
-                result.push_back(val);
+                result.push_back(num); 
 
                 if(result.size() == k)
                 {
-                    return result;
+                    return result; 
                 }
             }
         }
