@@ -1,9 +1,8 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // tech: hashing / hash tables --> time comp: o(n) 
-            // key: val 
-            // value: index of that val from the given array 
+        // hashing --> want to track value and its index to return 
+            // if it was matching w/ other val to add up to target 
         unordered_map<int, int> hashTable; 
 
         // iterate thr array 
@@ -13,12 +12,13 @@ public:
 
             if(hashTable.find(diff) != hashTable.end())
             {
-                return {i, hashTable[diff]}; 
+                return {i, hashTable[diff]};
             }
 
+            // insert this val to hash table 
             hashTable[nums[i]] = i;
         }
 
-        return {}; 
+        return {-1, -1};
     }
 };
