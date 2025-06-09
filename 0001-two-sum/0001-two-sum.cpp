@@ -1,29 +1,33 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // tech: hashing --> time comp: o(n) 
-            // want to track val and its index to return
+        // ?: 2 vals that add up to target val 
+
+        // tech: hash table 
+            // allows us to store both val and its index 
+            // time comp: o(n) 
 
         // 1. declare hash table 
-        unordered_map<int, int> hashTable; 
+        unordered_map<int, int> hashTab; 
 
         // 2. iterate thr array 
         for(int i = 0; i < nums.size(); i++)
         {
-            // 3. find diff --> let's us iterate thr the array ONCE 
+            // 3. calc diff btwn target - currElement 
+                // allows us to do 1-pass only --> time comp: o(n) :)) 
             int diff = target - nums[i]; 
 
-            // 4. search if found in hashTable already --> o(1) constant time for lookup 
-            if(hashTable.find(diff) != hashTable.end())
+            // 4. check if we've seen diff already 
+            if(hashTab.find(diff) != hashTab.end())
             {
-                return {i, hashTable[diff]}; 
+                return {i, hashTab[diff]};
             }
 
-            // else... add to hash table for later lookup 
-            hashTable[nums[i]] = i; 
+            // 5. otherwise, add this new curr val to hashTable! 
+            hashTab[nums[i]] = i; 
         }
 
-        // worst case return nothing 
+        // 6. worse case - return nothing! 
         return {}; 
     }
 };
