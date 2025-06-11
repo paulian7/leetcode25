@@ -1,45 +1,41 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: hash tables + bucket sort 
-            // time comp & space comp: o(n) 
-        
-        // 1. declare hash table 
-            // key: reps value from array 
-            // val: freq of that spec value 
-        unordered_map<int, int> numTable; 
+        // tracking the freq of each val 
+            // hash table - key-val pairs 
+                // key: actual value itself 
+                // value: frequency of that specific value 
+        unordered_map<int, int> hashTab; 
 
-        // 2. iterate thr input array to populate hashTable
-        for(int num : nums)
+        // populate this table by iterating thr our input array 
+        for(int val : nums)
         {
-            numTable[num]++; 
+            hashTab[val]++; 
         }
 
-        // 3. throw each of the vals into buckets 
-            // (aka each bucket being an element of a vector)
-            // each index representing a poss freq from the array 
-        vector<vector<int>> counts(nums.size() + 1); 
-        for(const auto& pair : numTable)
+        // throw all values into a vector 
+            // where each index represents frequency 
+        vector<vector<int>> count(nums.size() + 1); 
+        for(auto const& pair : hashTab)
         {
-            counts[pair.second].push_back(pair.first); 
+            count[pair.second].push_back(pair.first); 
         }
 
-        // 4. return top k most frequent elements now by iterating thr 2d vector 
+        // want to return k most frequent elements 
         vector<int> res; 
-        for(int i = counts.size() - 1; i > 0; i--)
+        for(int i = count.size() - 1; i > 0; i--)
         {
-            for(int num : counts[i])
+            for(int val : count[i])
             {
-                res.push_back(num); 
+                res.push_back(val); 
 
-                // check if we've reached top k 
                 if(res.size() == k)
                 {
-                    return res;
+                    return res; 
                 }
             }
         }
 
-        return res; 
+        return res;
     }
 };
