@@ -30,7 +30,7 @@ public:
             }
 
             // FINALLY check for equivalence -- after lowercasing the char 
-            if(to(lower(s[leftPtr]) != tolower(s[rightPtr]))
+            if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
                 return false; // not a palindrome immediately 
             }
