@@ -1,40 +1,45 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        // ?: palindrome is read same forwards and backwards 
-        // tech: 2 pointers from start and end going to middle --> time comp: o(n) 
+        // RMBR - PLAINDROME READ SAME FORWARDS AND BACKWARDS 
+            // (excluding any spaces & nonalphanumeric characters)
+        // tech: 2 pointers from start and end --> then going to middle 
+            // time comp: o(n) 
 
         // 1. initialize 2 pointers 
         int leftPtr = 0; 
         int rightPtr = s.length() - 1; 
 
-        // 2. iterate thr str w/ left and right ptrs going to middle 
-            // check for equivalent --> yes, palindrome! 
+        // 2. execute 2 ptrs technique 
+            // have left and rightPtrs meet @ the middle 
+            // if equivalent --> palindrome! 
         while(leftPtr < rightPtr)
         {
-            // account for nonalphabet cases for leftPtr 
+            // check for nonalpha chars w/ LEFTPTR 
             while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
             {
-                leftPtr++;
+                // then increment for an actual alphanum char 
+                leftPtr++; 
             }
 
-            // account for any nonalphabet cases for rightPtr 
+            // check for nonalpha chars w/ RIGHTPTR 
             while(rightPtr > leftPtr && !isalnum(s[rightPtr]))
             {
-                rightPtr--;
+                // then increment for an actual aphanum char 
+                rightPtr--; 
             }
 
-            // then check for similarity 
-            if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
+            // FINALLY check for equivalence -- after lowercasing the char 
+            if(to(lower(s[leftPtr]) != tolower(s[rightPtr]))
             {
-                return false;
+                return false; // not a palindrome immediately 
             }
 
-            // update pointers finally 
-            leftPtr++;
-            rightPtr--;
+            // update ptrs for next iteration 
+            leftPtr++; 
+            rightPtr--; 
         }
 
-        return true;
+        return true; 
     }
 };
