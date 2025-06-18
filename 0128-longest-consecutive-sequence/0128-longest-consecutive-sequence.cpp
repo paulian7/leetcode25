@@ -1,29 +1,35 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        // no sort --> time comp: o(nlogn) 
+        // tech: hash sets --> time comp: o(n) 
+        
+        // 1. declare hash set 
+        unordered_set<int> numSet(nums.begin(), nums.end()); 
 
-        unordered_set<int> hashSet(nums.begin(), nums.end()); 
-        int longestLength = 0; 
+        // var to return at end - tracks longest consec 
+        int longest = 0; 
 
-        // iterate thr our given array 
-        for(int i = 0; i < nums.size(); i++)
+        // 2. iterate thr the array 
+        for(int num : numSet)
         {
-            // track / find somehow the beginning of sequences 
-            if(hashSet.find(nums[i] - 1) == hashSet.end())
+            // 3. want to check for the start of sequences 
+                // if we can find the val that comes before our curr val...
+                // ... that is NOT the start 
+                // otherwise, if we can't --> we found a start! 
+            if(numSet.find(num - 1) == numSet.end()) 
             {
-                // dealing w/ start of seq
-                // can actually work on result 
-                int length = 1; 
-                while(hashSet.find(nums[i] + length) != hashSet.end())
+                // so... we found the start of a sequence 
+                int currLength = 1; // currLength of seq 
+                while(numSet.find(num + currLength) != numSet.end())
                 {
-                    length++; 
+                    currLength++; 
                 }
 
-                longestLength = max(longestLength, length); 
+                // update length tracker
+                longest = max(longest, currLength); 
             }
         }
 
-        return longestLength; 
+        return longest; 
     }
 };
