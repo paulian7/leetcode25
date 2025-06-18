@@ -5,7 +5,7 @@ public:
 
         // tech: hash table 
             // allows us to store both val and its index 
-            // time comp: o(n) 
+            // time comp: o(n), space comp: o(n)
 
         // 1. declare hash table 
         unordered_map<int, int> hashTab; 
