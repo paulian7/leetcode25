@@ -26,14 +26,13 @@ public:
             result = max(result, areaCalc); 
 
             // now update ptrs to maximize heights 
-            
-            if(height[rightPtr] < height[leftPtr])
-            {
-                rightPtr--; 
-            }
-            else if(height[leftPtr] < height[rightPtr])
+            if(height[leftPtr] < height[rightPtr])
             {
                 leftPtr++; // want to increase leftPtr's val height 
+            }
+            else if(height[rightPtr] < height[leftPtr])
+            {
+                rightPtr--; 
             }
             else 
             {
@@ -42,6 +41,6 @@ public:
             }
         }
 
-        return result; 
+        return result;
     }
 };
