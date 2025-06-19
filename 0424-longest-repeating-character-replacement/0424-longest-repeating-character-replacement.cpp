@@ -1,48 +1,48 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        // tech: hash tables & sliding window --> time comp: o(n) 
-        
+        // tech: hash tables & sliding window --> time comp: o(n)
+
         // 1. declare hash table 
-            // key: char of alphabet (26 possible)
+            // key: char of alphabet (26 possible) 
             // val: freq of that char in string 
-        unordered_map<char, int> charFreq;
-        int result = 0;
-        
+        unordered_map<char, int> charFreq; 
+        int result = 0; 
+
         // 2. declare 2 pointers 
         int leftPtr = 0; 
-        
-        // var to return as result 
-        int maxFreq = 0;
 
-        // rightPtr declared in for-loop as we iterate thr string
+        // helper variable 
+        int maxFreq = 0; 
+
+        // 3. iterate thr string 
+            // rightPtr is our iterator in for-loop 
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // incrementing freq (the value) for each key
-            charFreq[s[rightPtr]]++;
+            // incrementing freq for each character 
+            charFreq[s[rightPtr]]++; 
 
-            // update maxFreq 
+            // update maxFreq - helps us determine when to shrink window 
                 // taking the maxFreq each time as we'll be...
-                // taking length of str - maxFreq --> which gives us # of replac...
-                // ...we need to do 
-            maxFreq = max(maxFreq, charFreq[s[rightPtr]]);
+                // ... taking length of str - maxFreq --> which gives us # of replacements needed 
+            maxFreq = max(maxFreq, charFreq[s[rightPtr]]); 
 
-            // update window if necessary 
-                // checking if # of allowed replacements cover the needed replacements
+            // update window as necessary 
+                // checking if # of allowed replacements cover the needed replacements 
             while((rightPtr - leftPtr + 1) - maxFreq > k)
             {
-                // want to remove the freq of that value leftPtr pointed to from hash table
-                    // as we're no longer counting that freq
-                charFreq[s[leftPtr]]--;
+                // want to remove the freq of leftPtr's val..
+                    // as we're no longer counting that freq 
+                charFreq[s[leftPtr]]--; 
 
-                // update leftPtr --> move the window along 
-                leftPtr++;
+                // update leftPtr --> as THIS will move our window AND UPDATE IT
+                leftPtr++; 
             }
 
-            // updates result w/ max length of any valid sliding window
-            result = max(result, rightPtr - leftPtr + 1);
+            // updates result w/ max length of any valid sliding window 
+            result = max(result, rightPtr - leftPtr + 1); 
         }
 
-        return result;
+        return result; 
     }
 };
