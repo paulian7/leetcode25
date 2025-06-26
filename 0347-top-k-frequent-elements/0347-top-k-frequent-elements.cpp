@@ -1,44 +1,45 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: hash table --> time & space comp: o(n) 
-            // key: value 
-            // value: freq of that specific value 
+        // tech: hash tables + bucket sort 
+            // time comp & space comp: o(n) 
         
-        unordered_map<int, int> freqTab; 
+        // 1. declare hash table 
+            // key: reps value from array 
+            // val: freq of that spec value 
+        unordered_map<int, int> numTable; 
 
-        // populate this hash table 
-        for(int val : nums)
+        // 2. iterate thr input array to populate hashTable
+        for(int num : nums)
         {
-            freqTab[val]++; 
+            numTable[num]++; 
         }
 
-        // throw these frequencies into a bucket 
-            // each bucket is an index 
-            // indices --> reps a possible frequency 
-        vector<vector<int>> freqCounts(nums.size() + 1); 
-        for(auto const& pair : freqTab)
+        // 3. throw each of the vals into buckets 
+            // (aka each bucket being an element of a vector)
+            // each index representing a poss freq from the array 
+        vector<vector<int>> counts(nums.size() + 1); 
+        for(const auto& pair : numTable)
         {
-            freqCounts[pair.second].push_back(pair.first); 
+            counts[pair.second].push_back(pair.first); 
         }
-        
-        // then iterate starting from end of bucket array to return result 
 
-        // need variable to return as result 
-        vector<int> result; 
-        for(int i = freqCounts.size() - 1; i > 0; i--) 
+        // 4. return top k most frequent elements now by iterating thr 2d vector 
+        vector<int> res; 
+        for(int i = counts.size() - 1; i > 0; i--)
         {
-            for(int val : freqCounts[i])
+            for(int num : counts[i])
             {
-                result.push_back(val); 
+                res.push_back(num); 
 
-                if(result.size() == k)
+                // check if we've reached top k 
+                if(res.size() == k)
                 {
-                    return result; 
+                    return res;
                 }
             }
         }
 
-        return result; 
+        return res; 
     }
 };
