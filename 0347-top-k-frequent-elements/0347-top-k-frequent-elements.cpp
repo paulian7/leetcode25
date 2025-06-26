@@ -2,7 +2,9 @@ class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         // tech: hash tables + bucket sort 
-            // time comp & space comp: o(n) 
+            // time comp: o(n)
+            // space comp: o(n) 
+                // worst case - all values are unique 
         
         // 1. declare hash table 
             // key: reps value from array 
