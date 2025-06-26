@@ -1,61 +1,53 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // ?: want 3 diff values that add up to 0 
-
-        // 1. sort() - helps us avoid duplicates 
-            // does give us time complexity of o(nlogn) as we're sorting 
+        // sort() - o(nlogn) 
         sort(nums.begin(), nums.end()); 
 
-        // 2. declare vector of triplets to return as our answer 
-        vector<vector<int>> res; 
+        // declare variable to return 
+        vector<vector<int>> resTriplet; 
 
-        // 3. iterate thr array using a for-loop & inner while-loop 
-            // for-loop -- deals w/ first element in triplet 
-            // while loop - deals w/ the other 2 elements in the triplet 
-                // using the 2 pointers method here! 
+        // 1 for-loop --> time comp: o(n) 
+            // sole focus - looking at 1st element within triplet 
+            // then - we'll have a while loop 
+                // 2 pointers --> time comp: o(n) 
         for(int i = 0; i < nums.size(); i++)
         {
-            // === 4. DEALING WITH FIRST VAL WITHIN TRIPLET == 
-            // check for dups first 
+            // check for any duplicates right off the bat 
             if(i > 0 && nums[i] == nums[i - 1])
             {
-                // found duplicate! -- want to skip to next iteration 
-                    // (as we want to avoid dups in our triplet
                 continue; 
             }
 
-            // == 5. DEALING W/ OTHER 2 VALS WITHIN TRIPLET == 
+            // if no duplicates - then identify next to elements for our triplet 
             int leftPtr = i + 1; 
             int rightPtr = nums.size() - 1; 
+            // execute 2 pointers method 
             while(leftPtr < rightPtr)
             {
-                // calc sum first as a conditional statement w/ the 2 pointers 
                 int currSum = nums[i] + nums[leftPtr] + nums[rightPtr]; 
-
-                // update ptrs accordingly to the sum 
+                
+                // update pointers accordingly 
                 if(currSum > 0)
                 {
-                    // rightPtr's val too big --> so decrement to find smaller val 
                     rightPtr--; 
                 }
                 else if(currSum < 0)
                 {
-                    // leftPtr's val too small --> so increment to find larger val 
                     leftPtr++; 
                 }
                 else 
                 {
-                    // currSum is FINALLY 0! <-- what we want! 
+                    // when the currSum is ACTUALLY 0 
+                    
+                    // want to store this answer to return 
+                    resTriplet.push_back({nums[i], nums[leftPtr], nums[rightPtr]}); 
 
-                    // add to res vector to store our VALID TRIPLET 
-                    res.push_back({nums[i], nums[leftPtr], nums[rightPtr]}); 
-
-                    // update pointers -- just need to update 1 
-                        // as our conditional statements above will udpate accordingly for us 
+                    // want to update ptrs (only need to do 1)
                     leftPtr++; 
 
-                    // ensure no duplicates in the leftPtr 
+                    // want to ensure that the value leftPtr points at now 
+                        // DOES NOT HIT A DUPLICATE 
                     while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
                     {
                         leftPtr++; 
@@ -64,6 +56,6 @@ public:
             }
         }
 
-        return res;
+        return resTriplet; 
     }
 };
