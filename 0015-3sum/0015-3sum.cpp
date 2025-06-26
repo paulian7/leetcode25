@@ -55,7 +55,7 @@ public:
                         // as our conditional statements above will udpate accordingly for us 
                     leftPtr++; 
 
-                    // ensure no dups after this 
+                    // ensure no duplicates in the leftPtr 
                     while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
                     {
                         leftPtr++; 
