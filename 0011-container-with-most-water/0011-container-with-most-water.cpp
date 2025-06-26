@@ -1,40 +1,46 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        // WANT: 
-            // optimize largest possible length
+        // tech: 2 pointers approach --> time comp: o(n) 
+            // main goal: to maximize the length while also maximizing the height 
+            // have pointers be in their own respective sides 
+        
+        // 1. declare var to return 
+        int result = 0; 
 
-        // tech: 2 pointers technique 
+        // 2. declare / initialize our 2 ptrs 
+            // at opp ends as we want to maximize the length 
         int leftPtr = 0; 
         int rightPtr = height.size() - 1; 
 
-        int maxArea = 0; 
-
+        // 3. iterate thr array now -- searching for the longest valid length 
+            // moving only the ptrs that's the smallest btwn the 2 
+            // bc we ALSO want the largest height 
         while(leftPtr < rightPtr)
         {
-            // calculate the area 
-                // length * width 
-            int currArea = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]); 
+            // 4. calc currArea: length * height 
+                // want smallest height to avoid any overflowing 
+            int areaCalc = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]); 
 
-            // update maxArea accordingly 
-            maxArea = max(maxArea, currArea); 
+            // update max area ccordingly now after recent calculation 
+            result = max(result, areaCalc); 
 
-            // update our pointers accordingly to MAXIMIZE our height 
-            if(height[leftPtr] < height[rightPtr]) // leftPtr slacking 
+            // now update ptrs to maximize heights 
+            if(height[leftPtr] < height[rightPtr])
             {
-                leftPtr++; 
+                leftPtr++; // want to increase leftPtr's val height 
             }
-            else if(height[rightPtr] < height[leftPtr]) // rightPtr slacking 
+            else if(height[rightPtr] < height[leftPtr])
             {
                 rightPtr--; 
             }
             else 
             {
-                // both have the same height.. so we can just update 1 
-                leftPtr++; 
+                // both ptrs same val in height --> can just pick one to update 
+                rightPtr--; 
             }
         }
 
-        return maxArea; 
+        return result;
     }
 };
