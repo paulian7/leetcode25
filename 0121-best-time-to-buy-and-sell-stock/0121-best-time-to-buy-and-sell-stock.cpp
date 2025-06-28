@@ -1,42 +1,32 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        // ?: buy low, sell high --> want to get the largest profit
+        // given an array 
+        // want to get biggest difference 
+            // but can't sort the array 
+        // each value represents the price 
 
-        // tech: 2 pointers --> time comp: o(n) 
-            // will scan thr array once 
-            // leftPtr - the day we buy 
-            // rightPtr - the day we sell 
-        
-        // 1. initialize 2 pointers 
-        int leftPtr = 0; 
-        int rightPtr = 1; 
+        // must buy first.. then sell afterwards in the future 
 
-        // val to return at end 
+        // 2 pointers 
+        int buyPtr = 0; 
         int maxProfit = 0; 
 
-        // 2. iterate thr our array prices 
-        while(rightPtr < prices.size())
+        // iterate thr array 
+        for(int rightPtr = 1; rightPtr < prices.size(); rightPtr++)
         {
-            // check if we've made any profit   
-                // if left < right 
-            if(prices[leftPtr] < prices[rightPtr])
+            if(prices[rightPtr] > prices[buyPtr])
             {
-                // profit calc (sellfPrice - buyPrice)
-                int diff = prices[rightPtr] - prices[leftPtr]; 
+                int diff = prices[rightPtr] - prices[buyPtr]; 
 
-                // update maxProfit variable accordingly 
                 maxProfit = max(maxProfit, diff); 
             }
             else 
             {
-                // want to update leftPtr bc we found an EVEN...
-                    // ... lower price in rightPtr 
-                leftPtr = rightPtr; 
+                // leftPtr is actually bigger than rightPtr's value 
+                // want to swap! 
+                buyPtr = rightPtr; 
             }
-
-            // always want to update rightPtr as we itterate through 
-            rightPtr++; 
         }
 
         return maxProfit; 
