@@ -1,48 +1,54 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        // tech: hash tables & sliding window --> time comp: o(n) 
-            // dealing w/ frequencies --> hash tables!! 
-
+        // tech: hash tables & sliding window 
+            // time comp: o(n) -- 'n' is the length of the string 
+            // space comp: o(m) -- 'm' num of unique characters within string 
+        
         // 1. declare hash table 
-            // key: char of alphabet (26 possible)
+            // key: char (26 possible within alphabet) 
             // val: freq of that char within the string 
         unordered_map<char, int> charFreq; 
-        int result = 0; 
+        
+        // declare var to return as result 
+        int result = 0;
 
-        // 2. declare our 2 pointers 
+        // 2. declare 2 ptrs - for window 
         int leftPtr = 0; 
 
-        // have a helper variable -- helps us optimize time comp from o(26*n) -> o(n)
+        // have a helper variable 
+            // helps optimize time comp from o(26*n) to o(n) 
+            // no need to continuously iterate thr hash table to find highest freq 
         int maxFreq = 0; 
 
         // 3. iterate thr string 
-            // rightPtr is our iterator in the for-loop 
+            // rightPtr iterator here 
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // incrementing freq for each char 
-            charFreq[s[rightPtr]]++; 
+            // incr freq for each char 
+            charFreq[s[rightPtr]]++;
 
-            // update maxFreq --> highest freq we've seen 
-                // what helps us determine when to shrink window 
-                // will later take str.length() - maxFreq 
-                    // what gives us # of replacements we need to do
+            // update maxFreq accordingly 
+                // contians highest freq we've seen so far 
+                // the determination of whether or not we shrink the window 
             maxFreq = max(maxFreq, charFreq[s[rightPtr]]); 
 
-            // update window as necessary 
-                // checking if # of allowed replacements cover the NEEDED replacements
+            // update window if necessary ---- (if > k)
+                // take lengthWindow - maxFreq 
+                    // gives num of chars that isn't the char of maxFreq 
+                    // aka the num of chars we need to replace 
             while((rightPtr - leftPtr + 1) - maxFreq > k)
             {
-                // want to remove the freq of leftPtr's val 
-                    // as we're no longer counting that freq 
+                // need to update window!! 
+                // remove freq of leftPtrs val 
                 charFreq[s[leftPtr]]--; 
 
-                // update leftPtr --> as this will move our window and update it 
+                // update window 
                 leftPtr++; 
             }
 
-            // updates res w/ max length of any valid sliding window 
-            result = max(result, rightPtr - leftPtr + 1); 
+            // update res accordingly w/ max length if found 
+            result = max(result, (rightPtr - leftPtr + 1)); 
         }
 
         return result;
