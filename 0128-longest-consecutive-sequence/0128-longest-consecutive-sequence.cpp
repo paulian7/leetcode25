@@ -1,7 +1,7 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        // tech: hash sets --> time comp: o(n) 
+        // tech: hash sets --> time & space comp: o(n) 
         
         // 1. declare hash set 
         unordered_set<int> numSet(nums.begin(), nums.end()); 
