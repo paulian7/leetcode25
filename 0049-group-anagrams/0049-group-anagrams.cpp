@@ -1,38 +1,54 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        // hash tables 
-            // key: freq string
-            // val: all strings that share that freq string 
+        // anagrams - basically if you scramble the words 
+            // you can make the other word 
+            // chars should share same frequency 
+        
+        // tech: hash tables 
+            // key: a string that details frequency of each respective character 
+            // value: all the strings that share that frequency 
         
         unordered_map<string, vector<string>> hashTab; 
+
+        // 1. iterate thr array 
         for(int i = 0; i < strs.size(); i++)
         {
-            // want to iterate thr each char within curr string
+            // want to iterate through each string now within the overall array 
+
+            // want to also declare a vector 
+                // that tracks frequencies of each char 
+                // index denotes which char 
+                // char 0 --> represents freq count for "a" 
             vector<int> count(26, 0); 
-            for(int c : strs[i])
+            for(char c : strs[i])
             {
+                // using ascii trick here 
+                    // 'a' - 'a' --> index 0 --> increment corr index 
+                    // that represents freq count tracker for a 
+                    // 'b' - 'a' --> 98 - 97 --> 1 --> increment val in index 1 
                 count[c - 'a']++; 
             }
 
-            // want to convert array of indices into a string to actually be a key for hash table 
+            // want to turn that vector of integers into a string to store as a key 
             string key; 
             for(int i = 0; i < 26; i++)
             {
                 key += to_string(count[i]) + ","; 
             }
 
-            // actually add to hash table now 
+            // add this to the hash table tracker now 
             hashTab[key].push_back(strs[i]); 
         }
 
-        // now want to return our actual result 
+        // then actually return our result 
+        // want to create yet another vector to help us with this 
         vector<vector<string>> resAnagrams; 
         for(auto const& pair : hashTab)
         {
             resAnagrams.push_back(pair.second); 
         }
 
-        return resAnagrams;
+        return resAnagrams; // return result! 
     }
 };
