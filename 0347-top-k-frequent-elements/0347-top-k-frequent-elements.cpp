@@ -1,47 +1,39 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: hash tables + bucket sort 
-            // time comp: o(n)
-            // space comp: o(n) 
-                // worst case - all values are unique 
+        // hash tables 
+            // helps us track the frequency of a specific element 
         
-        // 1. declare hash table 
-            // key: reps value from array 
-            // val: freq of that spec value 
-        unordered_map<int, int> numTable; 
+        // bucket sort 
 
-        // 2. iterate thr input array to populate hashTable
+        unordered_map<int, int> hashTab; 
         for(int num : nums)
         {
-            numTable[num]++; 
+            hashTab[num]++; 
         }
 
-        // 3. throw each of the vals into buckets 
-            // (aka each bucket being an element of a vector)
-            // each index representing a poss freq from the array 
-        vector<vector<int>> counts(nums.size() + 1); 
-        for(const auto& pair : numTable)
+        // sort of a bucket sort 
+        vector<vector<int>> bucketCounts(nums.size() + 1); 
+        for(auto const& pair : hashTab)
         {
-            counts[pair.second].push_back(pair.first); 
+            bucketCounts[pair.second].push_back(pair.first); 
         }
 
-        // 4. return top k most frequent elements now by iterating thr 2d vector 
-        vector<int> res; 
-        for(int i = counts.size() - 1; i > 0; i--)
+        // want to return result 
+        vector<int> result; 
+        for(int i = bucketCounts.size() - 1; i > 0; i--)
         {
-            for(int num : counts[i])
+            for(int val : bucketCounts[i])
             {
-                res.push_back(num); 
+                result.push_back(val); 
 
-                // check if we've reached top k 
-                if(res.size() == k)
+                if(result.size() == k)
                 {
-                    return res;
+                    return result; 
                 }
             }
         }
 
-        return res; 
+        return result; 
     }
 };
