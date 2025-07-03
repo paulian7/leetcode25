@@ -1,40 +1,42 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        // WANT: 
-            // optimize largest possible length
-
-        // tech: 2 pointers technique 
+        // the largest area - 
+            // length * height 
+        
+        // time complexity: o(n) 
+        // space complexity: o(1) 
+        
+        // 2 pointers 
         int leftPtr = 0; 
         int rightPtr = height.size() - 1; 
 
-        int maxArea = 0; 
+        // var to return as our final result 
+        int maxAmnt = 0; 
 
-        while(leftPtr < rightPtr)
+        while(rightPtr > leftPtr)
         {
-            // calculate the area 
-                // length * width 
+            // to check what our currArea is right now 
             int currArea = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]); 
 
-            // update maxArea accordingly 
-            maxArea = max(maxArea, currArea); 
+            // want to update result var accordingly 
+            maxAmnt = max(maxAmnt, currArea); 
 
-            // update our pointers accordingly to MAXIMIZE our height 
-            if(height[leftPtr] < height[rightPtr]) // leftPtr slacking 
+            // to maximize the height 
+            if(height[leftPtr] < height[rightPtr])
             {
                 leftPtr++; 
             }
-            else if(height[rightPtr] < height[leftPtr]) // rightPtr slacking 
+            else if(height[rightPtr] < height[leftPtr])
             {
                 rightPtr--; 
             }
             else 
             {
-                // both have the same height.. so we can just update 1 
                 leftPtr++; 
             }
         }
 
-        return maxArea; 
+        return maxAmnt; 
     }
 };
