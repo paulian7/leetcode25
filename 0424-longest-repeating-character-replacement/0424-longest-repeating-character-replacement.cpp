@@ -1,51 +1,56 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        // want to return the longest SUBSTRING containing the same characters 
-            // after k operations (that can help us achieve this goal) 
+        // tech: hash tables & sliding window 
+            // time comp: o(n) -- 'n' is the length of the string 
+            // space comp: o(m) -- 'm' num of unique characters within string 
         
-        // overall idea: 
-            // need some way to figure out what the majority of our chars are 
-            // so we want to count the frequency of each char we come across
-            // to associate a char w/ a frequency --> we can use hash tables!! 
-            // but, the thing w/ this, is we have to continuously check the hash table again and again for 
-                // whatever char has the highest frequency --> time comp: o(26 * n) 
-            
-            // want longest substring --> sliding window! 
-                // helps us track and only track the window (or subarray) that's valid to stated condition 
-        unordered_map<char, int> countFreq; 
+        // 1. declare hash table 
+            // key: char (26 possible within alphabet) 
+            // val: freq of that char within the string 
+        unordered_map<char, int> charFreq; 
+        
+        // declare var to return as result 
+        int result = 0;
 
-        // declare 2 pointers 
+        // 2. declare 2 ptrs - for window 
         int leftPtr = 0; 
 
-        // want to have variable to return at the very end 
-        int longest = 0; 
-
-        // let's have a helper variable! that tracks the largest frequency of a char 
-            // will actually help optimize our time complexity --> down to o(n) 
+        // have a helper variable 
+            // helps optimize time comp from o(26*n) to o(n) 
+            // no need to continuously iterate thr hash table to find highest freq 
         int maxFreq = 0; 
 
+        // 3. iterate thr string 
+            // rightPtr iterator here 
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // what to populate our hash table 
-            countFreq[s[rightPtr]]++; 
+            // incr freq for each char 
+            charFreq[s[rightPtr]]++;
 
-            // want to update whether or not we have an ever highest frequency we've come across
-            maxFreq = max(maxFreq, countFreq[s[rightPtr]]); 
+            // update maxFreq accordingly 
+                // contians highest freq we've seen so far 
+                // the determination of whether or not we shrink the window 
+            maxFreq = max(maxFreq, charFreq[s[rightPtr]]); 
 
-            // check whether or not we need to update our window 
+            // update window if necessary ---- (if > k)
+                // take lengthWindow - maxFreq 
+                    // gives num of chars that isn't the char of maxFreq 
+                    // aka the num of chars we need to replace 
             while((rightPtr - leftPtr + 1) - maxFreq > k)
             {
-                // want to shrink our window in this case 
-                countFreq[s[leftPtr]]--; 
+                // need to update window!! 
+                // remove freq of leftPtrs val 
+                charFreq[s[leftPtr]]--; 
 
+                // update window 
                 leftPtr++; 
             }
 
-            // then finally update our final result 
-            longest = max(longest, (rightPtr - leftPtr + 1)); 
+            // update res accordingly w/ max length if found 
+            result = max(result, (rightPtr - leftPtr + 1)); 
         }
 
-        return longest; 
+        return result;
     }
 };
