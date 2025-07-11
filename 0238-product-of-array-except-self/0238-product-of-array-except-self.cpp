@@ -1,33 +1,44 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        // prefix technique 
-            // time: 
-            // space: 
+        // tech: prefix sum 
+            // prefix * postfix --> time & space comp: o(n) 
+                // one pass forward to get the prefix vals 
+                // one pass backwarxs to get the postfix 
+                // can multiply BOTH to get the correct result 
         
-        // prefix sums - interate from start -> end 
+        // 1. declare vector to return as result 
+        vector<int> result(nums.size(), 1); 
 
-        // want to declare array to return as result
-        vector<int> res(nums.size(), 1); 
+        // 2. calc the prefix vals first 
+            // have prefix val set to 1 to start 
+            // ... bc first element doesn't have a prefixVal 
         int prefixVal = 1; 
         for(int i = 0; i < nums.size(); i++)
         {
-            res[i] = prefixVal; 
+            // toss prefix into res vector first 
+            result[i] = prefixVal; 
 
+            // actually update our prefix val 
+                // multiplying prefix w/ each element as we go thr the array 
+                // (WHY?) - as we want the culmulative product UP to that point 
             prefixVal *= nums[i]; 
         }
 
-        // want to go backwards now 
-            // to calculate the postfix 
-            // want to immediately take curr of res * postfix --> gets corr ans 
-                // res --> is prefix val we got earlier 
+
+        // 3. calc the POSTFIX vals 
         int postfixVal = 1; 
         for(int i = nums.size() - 1; i >= 0; i--)
         {
-            res[i] *= postfixVal; 
+            // start multiplying each element w/ our postfix val RIGHT AWAY
+                // where we're multiplying both our PRE and POSTFIX vals at the same time 
+                // will get us the product of everything but curr element!! 
+            result[i] *= postfixVal;
+
+            // update postfix val now w/ val in array 
             postfixVal *= nums[i]; 
         }
 
-        return res; 
+        return result; 
     }
 };
