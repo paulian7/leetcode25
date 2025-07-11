@@ -1,27 +1,26 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        // tech: hash sets --> time & space comp: o(n) 
-            // priority - checking for existence of another element that already exists 
-                // aka duplicates 
-
-        // 1. create hash set 
+        // hash sets -- 
+            // time comp - o(n) 
+            // space comp - o(n)
+            
         unordered_set<int> hashSet; 
 
-        // 2. iterate thr array 
-        for(int i = 0; i < nums.size(); i++)
+        // iterate thr our given array
+        for(int val : nums)
         {
-            // check whether or not this element already exists within the hash set 
-            if(hashSet.find(nums[i]) != hashSet.end())
+            // check for any duplicates 
+            if(hashSet.find(val) != hashSet.end())
             {
+                // duplicate found! 
                 return true; 
             }
 
-            // else, haven't seen this element yet --> so add to hash set 
-            hashSet.insert(nums[i]); 
+            // otherwise, insert new element into hash set 
+            hashSet.insert(val); 
         }
 
-        // return false as no duplicates were found! 
-        return false;
+        return false; 
     }
 };
