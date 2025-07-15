@@ -1,53 +1,57 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        // reason why: 
-            // hash tables 
-                // key: string freq 
-                    // bc want to group all anagrams together in their respective groups 
-                // val: strings that match up with this frequency 
-            // o(n * m) <-- time comp :(  
-        
-        //  obv obv - create hash tab 
-        unordered_map<string, vector<string>> hashTab; 
+        // tech: hash tables 
+            // key: frequency string
+            // value: all the strings that share that freq string 
 
-        // iterate through array 
+        // time & space comp: 
+            // time: o(n * m) 
+                // n - number of strings
+                // m - length of longest string 
+            // space: 
+                // o(n) for the hash table created 
+                // o(n * m) for our output list
+        
+        // 1. declare hash table 
+        unordered_map<string, vector<string>> anaTable; 
+
+        // 2. iterate thr each string 
         for(int i = 0; i < strs.size(); i++)
         {
-            // want to iterate thr each respective string within the array now though :(! 
+            // iterate thr each char now within THAT string
+
+            // need a way to track freq of each char 
+                    // have vector
+                    // where each index represents a poss freq 
+                    // use ascii trick
+                        // take curr char - 'a' --> gives correct index to increment +1 to track freq
             vector<int> count(26, 0); 
             for(char c : strs[i])
             {
-                // then want a way to track frequencies of char --> to later convert to a string
-                    // little ascii trick here 
-                    // 'a' - 97 
-                    // 'b' - 98 
-                    // 98 - 97 = index val of 1 --> increment count at index of 1 
-                    // so we know there's currently 1 "b"  
                 count[c - 'a']++; 
             }
 
-            // turn this count vector into a string now 
+            // convert "count" integer array into a string type 
             string key; 
             for(int i = 0; i < 26; i++)
             {
                 key += to_string(count[i]) + ","; 
             }
 
-            // then add this to the hash table 
-            hashTab[key].push_back(strs[i]); 
+            // add new KEY to hash table w/ corresponding val 
+            anaTable[key].push_back(strs[i]);
         }
 
-        // finally return our result 
-        // want to create another vector for our actual answer 
-        vector<vector<string>> resAnagrams; 
-        for(auto const& pair : hashTab) 
+        // 3. return the values of each key-val pair from hash table 
+
+        // first declare vector to return as result 
+        vector<vector<string>> result; 
+        for(auto const& pair : anaTable)
         {
-            resAnagrams.push_back(pair.second); 
-
-            // will push back each group of anagrams 
+            result.push_back(pair.second); 
         }
 
-        return resAnagrams; 
-    } 
+        return result; 
+    }
 };
