@@ -1,41 +1,24 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        // tech: prefix sum 
-            // prefix * postfix --> time & space comp: o(n) 
-                // one pass forward to get the prefix vals 
-                // one pass backwarxs to get the postfix 
-                // can multiply BOTH to get the correct result 
-        
-        // 1. declare vector to return as result 
         vector<int> result(nums.size(), 1); 
 
-        // 2. calc the prefix vals first 
-            // have prefix val set to 1 to start 
-            // ... bc first element doesn't have a prefixVal 
+        // first pass forward - calculating prefix part of the prefix * postfix 
         int prefixVal = 1; 
         for(int i = 0; i < nums.size(); i++)
         {
-            // toss prefix into res vector first 
             result[i] = prefixVal; 
 
-            // actually update our prefix val 
-                // multiplying prefix w/ each element as we go thr the array 
-                // (WHY?) - as we want the culmulative product UP to that point 
+            // update prefixVal 
+                // as it gets the culumative product up to our current element 
             prefixVal *= nums[i]; 
         }
 
-
-        // 3. calc the POSTFIX vals 
+        // second pass - but backwards - as it calculates the postfix 
         int postfixVal = 1; 
         for(int i = nums.size() - 1; i >= 0; i--)
         {
-            // start multiplying each element w/ our postfix val RIGHT AWAY
-                // where we're multiplying both our PRE and POSTFIX vals at the same time 
-                // will get us the product of everything but curr element!! 
-            result[i] *= postfixVal;
-
-            // update postfix val now w/ val in array 
+            result[i] *= postfixVal; 
             postfixVal *= nums[i]; 
         }
 
