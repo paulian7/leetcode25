@@ -1,32 +1,37 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        // tech: hash sets --> time & space comp: o(n) 
+        // ?: find longest consec seq w/o sorting the array 
+            // sorting the array takes o(n logn time)
+            // we want o(n) time 
         
-        // 1. declare hash set 
-        unordered_set<int> numSet(nums.begin(), nums.end()); 
-
-        // var to return at end - tracks longest consec 
+        // tech: hash sets 
+            // iterating thr array --> o(n) time 
+            // lookups for existence of a val --> o(1) time 
+        
+        // time & space comp: 
+            // time: o(n) 
+            // space comp: o(n) 
+        
+        // 1. declare variable to return as result variable 
         int longest = 0; 
 
-        // 2. iterate thr the array 
-        for(int num : numSet)
+        // 2. declare hash set 
+        unordered_set<int> hashSet(nums.begin(), nums.end()); 
+
+        // 3. iterate thr array searching for longest consec seq 
+        for(int val : hashSet)
         {
-            // 3. want to check for the start of sequences 
-                // if we can find the val that comes before our curr val...
-                // ... that is NOT the start 
-                // otherwise, if we can't --> we found a start! 
-            if(numSet.find(num - 1) == numSet.end()) 
+            // check if we found the start of a sequence 
+            if(hashSet.find(val - 1) == hashSet.end())
             {
-                // so... we found the start of a sequence 
-                int currLength = 1; // currLength of seq 
-                while(numSet.find(num + currLength) != numSet.end())
+                int length = 1; 
+                while(hashSet.find(val + length) != hashSet.end())
                 {
-                    currLength++; 
+                    length++; 
                 }
 
-                // update length tracker
-                longest = max(longest, currLength); 
+                longest = max(longest, length); 
             }
         }
 
