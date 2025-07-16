@@ -1,52 +1,54 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        // want to identify the highest frequency --> hash table 
-            // key: char
-            // val: freq of that resp char 
-        // sliding window 
-            // to track the longest substr we can get according to the conditions 
-
-
-        // time comp: 
-            // o(n) 
-        // space comp: 
-            // o(n) 
+        // tech: hashing & sliding window 
+            // hashing --
+                // want to identify highest freq 
+                // can take size of str - highest freq --> to get how many replacements we need 
+                // key: char, val: freq of that char 
+            // sliding window -- 
+                // to track longest substr we can get 
         
-        unordered_map<char, int> hashCount; 
-
-        // final ans to return 
+        // time & space comp: 
+            // time: o(n) - length of str 
+            // space: o(m) - dictated by total num of unique chars in string 
+        
+        // 1. declare final ans to return 
         int longest = 0; 
 
-        // have another helping integer variable 
-            // tracks the highest frequency 
+        // 2. have a helper variable 
+            // helps track the highest freq we've seen so far 
+            // allows us to have a time comp of o(n) 
+            // won't need to always check for highest freq in hash table 
         int maxFreq = 0; 
 
-        // sliding window 
+        // 3. declare hash table 
+        unordered_map<char, int> hashCount; 
+        
+        // 4. FINALLY execute sliding window technique 
         int leftPtr = 0; 
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // update our hash table tracking the frequencies 
+            // update hash table trackin' char freqs 
             hashCount[s[rightPtr]]++; 
 
-            // track to see if we've found the highest freq 
-                // helps us reduce the time complexity down 
-                // from continuously checking which char has the highest complexity 
+            // update accordingly if we've found an even higher char freq 
             maxFreq = max(maxFreq, hashCount[s[rightPtr]]); 
 
-            // check whether or not we need to update our window 
+            // check if need to update window 
             while((rightPtr - leftPtr + 1) - maxFreq > k)
             {
-                // need to update window bc the number of replacements we do need... isn't covered by k 
+                // need to update window! bc num of replac. we need isn't covered by "k" 
+                    // num of replac = result from length - maxFreq 
                 
-                // update freq count in leftPtr 
-                hashCount[s[leftPtr]]--; 
-                
+                // update freq count in leftPtr in hash table 
+                hashCount[s[leftPtr]]--;
+
                 // then update leftPtr itself to shrink window 
                 leftPtr++; 
             }
 
-            // update our final answer 
+            // update final ans before next iteration 
             longest = max(longest, (rightPtr - leftPtr + 1)); 
         }
 
