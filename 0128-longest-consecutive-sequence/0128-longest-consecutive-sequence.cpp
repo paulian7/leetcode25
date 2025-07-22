@@ -3,7 +3,7 @@ public:
     int longestConsecutive(vector<int>& nums) {
         // hash sets --> help us write an algo w/ runtime of o(n) 
             // insert, remove, searching for an element --> all o(1) 
-        unordered_set<int> hashSet(nums.begin, nums.end()); 
+        unordered_set<int> hashSet(nums.begin(), nums.end()); 
 
         // var to return @ the end 
         int longest = 0; 
