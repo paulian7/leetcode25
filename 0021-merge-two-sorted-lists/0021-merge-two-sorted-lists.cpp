@@ -15,6 +15,7 @@ public:
 
         // time & space comp: 
             // time: o(n + m), n and m being lengths of the 2 resp lists 
+            // space: o(1) 
         
         // 1. declare and initialize a dummy node 
             // helps us avoid edge cases of an empty linked list 
