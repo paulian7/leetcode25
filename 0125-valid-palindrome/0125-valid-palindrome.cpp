@@ -1,45 +1,44 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        // RMBR - PLAINDROME READ SAME FORWARDS AND BACKWARDS 
-            // (excluding any spaces & nonalphanumeric characters)
-        // tech: 2 pointers from start and end --> then going to middle 
-            // time comp: o(n) 
-
-        // 1. initialize 2 pointers 
+        // ?: plaindrome 
+            // read same forwards and backwards 
+            // want a way to check both ends of the string 
+        
+        // tech: 2 pointers 
+            // each pointer at their own end of the string 
+        
+        // time & space comp: 
+            // time: o(n)
+            // space: o(1)
+        
+        // 1. declare & initialize our pointers 
         int leftPtr = 0; 
         int rightPtr = s.length() - 1; 
 
-        // 2. execute 2 ptrs technique 
-            // have left and rightPtrs meet @ the middle 
-            // if equivalent --> palindrome! 
         while(leftPtr < rightPtr)
         {
-            // check for nonalpha chars w/ LEFTPTR 
+            // want to remove all alphanumeric chars 
             while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
             {
-                // then increment for an actual alphanum char 
-                leftPtr++; 
+                leftPtr++;
             }
 
-            // check for nonalpha chars w/ RIGHTPTR 
             while(rightPtr > leftPtr && !isalnum(s[rightPtr]))
             {
-                // then increment for an actual aphanum char 
-                rightPtr--; 
+                rightPtr--;
             }
 
-            // FINALLY check for equivalence -- after lowercasing the char 
+            // want to lowercase 
             if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
-                return false; // not a palindrome immediately 
+                return false; // not a palindrome! bc no matches made 
             }
 
-            // update ptrs for next iteration 
-            leftPtr++; 
-            rightPtr--; 
+            // want to update our pointers for next iteration 
         }
 
+        // true --- if all cases are passed!
         return true; 
     }
 };
