@@ -1,38 +1,48 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        // ?: want to have a result array 
-            // where the curr element is the product of everything but itself
-        
-        // tech: 
-            // bc we are calculating a lot of products --> can use prefix sums tech
+        // tech: prefix sum 
+            // prefix * postfix 
+                // one pass forward to get the prefix vals 
+                // one pass backwarxs to get the postfix 
+                // can multiply BOTH to get the correct result 
+            
         // time & space comp: 
-            // time: o(n)
-            // space: o(n), o(1)
+            // time: o(n) 
+            // space: o(n) -- if output array is counted 
         
-        // 1. declare our result array to return 
-        vector<int> answer(nums.size(), 1); 
+        // 1. declare vector to return as result 
+        vector<int> result(nums.size(), 1); 
 
-        // 2. execute our prefix vals
-            // prefixVals * postfixVals = result we want
+        // 2. calc the prefix vals first 
+            // have prefix val set to 1 to start 
+            // ... bc first element doesn't have a prefixVal 
         int prefixVal = 1; 
         for(int i = 0; i < nums.size(); i++)
         {
-            answer[i] = prefixVal;
+            // toss prefix into res vector first 
+            result[i] = prefixVal; 
 
-            prefixVal *= nums[i];
+            // actually update our prefix val 
+                // multiplying prefix w/ each element as we go thr the array 
+                // (WHY?) - as we want the culmulative product UP to that point 
+            prefixVal *= nums[i]; 
         }
 
-        // 3. execute our postfix vals 
-            // immediately multiplying it w/ ans[i] as we want prod of everything except...
+
+        // 3. calc the POSTFIX vals 
         int postfixVal = 1; 
         for(int i = nums.size() - 1; i >= 0; i--)
         {
-            answer[i] *= postfixVal; 
+            // start multiplying each element w/ our postfix val RIGHT AWAY
+                // where we're multiplying both our PRE and POSTFIX vals at the same time 
+                // will get us the product of everything but curr element!! 
+            result[i] *= postfixVal;
 
+            // update postfix val now w/ val in array 
             postfixVal *= nums[i]; 
         }
 
-        return answer; 
+        return result; 
     }
 };
