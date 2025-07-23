@@ -1,49 +1,47 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // the most frequent elements 
-            // hash tables - helpful in tracking freq 
-                // key: val 
-                // val: freq of that val
-        // return most freq 
-            // can do a bucket sort where each index reps a possible freq
+        // tech: hash tables + bucket sort 
+            // time comp: o(n)
+            // space comp: o(n) 
+                // worst case - all values are unique 
         
+        // 1. declare hash table 
+            // key: reps value from array 
+            // val: freq of that spec value 
+        unordered_map<int, int> numTable; 
 
-        // time & space comp: 
-            // time: o(n) 
-            // space: o(m)
-        
-        // 1. declare our hash table 
-        unordered_map<int, int> hashCount; 
-
-        for(int val : nums)
+        // 2. iterate thr input array to populate hashTable
+        for(int num : nums)
         {
-            hashCount[val]++; 
+            numTable[num]++; 
         }
 
-        // 2. bucket sort 
-        vector<vector<int>> count(nums.size() + 1); 
-        for(auto const& pair : hashCount)
+        // 3. throw each of the vals into buckets 
+            // (aka each bucket being an element of a vector)
+            // each index representing a poss freq from the array 
+        vector<vector<int>> counts(nums.size() + 1); 
+        for(const auto& pair : numTable)
         {
-            count[pair.second].push_back(pair.first); 
+            counts[pair.second].push_back(pair.first); 
         }
 
-        // 3. want to return our result 
-        vector<int> result; 
-        for(int i = count.size() - 1; i > 0; i--)
+        // 4. return top k most frequent elements now by iterating thr 2d vector 
+        vector<int> res; 
+        for(int i = counts.size() - 1; i > 0; i--)
         {
-            // want to iterate thr each val now 
-            for(int val : count[i])
+            for(int num : counts[i])
             {
-                result.push_back(val); 
+                res.push_back(num); 
 
-                if(result.size() == k)
+                // check if we've reached top k 
+                if(res.size() == k)
                 {
-                    return result;
+                    return res;
                 }
             }
         }
 
-        return result;
+        return res; 
     }
 };
