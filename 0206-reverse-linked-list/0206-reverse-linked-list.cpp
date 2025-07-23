@@ -12,13 +12,15 @@ class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
         // time & space comp: 
-            // time: o(n)
-            // space: o(1)
-
+            // time:
+            // space: 
+        
+        // 1. create 2 pointers 
         ListNode *curr = head; 
         ListNode *prev = nullptr; 
 
-        while(curr != nullptr)
+        // 2. start reversing & iterating thr the list 
+        while(curr != nullptr) 
         {
             ListNode *tempNext = curr -> next; 
 
