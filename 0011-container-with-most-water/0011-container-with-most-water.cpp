@@ -1,42 +1,49 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        // the largest area - 
-            // length * height 
+        // tech: 
+            // 2 pointers method! 
+                // want to find largest area 
+                // can maximize length by having 2 pointers at beg & end 
         
-        // time complexity: o(n) 
-        // space complexity: o(1) 
+        // time & space comp: 
+            // time: o(n)
+            // space: o(1)
         
-        // 2 pointers 
+        // 1. declare var to return @ end 
+        int maxArea = 0; 
+
+        // 2. execute 2 pointers method 
         int leftPtr = 0; 
         int rightPtr = height.size() - 1; 
 
-        // var to return as our final result 
-        int maxAmnt = 0; 
-
-        while(rightPtr > leftPtr)
+        while(leftPtr < rightPtr)
         {
-            // to check what our currArea is right now 
-            int currArea = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]); 
+            // 3. check for curr area 
+                // length * height 
+                    // want to minimize the height so no overflow occurs 
+            int currArea = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]);
 
-            // want to update result var accordingly 
-            maxAmnt = max(maxAmnt, currArea); 
+            // 4. update maxArea accordingly 
+            maxArea = max(maxArea, currArea);
 
-            // to maximize the height 
+            // 5. see if we can maximize the heights now by adjusting the pointers 
             if(height[leftPtr] < height[rightPtr])
             {
-                leftPtr++; 
+                leftPtr++; // update left bc left too small 
             }
             else if(height[rightPtr] < height[leftPtr])
             {
-                rightPtr--; 
+                rightPtr--; // update rightPtr bc right too small 
             }
             else 
             {
-                leftPtr++; 
+                // both heights are the same val... can just update one height then 
+                leftPtr++;
             }
         }
 
-        return maxAmnt; 
+        // return result 
+        return maxArea;
     }
 };
