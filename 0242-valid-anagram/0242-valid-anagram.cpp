@@ -1,30 +1,40 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        // tech: hash tables
-            // time comp: o(n + m) --> as we're iterating thr 2 strings respectively 
+        // tech: 
+            // anagrams - hash tables! 
+                // hash tables - count freq of chars 
+                // if each string has same hash table ....
+                // ... then dealing w/ valid anagram pair! 
 
-        // 1. cover base case -- 
-            // checking whether or not both strings are the same length 
-            // bc if not same length --> can't be anagrams :(
+        // time & space comp: 
+            // time: o(n + m) 
+                // bc we're iterating thr 2 strings
+            // space: o(1) 
+                // constant - bc we know we're dealing w/ 26 chars 
+
+        // 1. EDGE CASE CHECK - if same length! 
         if(s.length() != t.length())
         {
-            return false; 
+            return false; // not an anagram instantly :(
         }
 
-        // 2. declare and initialize hash tables for each respective string 
-        unordered_map<char, int> sTable;
-        unordered_map<char, int> tTable;
+        // 2. create hash tables 
+        unordered_map<char, int> hashS; 
+        unordered_map<char, int> hashT; 
 
-        // iterate thr the strings to initialize hash table
+        // 3. populate hash tables 
         for(int i = 0; i < s.length(); i++)
         {
-            sTable[s[i]]++;
-            tTable[t[i]]++;
+            hashS[s[i]]++; 
+            hashT[t[i]]++; 
         }
 
-        // 3. compare whether or not hash tables are equivalent! 
-            // equivalent --> dealing with anagrams! :D 
-        return sTable == tTable;
+        // 4. return whether or not the 2 hash tables are equivalent 
+            // if yes... then we're dealing w/ valid anagrams!
+            // valid anagram pairs share the same key-val pairs 
+                // aka, each word is made up of the same chars! 
+        return hashS == hashT; 
+
     }
 };
