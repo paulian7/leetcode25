@@ -1,55 +1,56 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: frequency -> hash tables 
-            // key: value 
-            // val: freq of that spec value 
-            // -- 
-            // want to return k most freq elements 
-            // bucket sort -- each index within array reps poss freq 
+        // tech: 
+            // hash tables & bucket sort 
         
         // time & space comp: 
-            // time: o(n)
-            // space: 
-                // hash table: o(n)
+            // time: o(n) 
+            // space: o(n)
         
-        // 1. declare hash table 
+        // 1. create and populate our hash table 
+            // time: o(n) 
+                // iterating thr each val within array and pop hashTab accordnigly 
+            // space: o(n) 
+                // the vals we're inputting into hash table 
+                // could also be all unique 
         unordered_map<int, int> hashCount; 
 
-        // 2. populate the hash table 
         for(int i = 0; i < nums.size(); i++)
         {
-            hashCount[nums[i]]++;
+            hashCount[nums[i]]++; 
         }
 
-        // 3. populate our "bucket sort" array by iterating thr hash table
-            // sorting vals into their own buckets based on freq 
-            // buckets being "indices" which reps poss freq 
-            // doing +1 to the size of the array to cover...
-                // all possible frequenceis 
-            // also 2d vector bc can have multiple vals share same freq
+        // 2. do bucket sort 
+            // index reps a possible freq 
+            // time: o(n)
+                // iterating thr hash table and pushing appropriate vals to array
+            // space: o(n) 
+                // bc end of day, still pushing n elements to these buckets overall
         vector<vector<int>> count(nums.size() + 1); 
         for(auto const& pair : hashCount)
         {
             count[pair.second].push_back(pair.first); 
         }
 
-        // 4. finally return the top k freq elements by iterating thr 2d vector 
-        vector<int> result; 
+        // 3. want to return top k 
+            // time: o(n) --> iterating thr count 
+            // space: o(n) 
+                // worst case k == n, but usually k < n --> o(n)
+        vector<int> result;
         for(int i = count.size() - 1; i > 0; i--)
         {
-            // want to iterate thr each array now within the 2d vector 
             for(int val : count[i])
             {
                 result.push_back(val); 
 
                 if(result.size() == k)
                 {
-                    return result;  
+                    return result;
                 }
             }
         }
 
-        return result; 
+        return result;
     }
 };
