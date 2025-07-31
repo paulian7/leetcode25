@@ -9,41 +9,35 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        // tech: 2 pointers approach! 
-            // will have fast & slow ptr 
-                // fast: moves 2 steps at a time 
-                // slow: moves 1 step at a time 
-            // if no cycle: 
-                // fastPtr will eventually reach the end -> return false; 
-            // if cycle: 
-                // fastPtr will eventually meet up w/ slowPtr -> return true; 
-        
+        // tech: 2 pointers 
+            // fast and slowPtr 
+                // fast x2 
+                // slow x1 
+            // if fast == slow --> cycle!, otherwise no cycle 
+
         // time & space comp: 
-            // time: o(n) 
+            // time: o(n)
             // space: o(1)
         
-        
-        // 1. declare & initalize our 2 ptrs (default to head first)
+        // 1. create our pointers, default vals to head for now
         ListNode *fastPtr = head; 
         ListNode *slowPtr = head;
 
-        // 2. start our 2 ptrs strategy 
-            // continue while loopin' until: 
-                // fastPtr is valid && isn't the last node in the list
+        // 2. start the cycle detection cycle 
+            // while fastPtr is valid && is NOT the last node... 
         while(fastPtr && fastPtr -> next)
         {
-            // update ptrs accordingly 
-            slowPtr = slowPtr -> next; 
+            // update pointers 
             fastPtr = fastPtr -> next -> next; 
+            slowPtr = slowPtr -> next; 
 
-            // check for cycle now! 
-            if(slowPtr == fastPtr)
+            // cycle detection test 
+            if(fastPtr == slowPtr)
             {
-                return true; // cycle exists
+                return true; // cycle detected
             }
         }
 
-        // 3. return false if fastPtr reaches the end
-        return false;
+        return false; // all checks passed. no cycle
     }
 };
