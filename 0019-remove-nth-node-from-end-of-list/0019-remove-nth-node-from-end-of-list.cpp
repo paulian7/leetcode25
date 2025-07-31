@@ -11,42 +11,44 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        // approach: 2 pointers + using a dummy node --> time comp: o(n) 
+        // tech: 2 pointers!! 
 
-        // 1. declare / initialize a dummy node 
-            // let's us update the appropriate pointer of the node...
-            // ... not just the node we're removing 
-        ListNode *dummyNode = new ListNode(0); // holds val of 0 for now 
-        
-        // set dummy node's next pointer to the head 
-        dummyNode -> next = head; 
+        // time & space comp:
+            // time: o(n) 
+            // space: o(1)
 
-        // 2. declare and initialize our 2 pointers 
-        ListNode *leftPtr = dummyNode; 
-        ListNode *rightPtr = head; // have it set initially to head 
+        // 1. create dummyNode && have ptr point to it
+            // create dummy node w/ dummy val of 0
+            // have next ptr point to HEAD
+        ListNode *dummyPtr = new ListNode(0, head);
 
-        // 3. place rightPtr at the correct spot before iterating...
-            // ... to find our node to update its ptrs (before removing node)
-            while(n > 0 && rightPtr != nullptr) 
-            {
-                rightPtr = rightPtr -> next; 
-                // once n hits 0, we shifted the rightPtr to the place we want
-                n  -= 1;
-            }
+        // 2. have left & rightPtrs 
+            // rightPtr - acts as our fast ptr.. but default val to HEAD for now
+        ListNode *leftPtr = dummyPtr; 
+        ListNode *rightPtr = head; 
 
-        // 4, iterate and update ptrs til rightPtr hits end of list
+        // 3. place rightPtr @ correct spot to prepare 
+            // rightPtr is 1 node BEHIND the node we need to remove
+        while(n > 0)
+        {
+            rightPtr = rightPtr -> next; 
+            n -= 1; 
+        }
+
+        // 4. perform 2 pointers method now til rightPtr reaches end
+            // helps us position leftPtr in the correct spot to do the removal
         while(rightPtr != nullptr)
         {
             leftPtr = leftPtr -> next; 
-            rightPtr = rightPtr -> next; 
+            rightPtr = rightPtr -> next;
         }
 
-        // 5. NOW update the ptrs and finally delete the nth node 
+        // 5. do the removal of the n'th node now 
+            // now that leftPtr is in the correct spot 
+            // leftPtr is node RIGHT BEHIND the node we need to remove
+        leftPtr -> next = leftPtr -> next -> next; 
         
-        // update left node's ptrs 
-        leftPtr -> next = leftPtr -> next -> next;
-
-        // returns our linked list w/o our dummy node :)
-        return dummyNode -> next; 
+        // 6. return corrected linked list w/o the node 
+        return dummyPtr -> next; 
     }
 };
