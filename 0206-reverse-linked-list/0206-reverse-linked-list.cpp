@@ -11,24 +11,27 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        // time & space comp: 
-            // time:
-            // space: 
-        
-        // 1. create 2 pointers 
-        ListNode *curr = head; 
-        ListNode *prev = nullptr; 
+        // tech: 2 pointers 
 
-        // 2. start reversing & iterating thr the list 
-        while(curr != nullptr) 
+        // time & space comp: 
+            // time: o(n) 
+            // space: o(1) 
+        
+        // 1. create our pointers 
+        ListNode *prev = nullptr; 
+        ListNode *curr = head; 
+
+        // 2. start reversing linked list 
+        while(curr)
         {
             ListNode *tempNext = curr -> next; 
 
+            // start reversing 
             curr -> next = prev; 
             prev = curr; 
             curr = tempNext; 
         }
 
-        return prev; 
+        return prev;
     }
 };
