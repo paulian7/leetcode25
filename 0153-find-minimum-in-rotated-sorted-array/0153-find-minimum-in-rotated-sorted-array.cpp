@@ -8,7 +8,7 @@ public:
         
         // time & space comp: 
             // time: o(logn)
-            // space: 
+            // space: o(1)
 
         // 1. declare & initialize our result var to return 
             // have default val to first element in array fOR NOW
