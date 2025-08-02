@@ -11,56 +11,64 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        // time comp: o(n), space comp: o(1)
-            // finding first & second half 
-                // can do so by using fast & slow ptrs 
-            // then adding each node from the halves appropriately 
+        // tech: 
+            // find first & second half of list 
+                // can do so using fast & slow ptrs 
+            // then adding each node from the halves accord
         
-        // 1. declare & initialize our fast and slow ptrs 
+        // 1. declare & initialize our fast & slow ptrs 
         ListNode *fastPtr = head -> next; 
         ListNode *slowPtr = head; 
 
-        // 2. find our midPt now (where we can half the array) 
+        // 2. find our midPt now... where our array will be halved 
+            // while fastPtr is valid && is NOT the last node in the list
         while(fastPtr != nullptr && fastPtr -> next != nullptr)
         {
-            // update ptrs appropriately w/ each iteration 
+            // move ptrs to correct spot 
             slowPtr = slowPtr -> next; 
             fastPtr = fastPtr -> next -> next;
         }
 
-        // 3. reverse the second half of the array now 
-        ListNode *startOfSecHalfPtr = slowPtr -> next; // gets beg of 2nd half of array
-        // make sure to split the 2 arrays now (unlink) 
-        slowPtr -> next = nullptr; 
+        // 3. reverse the second half of the array now! 
+            // slowPtr will be ONE node behind our "mid pt"
+            // startOfHalfPtr --> now becomes the start of the 2nd half of list
+        ListNode *startOfHalfPtr = slowPtr -> next;
 
-        ListNode *prevVal = nullptr; 
-        while(startOfSecHalfPtr != nullptr)
+        // make sure to split the 2 arrays now (unlink!)
+        slowPtr -> next = nullptr;
+
+        // 4. start reversing the 2nd half of the list
+        ListNode *prevPtr = nullptr; 
+        while(startOfHalfPtr != nullptr)
         {
-            ListNode *tempNext = startOfSecHalfPtr -> next; 
-            // actual reversing here 
-            startOfSecHalfPtr -> next = prevVal; 
-            prevVal = startOfSecHalfPtr; 
-            startOfSecHalfPtr = tempNext; 
+            ListNode *tempNext = startOfHalfPtr -> next; 
+
+            // start reversing 
+            startOfHalfPtr -> next = prevPtr; 
+            prevPtr = startOfHalfPtr; 
+            startOfHalfPtr = tempNext;
         }
 
-        // 4. start building the reordered arrray now 
-        ListNode *firstPtr = head; // start of 1st part 
-        
-        // have a pointer for the start of the 2nd part 
-        startOfSecHalfPtr = prevVal; // prevVal holds start of 2nd list 
-        while(startOfSecHalfPtr != nullptr)
+        // 5. start building recordered linked list!
+            // firstPtr - points to our starting node (aka from 1st half)
+        ListNode *firstPtr = head; 
+
+        // have another pointer that points at the start of the second half of the list
+            // aka prevPtr -- holds this 
+        startOfHalfPtr = prevPtr;
+        while(startOfHalfPtr != nullptr)
         {
-            // want to hold next node to traverse to in each of the lists 
-            ListNode *temp1 = firstPtr -> next; 
-            ListNode *temp2 = startOfSecHalfPtr -> next; 
+            // want to hold tempVals for next node to go to
+            ListNode *tempNext1 = firstPtr -> next; 
+            ListNode *tempNext2 = startOfHalfPtr -> next; 
 
-            // reorder our pointers accordingly now 
-            firstPtr -> next = startOfSecHalfPtr; 
-            startOfSecHalfPtr -> next = temp1; 
+            // reorder pointers accord. now
+            firstPtr -> next = startOfHalfPtr; 
+            startOfHalfPtr -> next = tempNext1; 
 
-            // update pointers now for next iteration 
-            firstPtr = temp1; 
-            startOfSecHalfPtr = temp2;   
-        } 
+            // update pointers for next iteration 
+            firstPtr = tempNext1; 
+            startOfHalfPtr = tempNext2;
+        }
     }
 };
