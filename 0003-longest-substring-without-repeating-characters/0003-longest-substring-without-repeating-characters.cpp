@@ -1,51 +1,44 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        // tech: 
-            // sliding window -- 
-                // "longest substring"
-            // hash sets --
-                // want to identify any dup chars 
-                // checking for existence takes o(1) time
-                // insertion o(1) time :)
-        
-        // time & space comp: 
-            // time: 
-            // space: o(m) 
-                // m - being the number of unique chars we've come across
-        
-        // 1. declare var to return at the end 
-        int result = 0; 
+        // tech - hash sets & sliding window 
+            // "longest substring" - sliding window 
+            // "w/o repeating chars" - hash set 
+                // as checking for existence of elements is o(1) time 
 
-        // 2. declare hash set to track seenChars
-        unordered_set<char> seenChars;
+        // complexity analysis -
+            // time: o(n) - n is s.length() 
+            // space: o(m) - num of unique characters 
 
-        // 3. execute sliding window tech
+        // 1. declare final var to return 
+        int longest = 0; 
+
+        // 2. declare hash set to track seen chars that are unique 
+        unordered_set<char> seenChars; 
+
+        // 3. sliding window technique 
         int leftPtr = 0; 
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // check immediately for any repeats
+            // condition - check for any repeating chars @ first 
             while(seenChars.find(s[rightPtr]) != seenChars.end())
             {
-                // we've come across a duplicate :(
-                
-                // (1) remove the dup from hash set 
-                    // our hash set tracks the unique chars we've found
-                seenChars.erase(s[leftPtr]);
+                // need to update window.. repeat has been found! 
+                // remove repeat from hash set first 
+                seenChars.erase(s[leftPtr]); 
 
-                // (2) update leftPtr now 
-                    // leftPtr - is what shrinks the window 
-                    // rightPtr - is what helps us grow the window
-                leftPtr++;
+                // update leftPtr to shrink sliding window 
+                leftPtr++; 
             }
 
-            // otherwise, insert this UNSEEN char to our hash set for later
+            // if unique char, add to hash set for later ref 
             seenChars.insert(s[rightPtr]); 
 
-            // update var to return at end 
-            result = max(result, (rightPtr - leftPtr + 1));
+            // update final var to return 
+                // (rightPtr - leftPtr + 1) --> gives us curr substring length 
+            longest = max(longest, (rightPtr - leftPtr + 1)); 
         }
 
-        return result;
+        return longest; 
     }
 };
