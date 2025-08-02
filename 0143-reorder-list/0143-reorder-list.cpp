@@ -15,6 +15,10 @@ public:
             // find first & second half of list 
                 // can do so using fast & slow ptrs 
             // then adding each node from the halves accord
+
+        // time & space comp: 
+            // time: o(n) 
+            // space: o(1)
         
         // 1. declare & initialize our fast & slow ptrs 
         ListNode *fastPtr = head -> next; 
