@@ -4,7 +4,7 @@ public:
         // tech: prefix sum 
             // prefix * postfix 
                 // one pass forward to get the prefix vals 
-                // one pass backwarxs to get the postfix 
+                // one pass backwards to get the postfix 
                 // can multiply BOTH to get the correct result 
             
         // time & space comp: 
@@ -12,7 +12,7 @@ public:
             // space: o(n) -- if output array is counted 
         
         // 1. declare vector to return as result 
-        vector<int> result(nums.size(), 1); 
+        vector<int> answer(nums.size(), 1); 
 
         // 2. calc the prefix vals first 
             // have prefix val set to 1 to start 
@@ -21,7 +21,7 @@ public:
         for(int i = 0; i < nums.size(); i++)
         {
             // toss prefix into res vector first 
-            result[i] = prefixVal; 
+            answer[i] = prefixVal; 
 
             // actually update our prefix val 
                 // multiplying prefix w/ each element as we go thr the array 
@@ -37,12 +37,12 @@ public:
             // start multiplying each element w/ our postfix val RIGHT AWAY
                 // where we're multiplying both our PRE and POSTFIX vals at the same time 
                 // will get us the product of everything but curr element!! 
-            result[i] *= postfixVal;
+            answer[i] *= postfixVal;
 
             // update postfix val now w/ val in array 
             postfixVal *= nums[i]; 
         }
 
-        return result; 
+        return answer; 
     }
 };
