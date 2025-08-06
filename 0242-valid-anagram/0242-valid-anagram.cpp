@@ -1,40 +1,35 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        // tech: 
-            // anagrams - hash tables! 
-                // hash tables - count freq of chars 
-                // if each string has same hash table ....
-                // ... then dealing w/ valid anagram pair! 
-
+        // tech: anagrams! 
+            // hash tables! 
+                // key: char 
+                // val: freq of char 
+        
         // time & space comp: 
             // time: o(n + m) 
-                // bc we're iterating thr 2 strings
+                // n & m - number of chars dictated by length of strings resp 
             // space: o(1) 
-                // constant - bc we know we're dealing w/ 26 chars 
-
-        // 1. EDGE CASE CHECK - if same length! 
+                // 26 possible chars we can store --> simplifies to o(1)
+        
+        // 1. check edge case 
         if(s.length() != t.length())
         {
-            return false; // not an anagram instantly :(
+            return false;
         }
 
-        // 2. create hash tables 
+        // 2. otherwise, create hash tables to compare 
         unordered_map<char, int> hashS; 
         unordered_map<char, int> hashT; 
 
-        // 3. populate hash tables 
         for(int i = 0; i < s.length(); i++)
         {
             hashS[s[i]]++; 
-            hashT[t[i]]++; 
+            hashT[t[i]]++;
         }
 
-        // 4. return whether or not the 2 hash tables are equivalent 
-            // if yes... then we're dealing w/ valid anagrams!
-            // valid anagram pairs share the same key-val pairs 
-                // aka, each word is made up of the same chars! 
+        // 3. check for equivalency 
+            // checks if both hash tables share the same key-val pairs
         return hashS == hashT; 
-
     }
 };
