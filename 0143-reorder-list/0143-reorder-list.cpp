@@ -21,8 +21,9 @@ public:
             // space: o(1)
         
         // 1. declare & initialize our fast & slow ptrs 
-        ListNode *fastPtr = head -> next; 
-        ListNode *slowPtr = head; 
+            // default to head first
+        ListNode *fastPtr = head; // will go x2 later
+        ListNode *slowPtr = head; // will go x1 later
 
         // 2. find our midPt now... where our array will be halved 
             // while fastPtr is valid && is NOT the last node in the list
