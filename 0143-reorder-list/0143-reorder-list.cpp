@@ -35,14 +35,14 @@ public:
         }
 
         // 3. reverse the second half of the array now! 
-            // slowPtr will be ONE node behind our "mid pt"
-            // startOfHalfPtr --> now becomes the start of the 2nd half of list
-        ListNode *startOfHalfPtr = slowPtr -> next;
+            // slowPtr will be ONE node behind our "midPt" 
+            // startOfHalfPftr --> now becomes the start of the 2nd half of list 
+        ListNode *startOfHalfPtr = slowPtr -> next; 
 
-        // make sure to split the 2 arrays now (unlink!)
-        slowPtr -> next = nullptr;
+        // make sure to split the 2 arrays now (unlink!) 
+        slowPtr -> next = nullptr; 
 
-        // 4. start reversing the 2nd half of the list
+        // 4. start reversing the 2nd half of the list 
         ListNode *prevPtr = nullptr; 
         while(startOfHalfPtr != nullptr)
         {
@@ -50,28 +50,28 @@ public:
 
             // start reversing 
             startOfHalfPtr -> next = prevPtr; 
-            prevPtr = startOfHalfPtr; 
-            startOfHalfPtr = tempNext;
+            prevPtr = startOfHalfPtr;
+            startOfHalfPtr = tempNext; 
         }
 
-        // 5. start building recordered linked list!
-            // firstPtr - points to our starting node (aka from 1st half)
+        // 5. start building reordered linked list
+            // firstPtr - points to our starting node (aka from the 1st half) 
         ListNode *firstPtr = head; 
 
-        // have another pointer that points at the start of the second half of the list
-            // aka prevPtr -- holds this 
-        startOfHalfPtr = prevPtr;
+        // have another ptr that points to the start of the sec half 
+            // (aka prevPtr - hold start of sec half)
+        startOfHalfPtr = prevPtr; 
         while(startOfHalfPtr != nullptr)
         {
-            // want to hold tempVals for next node to go to
+            // want to hold tempVals for next node to go to 
             ListNode *tempNext1 = firstPtr -> next; 
             ListNode *tempNext2 = startOfHalfPtr -> next; 
 
-            // reorder pointers accord. now
+            // reorder pointers accordingly NOW
             firstPtr -> next = startOfHalfPtr; 
             startOfHalfPtr -> next = tempNext1; 
 
-            // update pointers for next iteration 
+            // update ptrs for next iteration 
             firstPtr = tempNext1; 
             startOfHalfPtr = tempNext2;
         }
