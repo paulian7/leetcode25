@@ -22,7 +22,6 @@ public:
             // time: o(n) 
             // space: o(1)
         
-        
         // 1. declare & initalize our 2 ptrs (default to head first)
         ListNode *fastPtr = head; 
         ListNode *slowPtr = head;
