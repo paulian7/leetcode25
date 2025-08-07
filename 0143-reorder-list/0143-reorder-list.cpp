@@ -12,68 +12,69 @@ class Solution {
 public:
     void reorderList(ListNode* head) {
         // tech: 
-            // find first & second half of list 
+            // find first & second half of list
                 // can do so using fast & slow ptrs 
-            // then adding each node from the halves accord
-
+            // then adding each node from the halves accord 
+        
         // time & space comp: 
-            // time: o(n) 
-            // space: o(1)
+            // time: o(n)
+            // space: o(1) 
         
         // 1. declare & initialize our fast & slow ptrs 
-            // default to head first
+            // default to head first 
         ListNode *fastPtr = head; // will go x2 later
         ListNode *slowPtr = head; // will go x1 later
-
-        // 2. find our midPt now... where our array will be halved 
-            // while fastPtr is valid && is NOT the last node in the list
+        
+        // 2. find our midPt now.. where our array will be halved 
+            // while fastPtr is valid && NOT the last node in the list 
         while(fastPtr != nullptr && fastPtr -> next != nullptr)
         {
-            // move ptrs to correct spot 
+            // move ptrs to corr spot 
             slowPtr = slowPtr -> next; 
-            fastPtr = fastPtr -> next -> next;
+            fastPtr = fastPtr -> next -> next; 
         }
 
-        // 3. reverse the second half of the array now! 
-            // slowPtr will be ONE node behind our "midPt" 
-            // startOfHalfPftr --> now becomes the start of the 2nd half of list 
-        ListNode *startOfHalfPtr = slowPtr -> next; 
+        // 4. reverse the second half of the array now 
+            // slowPtr is curr ONE node behind our "midPt" 
+            // startOfHalfPtr -->
+                // once we do slowPtr -> next... this will become start of...
+                // ... 2nd half of list
+        ListNode *startOfSecHalfPtr = slowPtr -> next;
 
-        // make sure to split the 2 arrays now (unlink!) 
+        // make sure to split the 2 arrays now -- unlink!
         slowPtr -> next = nullptr; 
-
-        // 4. start reversing the 2nd half of the list 
+        
+        // 4. start reversing the 2nd half of the list
         ListNode *prevPtr = nullptr; 
-        while(startOfHalfPtr != nullptr)
+        while(startOfSecHalfPtr != nullptr)
         {
-            ListNode *tempNext = startOfHalfPtr -> next; 
+            ListNode *tempNext = startOfSecHalfPtr -> next; 
 
             // start reversing 
-            startOfHalfPtr -> next = prevPtr; 
-            prevPtr = startOfHalfPtr;
-            startOfHalfPtr = tempNext; 
+            startOfSecHalfPtr -> next = prevPtr;
+            prevPtr = startOfSecHalfPtr; 
+            startOfSecHalfPtr = tempNext;
         }
 
-        // 5. start building reordered linked list
-            // firstPtr - points to our starting node (aka from the 1st half) 
-        ListNode *firstPtr = head; 
+        // 5. start building reordered linked list 
+            // firstPtr - points to our starting node (from 1st half of list)
+        ListNode *firstPtr = head;
 
-        // have another ptr that points to the start of the sec half 
-            // (aka prevPtr - hold start of sec half)
-        startOfHalfPtr = prevPtr; 
-        while(startOfHalfPtr != nullptr)
+        // reinitialize ptrs that pts to the start of the secHalf
+        startOfSecHalfPtr = prevPtr;
+        while(startOfSecHalfPtr != nullptr)
         {
             // want to hold tempVals for next node to go to 
             ListNode *tempNext1 = firstPtr -> next; 
-            ListNode *tempNext2 = startOfHalfPtr -> next; 
+            ListNode *tempNext2 = startOfSecHalfPtr -> next; 
 
-            // reorder pointers accordingly NOW
-            firstPtr -> next = startOfHalfPtr; 
-            startOfHalfPtr -> next = tempNext1; 
+            // reorder pointers accord NOW 
+            firstPtr -> next = startOfSecHalfPtr; 
+            startOfSecHalfPtr -> next = tempNext1; 
 
             // update ptrs for next iteration 
             firstPtr = tempNext1; 
-            startOfHalfPtr = tempNext2;
+            startOfSecHalfPtr = tempNext2;
         }
     }
 };
