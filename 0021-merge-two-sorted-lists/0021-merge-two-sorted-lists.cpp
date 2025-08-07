@@ -11,48 +11,41 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        // tech: pointers 
+        // tech: iterative 
 
         // time & space comp: 
-            // time: o(n + m)
+            // time: o(n + m) 
             // space: o(1)
+        
+        // 1. dummyNode creation... helps us return final result at end
+        ListNode *dummyPtr = new ListNode(-1); 
+        ListNode *tailPtr = dummyPtr;
 
-        // 1. create a dummyPtr - helps us iterate thr our new merged list afterwards
-        ListNode *dummyPtr = new ListNode(-1);
-
-        // 2. have a pointer point to last node of our new list for now 
-        ListNode *tailPtr = dummyPtr; 
-
-        // 3. start iterating thr the 2 lists
-        while((list1 != nullptr) && (list2 != nullptr)) 
+        while(list1 && list2)
         {
             if(list1 -> val < list2 -> val)
             {
                 tailPtr -> next = list1; 
-
-                list1 = list1 -> next; 
+                list1 = list1 -> next;
             }
             else 
             {
                 tailPtr -> next = list2; 
-                list2 = list2 -> next; 
+                list2 = list2 -> next;
             }
 
-            // always update tailPtr to prep for next iteration 
-            tailPtr = tailPtr -> next; 
+            tailPtr = tailPtr -> next;
         }
 
-        // 4. ensure we've iterated fully thr both lists
         if(list1 != nullptr)
         {
-            tailPtr -> next = list1;
+            tailPtr -> next = list1; 
         }
         else 
         {
             tailPtr -> next = list2; 
         }
 
-        // 5. return new merged list
         return dummyPtr -> next;
     }
 };
