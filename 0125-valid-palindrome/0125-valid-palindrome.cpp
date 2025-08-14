@@ -36,6 +36,8 @@ public:
             }
 
             // want to update our pointers for next iteration 
+            leftPtr++; 
+            rightPtr--;
         }
 
         // true --- if all cases are passed!
