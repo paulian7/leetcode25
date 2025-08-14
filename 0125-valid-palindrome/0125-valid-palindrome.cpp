@@ -1,24 +1,22 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        // ?: plaindrome 
-            // read same forwards and backwards 
-            // want a way to check both ends of the string 
-        
-        // tech: 2 pointers 
-            // each pointer at their own end of the string 
-        
+        // tech: 
+            // 2 pointers 
+            // want to compare char at beg && at end at the same time 
+
         // time & space comp: 
             // time: o(n)
             // space: o(1)
         
-        // 1. declare & initialize our pointers 
-        int leftPtr = 0; 
-        int rightPtr = s.length() - 1; 
+        // 1. create our pointers 
+        int leftPtr = 0;
+        int rightPtr = s.length() - 1;
 
+        // 2. execute 2 pointers method 
         while(leftPtr < rightPtr)
         {
-            // want to remove all alphanumeric chars 
+            // ensure all ptrs are @ valid chars
             while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
             {
                 leftPtr++;
@@ -29,18 +27,17 @@ public:
                 rightPtr--;
             }
 
-            // want to lowercase 
+            // finally check for equivalence
             if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
-                return false; // not a palindrome! bc no matches made 
+                return false;
             }
 
-            // want to update our pointers for next iteration 
+            // update ptrs for next iteration
             leftPtr++; 
             rightPtr--;
         }
-
-        // true --- if all cases are passed!
-        return true; 
+        
+        return true;
     }
 };
