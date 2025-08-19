@@ -2,45 +2,55 @@ class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         // tech: 
-            // way to track freq --> hash tables
-            // want to return top k --> sort of bucket sort!
-
+            // hash tables & bucket sort 
+        
         // time & space comp: 
+            // time: o(n) 
+            // space: o(n)
+        
+        // 1. create and populate our hash table 
+            // time: o(n) 
+                // iterating thr each val within array and pop hashTab accordnigly 
+            // space: o(n) 
+                // the vals we're inputting into hash table 
+                // could also be all unique 
+        unordered_map<int, int> hashCount; 
+
+        for(int i = 0; i < nums.size(); i++)
+        {
+            hashCount[nums[i]]++; 
+        }
+
+        // 2. do bucket sort 
+            // index reps a possible freq 
             // time: o(n)
-            // space: 
-                // o(n) - n being the num of integers we're storing
-
-        // 1. declare hash table 
-        unordered_map<int, int> hashTab;
-
-        // 2. populate hash table 
-        for(int val : nums)
+                // iterating thr hash table and pushing appropriate vals to array
+            // space: o(n) 
+                // bc end of day, still pushing n elements to these buckets overall
+        vector<vector<int>> count(nums.size() + 1); 
+        for(auto const& pair : hashCount)
         {
-            hashTab[val]++;
+            count[pair.second].push_back(pair.first); 
         }
 
-        // 3. store frequencies in resp buckets
-        vector<vector<int>> counts(nums.size() + 1);
-        for(auto const& pair : hashTab)
+        // 3. want to return top k 
+            // time: o(n) --> iterating thr count 
+            // space: o(n) 
+                // worst case k == n, but usually k < n --> o(n)
+        vector<int> result;
+        for(int i = count.size() - 1; i > 0; i--)
         {
-            counts[pair.second].push_back(pair.first);
-        }
-
-        // 4. return top k elements now 
-        vector<int> res; 
-        for(int i = counts.size() - 1; i > 0; i--)
-        {
-            for(int val : counts[i])
+            for(int val : count[i])
             {
-                res.push_back(val);
+                result.push_back(val); 
 
-                if(res.size() == k)
+                if(result.size() == k)
                 {
-                    return res;
+                    return result;
                 }
             }
         }
 
-        return res;
+        return result;
     }
 };
