@@ -12,18 +12,23 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // tech: depth first search w/ recursion --> time comp: o(n)
-
-        // 1. take care of base case 
-            // when tree is empty --> so when root is NULL
-        if(root == NULL)
+        // tech: 
+            // want to return max depth (aka longest path from root to leaf)
+            // 3 ways to solve -- 
+                // recursive dfs 
+                    // time: o(n) 
+                    // space: o(h) - h = height of tree 
+                        // worst case - o(n) if not balanced binary tree 
+                // iterative dfs (stack) 
+                // breadth first search.. bfs
+        
+        // 1. RECURISVE DFS -- establish base case 
+        if(root == nullptr)
         {
             return 0;
         }
 
-        // 2. otherwise, perform recursive solution 
-            // we'll have 1 + <-- accounts for root node depth of 1
-            // then recursively call dfs on left and right subtrees
+        // 2. split into subproblems 
         return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
     }
 };
