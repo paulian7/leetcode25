@@ -1,44 +1,45 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        // tech: palindrome?? 
-            // read same forward and backwards 
-            // want a way to compare both ends @ the same time 
-            // 2 pointers! 
-        
+        // tech: 
+            // palindrome - same forwards & backwards
+            // 2 pointers -     
+                // allows us to compare front & back
+                // @ the same time
+
         // time & space comp: 
             // time: o(n)
             // space: o(1)
         
-        // 1. declare our 2 pointers 
+        // 1. create our 2 pointers 
         int leftPtr = 0; 
-        int rightPtr = s.length() - 1;
+        int rightPtr = s.length() - 1; 
 
-        // 2. execute 2 pointers method -- iterate thr string --> time comp: o(n)
-        while(rightPtr > leftPtr)
+        // 2. start 2 pointers method 
+        while(leftPtr < rightPtr)
         {
-            // update pointers accordingly if NOT alphanumeric char
-            while(leftPtr < rightPtr && !isalnum(s[leftPtr])) // update left accord. 
+            // update pointers accordingly 
+            while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
             {
                 leftPtr++; 
             }
 
-            while(rightPtr > leftPtr && !isalnum(s[rightPtr])) // update right accord.
+            while(rightPtr > leftPtr && !isalnum(s[rightPtr]))
             {
                 rightPtr--;
             }
 
-            // check for equivalency 
+            // compare for equivalence 
             if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
                 return false;
             }
 
-            // otherwise, update pointers
-            leftPtr++;
+            // update pointers for next iteration
+            leftPtr++; 
             rightPtr--;
         }
 
-        return true;
+        return true; // all checks passed
     }
 };
