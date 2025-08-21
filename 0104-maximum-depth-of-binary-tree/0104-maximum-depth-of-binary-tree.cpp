@@ -12,23 +12,24 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // tech: 
-            // want to return max depth (aka longest path from root to leaf)
-            // 3 ways to solve -- 
-                // recursive dfs 
-                    // time: o(n) 
-                    // space: o(h) - h = height of tree 
-                        // worst case - o(n) if not balanced binary tree 
-                // iterative dfs (stack) 
-                // breadth first search.. bfs
+        // tech: 2 possible ways 
+            // recursive dfs -- X 
+            // iterative bfs 
         
-        // 1. RECURISVE DFS -- establish base case 
-        if(root == nullptr)
+        // time & space comp: 
+            // time: o(n)
+            // space: o(n) 
+                // balanced tree - o(n)
+                // unbalanced tree - o(n)
+
+        // 1. RECURSIVE DFS -- base case 
+            // when there's no root 
+        if(!root) 
         {
             return 0;
         }
 
-        // 2. split into subproblems 
+        // 2. split into subproblems to perform recursive calls 
         return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
     }
 };
