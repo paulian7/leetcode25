@@ -21,45 +21,14 @@ public:
                         // worst case - o(n) if not balanced binary tree 
                 // iterative dfs (stack) 
                 // breadth first search.. bfs
-                    // bfs typically invovles a QUEUE
         
-        // 1. BREADTH FIRST SEARCH APPROACH -- 
-            // 1st establish a queue 
-        queue<TreeNode*> nodeQueue; 
-
-        // 2. have a base case 
-        if(root != nullptr)
+        // 1. RECURISVE DFS -- establish base case 
+        if(root == nullptr)
         {
-            nodeQueue.push(root); 
+            return 0;
         }
 
-        // 3. declare var to return at end 
-        int level = 0; 
-        while(!nodeQueue.empty())
-        {
-            int size = nodeQueue.size(); 
-
-            // iterate thr each node within each level of the tree
-            for(int i = 0; i < size; i++)
-            {
-                // grab curr parent node
-                TreeNode* node = nodeQueue.front(); 
-                nodeQueue.pop(); 
-
-                // push any children of that parent we just popped 
-                if(node -> left != nullptr)
-                {
-                    nodeQueue.push(node -> left); 
-                }
-                if(node -> right != nullptr)
-                {
-                    nodeQueue.push(node -> right);
-                }
-
-                level++;
-            }
-        }
-
-        return level;
+        // 2. split into subproblems 
+        return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
     }
 };
