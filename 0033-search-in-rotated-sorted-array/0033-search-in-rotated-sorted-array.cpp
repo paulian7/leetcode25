@@ -1,59 +1,69 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        // tech: binary search --> time comp: o(logn) 
-            // binary search way to go if want time comp better than o(n)
+        // tech: 
+            // array sorted --> binary search
+            // sorted, but could be dealing w/ a rotated array lol
+            // want to return index of value specified by target 
+                // return -1 if can't find 
         
-        // 1. create our 2 pointers 
-        int leftPtr = 0; 
-        int rightPtr = nums.size() - 1; 
+        // time & space comp: 
+            // time: o(logn)
+                // BINARY SEARCH -- way to go if want time comp < o(n)
+            // space: o(1) 
+        
+        // 1. create our pointers 
+        int leftPtr = 0; // low 
+        int rightPtr = nums.size() - 1; // high 
 
-        // 2. iterate thr the array now 
+        // 2. iterate thr array
         while(leftPtr <= rightPtr)
         {
-            int midPt = leftPtr + (rightPtr - leftPtr) / 2; 
+            // calc midPt to halve our search space (since we're doing binary search)
+            int midPt = leftPtr + (rightPtr - leftPtr) / 2;
 
-            // case 1 - check if at the midPt we have target right away 
+            // CASE 1 == CHECK IF OUR MIDPT IS OUR TARGET VAL
             if(target == nums[midPt])
             {
-                return midPt; 
+                return midPt; // return midPt's index :)
             }
 
-            // otherwise - figure out which left or right portion to search for target 
+            // CASE 2 - figure out which halve to search for target (left or right)
             if(nums[leftPtr] <= nums[midPt])
             {
-                // so, dealing w/ left portion bc leftVal < midPt val... 
-                    // so vals just increase from left -> midPt 
+                // midPt val belongs to LEFT sorted portion.... 
+                // so, focus on left portion here
                 if(target > nums[midPt] || target < nums[leftPtr])
                 {
-                    // need to switch to right side for these scenarios 
-                    leftPtr = midPt + 1; 
+                    // need to switch to right portion here...
+                    leftPtr = midPt + 1;
                 }
                 else 
                 {
-                    // can stay in this portion :)
-                        // so update rightPtr to search left area 
-                    rightPtr = midPt - 1; 
-
+                    // can stay in left portion!! 
+                    // need to update rightPtr then to left halve 
+                        // this narrows down our search space further
+                    rightPtr = midPt - 1;
                 }
             }
             else 
             {
-                // so, dealing w/ right portion 
-                    // as our midPt val can't increase from leftPt bc its too small and left too big
+                // midPt val belongs to RIGHT sorted portoin
                 if(target < nums[midPt] || target > nums[rightPtr])
                 {
-                    // damn got to switch to left portion now 
-                    rightPtr = midPt - 1; 
+                    // switch to left portion...
+                    rightPtr = midPt - 1;
                 }
                 else 
                 {
-                    // yay stay in right portion 
+                    // can stay in right portion!
                     leftPtr = midPt + 1;
                 }
             }
+
         }
 
-        return -1; // worst case return of index
+        // worst case, return -1 
+        return -1; 
     }
 };
