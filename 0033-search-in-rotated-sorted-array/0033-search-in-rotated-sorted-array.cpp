@@ -26,7 +26,7 @@ public:
             }
 
             // CASE 2 :( -otherwise, decide which half to search
-            if(nums[leftPtr]) <= nums[midPt])
+            if(nums[leftPtr] <= nums[midPt])
             {
                 // then... midPt belongs to LEFT portion... so focus here,
                 if(target > nums[midPt] || target < nums[leftPtr])
