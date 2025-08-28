@@ -11,47 +11,52 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        // tech: splitting list, reversing 2nd half of list, then making new list
+
         // time & space comp: 
             // time: o(n)
             // space: o(1) 
 
-        // 1. want to find midPt 
+        // 1. declare our fast & slow ptrs 
+        ListNode *fastPtr = head; 
         ListNode *slowPtr = head; 
-        ListNode *fastPtr = head;
 
-        // 2. want to place slowPtr in the corr spot 
+        // 2. move slowPtr to midPt 
         while(fastPtr && fastPtr -> next)
         {
-            // update our pointers 
-            slowPtr = slowPtr -> next; 
             fastPtr = fastPtr -> next -> next; 
+            slowPtr = slowPtr -> next; 
         }
 
-        // 3. from here, slowPtr should @ midPt, start reversing 2nd half of list
+        // 3. w/ slowPtr finally at its midPt, start reversing 2nd half of lsit
         ListNode *prev = nullptr; 
-        ListNode *curr = slowPtr; 
-        while(curr != nullptr) 
+        ListNode *curr = slowPtr -> next;
+        slowPtr -> next = nullptr; 
+
+        while(curr != nullptr)
         {
             ListNode *tempNext = curr -> next; 
-
-            curr -> next = prev;
-            prev = curr;
+            curr -> next = prev; 
+            prev = curr; 
             curr = tempNext; 
         }
 
-        // 4. start adding each node corr from its resp halve 
+
+        // 4. add nodes in accordingly from both halves
         ListNode *startHalf = head; 
-        ListNode *endHalf = prev; 
-        while(endHalf -> next != nullptr)
+        ListNode *secHalf = prev;
+
+        while(secHalf != nullptr)
         {
             ListNode *tempNext1 = startHalf -> next; 
-            ListNode *tempNext2 = endHalf -> next; 
+            ListNode *tempNext2 = secHalf -> next; 
 
-            startHalf -> next = endHalf; 
-            endHalf -> next = tempNext1; 
+            startHalf -> next = secHalf;
+            secHalf -> next = tempNext1; 
 
+            // update pointers 
             startHalf = tempNext1;
-            endHalf = tempNext2;
+            secHalf = tempNext2;
         }
     }
 };
