@@ -15,8 +15,8 @@ public:
             // establish 2nd half of list by FIRST finding fast & slow ptrs
 
         // time & space comp: 
-            // time: 
-            // space: 
+            // time: o(n)
+            // space: o(1)
         
         // 1. establish our slow & fast ptrs
         ListNode *slowPtr = head; 
