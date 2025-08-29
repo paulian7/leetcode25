@@ -23,6 +23,7 @@ public:
         ListNode *fastPtr = head -> next; 
 
         // 2. move slowPtr to correct location (will be 1 node behind the "midPt")
+            // will continue to iterate til end of list
         while((fastPtr != nullptr) && (fastPtr -> next != nullptr))
         {
             slowPtr = slowPtr -> next; 
