@@ -11,57 +11,51 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        // tech: fast & slow ptrs to identify mid list
-            // reverse 2nd half of list 
-            // add nodes accordingly from there 
-
         // time & space comp: 
-            // time: 
-            // space: 
-        
-        // 1. declare our fast & slow ptrs 
-        ListNode *slowPtr = head; 
-        ListNode *fastPtr = head -> next;
+            // time: o(n) 
+            // space: o(1) 
 
-        // 2. position our pointers in the corr spot 
-            // keep iterating til fastPtr reaches end of list OR...
-            // ... last val of list
-            // slowPtr will be 1 node before the "start of 2nd half" 
+        // 1. establish fast & slow ptrs 
+        ListNode *slowPtr = head;
+        ListNode *fastPtr = head -> next; 
+
+        // 2. position our fast & slow ptrs 
         while(fastPtr && fastPtr -> next)
         {
             slowPtr = slowPtr -> next;
             fastPtr = fastPtr -> next -> next; 
         }
 
-        // 3. establish start of secHalf of list, then chop off ties
-            // .. want to separate 1st and 2nd half of list
-        ListNode *startHalf = slowPtr -> next; 
+        // 3. establish new ptrs to start reversing 2nd half of list now 
+        ListNode *startSec = slowPtr -> next; 
+        
+        // ensure there's a divide btwn the 2 halves 
         slowPtr -> next = nullptr; 
 
-        // 4. start algo for reversing 2nd half of list 
         ListNode *prevPtr = nullptr; 
-        while(startHalf != nullptr)
-        {
-            ListNode *tempNext = startHalf -> next; 
-
-            startHalf -> next = prevPtr; 
-            prevPtr = startHalf; 
-            startHalf = tempNext; 
-        }
-
-        // 5. start adding nodes accordingly from each half now 
-        ListNode *startFirst = head; 
-        ListNode *startSec = prevPtr; 
         while(startSec != nullptr)
         {
-            ListNode *tempNext1 = startFirst -> next;
-            ListNode *tempNext2 = startSec -> next; 
+            ListNode *tempNext = startSec -> next; 
 
-            startFirst -> next = startSec; 
-            startSec -> next = tempNext1; 
-
-            startFirst = tempNext1; 
-            startSec = tempNext2; 
+            startSec -> next = prevPtr; 
+            prevPtr = startSec;
+            startSec = tempNext; 
         }
+
+        // 4. add nodes accordingly now 
+        ListNode *startHalf = head; 
+        ListNode *startSecHalf = prevPtr; 
+        while(startSecHalf != nullptr)
+        {
+            ListNode *tempNext1 = startHalf -> next;
+            ListNode *tempNext2 = startSecHalf -> next; 
+
+            startHalf -> next = startSecHalf; 
+            startSecHalf -> next = tempNext1; 
+
+            startHalf = tempNext1; 
+            startSecHalf = tempNext2; 
+        }
+
     }
 };
