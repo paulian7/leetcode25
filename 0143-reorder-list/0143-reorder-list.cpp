@@ -16,8 +16,8 @@ public:
             // add nodes accordingly from there 
 
         // time & space comp: 
-            // time: 
-            // space: 
+            // time: o(n)
+            // space: o(1)
         
         // 1. declare our fast & slow ptrs 
         ListNode *slowPtr = head; 
