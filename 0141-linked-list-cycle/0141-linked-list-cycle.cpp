@@ -9,31 +9,28 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        // tech: fast & slow ptrs
-
         // time & space comp: 
             // time: o(n) 
             // space: o(1) 
-
-        // 1. declare & initialize fast & slow ptrs
+        
+        // 1. declare our fast & slow ptrs here 
         ListNode *fastPtr = head; 
-        ListNode *slowPtr = head;
+        ListNode *slowPtr = head; 
 
-        // 2. execute loop to identify whether or not cycle 
-            // if fastPtr == slowPtr --> dealing w/ cycle! 
-        while((fastPtr != nullptr) && (fastPtr -> next != nullptr))
+        // 2. start executing fast & slowptr tech. to see if == 
+            // if == --> then we have a cycle! 
+        while(fastPtr && fastPtr -> next)
         {
-            slowPtr = slowPtr -> next; 
+            slowPtr = slowPtr -> next;
             fastPtr = fastPtr -> next -> next; 
 
-            // 3. check for cycle: 
+            // check for == 
             if(slowPtr == fastPtr)
             {
                 return true;
             }
         }
 
-        // 4. otherwise, return false as loop terminated w/o any == 
         return false;
     }
 };
