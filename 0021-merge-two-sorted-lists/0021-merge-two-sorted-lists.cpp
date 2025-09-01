@@ -14,16 +14,20 @@ public:
         // tech: iterative 
 
         // time & space comp: 
-            // time: o(n)
+            // time: o(n) 
             // space: o(1) 
-
-        // 1. declare a dummyPtr to help us return the newly merged list 
+        
+        // 1. establish a dummyPtr 
+            // will help us return the entirity of new list 
         ListNode *dummyPtr = new ListNode(0); 
 
-        // 2. have a tailPtr to track end of list so far 
+        // 2. establish a tailPtr 
+            // will pt to end of our new linked list 
+            // will pt to where dummyPtr pts to for now 
+                // (aka dummyNode) 
         ListNode *tailPtr = dummyPtr; 
 
-        // 3. start adding nodes accordingly from the 2 lists 
+        // 3. start adding nodes accordingly 
         while((list1 != nullptr) && (list2 != nullptr))
         {
             if(list1 -> val < list2 -> val)
@@ -37,11 +41,9 @@ public:
                 list2 = list2 -> next; 
             }
 
-            // always ensure you're updating our tailPtr 
             tailPtr = tailPtr -> next; 
         }
 
-        // 4. ensure all nodes from each of the 2 lists have been added 
         if(list1 != nullptr)
         {
             tailPtr -> next = list1; 
@@ -51,7 +53,6 @@ public:
             tailPtr -> next = list2; 
         }
 
-        // 5. use dummyPtr to help us return the newly merged 2 of the linked lists
         return dummyPtr -> next;
     }
 };
