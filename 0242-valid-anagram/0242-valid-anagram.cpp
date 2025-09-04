@@ -10,6 +10,7 @@ public:
                 // iterating thr both strings, s & t 
             // space: o(1) 
                 // constant time, as we're just utilizing pointers
+                // also account for hash table (but limited to just 26 chars -> o(1))
 
         // 0. check if same length first 
         if(s.length() != t.length())
