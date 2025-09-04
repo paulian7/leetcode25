@@ -1,36 +1,32 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // ?: want 2 vals that add up to the target val 
-
-        // tech: hash table 
+        // tech: hashing --> let's us do this in one-pass 
         
         // time & space comp: 
-            // time: o(n) - one pass 
-            // space: o(n) - worst case, store all nums in hash table 
+            // time: o(n) 
+            // space: o(n) 
         
         // 1. declare hash table 
-            // key: val, value: index of that val 
         unordered_map<int, int> hashTab; 
 
-        // 2. iterate thr array, one pass only 
+        // 2. iterate thr array 
         for(int i = 0; i < nums.size(); i++)
         {
-            // calc diff - is what allows us to do 1-pass only 
-                // makes possible the time comp: o(n) 
+            // check for complement 
             int diff = target - nums[i]; 
 
-            // check if we've seen diff already
-            if(hashTab.find(diff) != hashTab.end())
+            // check for existence of complement 
+            if(hashTab.find(diff) != hashTab.end()) 
             {
-                return {i, hashTab[diff]};
+                // return indices 
+                return {i, hashTab[diff]}; 
             }
 
-            // otherwise, add new val to hashTab 
-            hashTab[nums[i]] = i; 
+            // otherwise, insert into hash table as a new pair 
+            hashTab[nums[i]] = i;
         }
 
-        // worst case, return nothing 
-        return {}; 
+        return {};
     }
 };
