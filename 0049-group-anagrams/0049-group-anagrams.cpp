@@ -1,57 +1,46 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        // tech: hash tables 
-            // key: frequency string
-            // value: all the strings that share that freq string 
+        // tech: 
+            // hashing -- hash table (freq string->strs that share it)
 
         // time & space comp: 
-            // time: o(n * m) 
-                // n - number of strings
-                // m - length of longest string 
+            // time: 
             // space: 
-                // o(n) for the strings stored in the hash table 
-                // o(n * m) for our output list
         
         // 1. declare hash table 
-        unordered_map<string, vector<string>> anaTable; 
+        unordered_map<string, vector<string>> hashTab;
 
-        // 2. iterate thr each string 
+        // 2. iterate thr string 
         for(int i = 0; i < strs.size(); i++)
         {
-            // iterate thr each char now within THAT string
-
-            // need a way to track freq of each char 
-                    // have vector
-                    // where each index represents a poss freq 
-                    // use ascii trick
-                        // take curr char - 'a' --> gives correct index to increment +1 to track freq
-            vector<int> count(26, 0); 
+            // iterate thr each char in each element str
+            vector<int> count(26, 0); // have way to track char freqs
             for(char c : strs[i])
             {
+                // utilize an ascii trick here 
+                    // curr - 'a' --> gives corr index to increment 
                 count[c - 'a']++; 
             }
 
-            // convert "count" integer array into a string type 
+            // convert "count" array to a string to use as our "key" for hash table
             string key; 
             for(int i = 0; i < 26; i++)
             {
                 key += to_string(count[i]) + ","; 
             }
 
-            // add new KEY to hash table w/ corresponding val 
-            anaTable[key].push_back(strs[i]);
+            // add key-val pair to hash table 
+            hashTab[key].push_back(strs[i]);
         }
 
-        // 3. return the values of each key-val pair from hash table 
-
-        // first declare vector to return as result 
-        vector<vector<string>> result; 
-        for(auto const& pair : anaTable)
+        // 3. return only the pair.second now 
+        vector<vector<string>> resAnagrams;
+        for(auto const& pair : hashTab)
         {
-            result.push_back(pair.second); 
+            resAnagrams.push_back(pair.second); 
         }
 
-        return result; 
+        return resAnagrams;
     }
 };
