@@ -1,20 +1,23 @@
 class Solution {
 public:
     int hammingWeight(int n) {
-        // tech: modulo operator & shifting bits 
+        // tech: modulo operator and shifting bits 
 
         // time & space comp: o(1) 
 
-        // 1. declare result var to return 
-        int result = 0; 
+        // 1. declare var to return as result 
+        int result = 0;
 
-        // 2. iterate thr the bit representation of 'n' til no more relvant bits to 'n'
+        // 2. iterate thr bits til all relvant bits are gone thr
         while(n > 0)
         {
-            // mod operator curr bit to add +1 to result if we're curr at a 1
+            // 3. check if our curr bit is a 0 or 1 by using a modulo operator 
+                // if 1 --> 1 % 2 = 1 
+                // if 0 --> 0 % 2 = 0 
             result += n % 2; 
 
-            // shift to next bit to look @ 
+            // 4. shift bits to the right now
+                // to look at next col (aka left from curr) 
             n = n >> 1; 
         }
 
