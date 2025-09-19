@@ -2,36 +2,31 @@ class Solution {
 public:
     bool isAnagram(string s, string t) {
         // tech: 
-            // checking for anagrams 
-                // words that have same char freq as another word
-            // hash tables - account for char freq 
+            // anagram - consists of same char freq 
+            // hash tables - key: char, val: freq of char 
         
         // time & space comp: 
-            // time: o(n + m) 
-                // bc iterating thr 2 strings respectively 
-            // space: 
-                // o(1) -- due to the fact that our characters we're dealing w/ are limited to the alphabet 
-                    // o(26) -> simplifies to o(1)
-
-        // 1. check for length of the 2 strings 
+            // time: o(n + m) -- iterating thr 2 strings
+            // space: o(1) -- limited to just 26 distinct chars
+        
+        // 0. edge case -- check if same length first 
         if(s.length() != t.length())
         {
-            return false; // need same length to be anagram :(
+            return false;
         }
 
-        // 2. create hash tables to begin check
+        // 1. create hash tables for each string
         unordered_map<char, int> hashS; 
         unordered_map<char, int> hashT; 
-
-        // 3. populate hash tables 
+        
+        // 2. iterate thr chars 
         for(int i = 0; i < s.length(); i++)
         {
             hashS[s[i]]++; 
-            hashT[t[i]]++;
+            hashT[t[i]]++; 
         }
 
-        // 4. check if both has tables line up 
-        return hashS == hashT;
-        
+        // 3. check for equivalence 
+        return hashS == hashT; 
     }
 };
