@@ -5,8 +5,8 @@ public:
             // hashing -- hash table (freq string->strs that share it)
 
         // time & space comp: 
-            // time: 
-            // space: 
+            // time: o(n * m)
+            // space: o(n) -- 'n' being num of strings stored into hash table
         
         // 1. declare hash table 
         unordered_map<string, vector<string>> hashTab;
