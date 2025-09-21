@@ -9,7 +9,9 @@ public:
             
         // time & space comp: 
             // time: o(n) 
-            // space: o(n) -- if output array is counted 
+            // space: 
+                // o(n) hash table 
+                // o(n * m) -- if output array is countedd
         
         // 1. declare vector to return as result 
         vector<int> answer(nums.size(), 1); 
