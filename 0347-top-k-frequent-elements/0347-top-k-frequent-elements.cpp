@@ -1,43 +1,53 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: hashing 
-            // val -> freq of that val 
-        
-        // time & space comp: 
-            // time: 
-            // space: 
+        // tech: want to count freq 
+            // hash tables! 
+
+        // overall time & space comp: 
+            // time: o(n)
+            // space: o(n)
         
         // 1. declare hash table 
         unordered_map<int, int> hashTab; 
 
         // 2. iterate thr array 
-        for(int val : nums)
+            // time: o(n)
+            // space: o(n)
+        for(int i = 0; i < nums.size(); i++)
         {
-            hashTab[val]++; 
+            // populate hash table thr each iteration 
+            hashTab[nums[i]]++;
         }
 
-        // 3. throw into buckets now 
+        // 3. bucket sort tech 
+            // each index represents that value's frequency
+            // time: o(n)
+            // space: o(n)
         vector<vector<int>> count(nums.size() + 1); 
         for(auto const& pair : hashTab)
         {
             count[pair.second].push_back(pair.first);
         }
 
-        // 4. iterate backwards now 
-        vector<int> result; 
+        // 4. return top k elements 
+            // time: o(n) 
+            // space: o(n)
+        vector<int> result;
         for(int i = count.size() - 1; i > 0; i--)
         {
             for(int val : count[i])
             {
                 result.push_back(val); 
+
+                // check for k size yet? 
                 if(result.size() == k)
                 {
                     return result;
                 }
             }
         }
-        
+
         return result;
     }
 };
