@@ -1,46 +1,39 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // tech: want to count freq 
-            // hash tables! 
+        // tech: 
+            // hash table - stores key-val pairs
+                // key: val; value: freq of that val
+            // bucket sort - indices represent freq of the value stored @ that index
 
-        // overall time & space comp: 
+        // time & space comp: 
             // time: o(n)
             // space: o(n)
-        
+
         // 1. declare hash table 
-        unordered_map<int, int> hashTab; 
-
-        // 2. iterate thr array 
-            // time: o(n)
-            // space: o(n)
-        for(int i = 0; i < nums.size(); i++)
+        unordered_map<int, int> hashCount; 
+        
+        // 2. populate hash table 
+        for(int val : nums)
         {
-            // populate hash table thr each iteration 
-            hashTab[nums[i]]++;
+            hashCount[val]++;
         }
 
-        // 3. bucket sort tech 
-            // each index represents that value's frequency
-            // time: o(n)
-            // space: o(n)
-        vector<vector<int>> count(nums.size() + 1); 
-        for(auto const& pair : hashTab)
+        // 3. sort into respective buckets 
+        vector<vector<int>> freqCount(nums.size() + 1); 
+        for(auto const& pair : hashCount)
         {
-            count[pair.second].push_back(pair.first);
+            freqCount[pair.second].push_back(pair.first);
         }
 
-        // 4. return top k elements 
-            // time: o(n) 
-            // space: o(n)
+        // 4. return top k elements now 
         vector<int> result;
-        for(int i = count.size() - 1; i > 0; i--)
+        for(int i = freqCount.size() - 1; i > 0; i--)
         {
-            for(int val : count[i])
+            for(int val : freqCount[i])
             {
-                result.push_back(val); 
+                result.push_back(val);
 
-                // check for k size yet? 
                 if(result.size() == k)
                 {
                     return result;
