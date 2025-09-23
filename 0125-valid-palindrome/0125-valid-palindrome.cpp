@@ -1,44 +1,42 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        // tech: palindrome?? 
-            // read same forward and backwards 
-            // want a way to compare both ends @ the same time 
-            // 2 pointers! 
+        // tech: want to check if same forwards && backwards 
+            // 2 pointers technique! -- let's us compare front && back @ the same time 
         
         // time & space comp: 
-            // time: o(n)
-            // space: o(1)
+            // time: 
+            // space: 
         
-        // 1. declare our 2 pointers 
+        // 1. declare && initialize our 2 pointers 
         int leftPtr = 0; 
-        int rightPtr = s.length() - 1;
+        int rightPtr = s.length() - 1; 
 
-        // 2. execute 2 pointers method -- iterate thr string --> time comp: o(n)
-        while(rightPtr > leftPtr)
+        // 2. start iterating 
+        while(leftPtr < rightPtr)
         {
-            // update pointers accordingly if NOT alphanumeric char
-            while(leftPtr < rightPtr && !isalnum(s[leftPtr])) // update left accord. 
+            // update pointers accordingly if NOT an alphanumeric char
+            while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
             {
-                leftPtr++; 
+                leftPtr++;
             }
 
-            while(rightPtr > leftPtr && !isalnum(s[rightPtr])) // update right accord.
+            while(rightPtr > leftPtr && !isalnum(s[rightPtr]))
             {
                 rightPtr--;
             }
 
-            // check for equivalency 
+            // check for equivalence once pointers are valid alphanumerics
             if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
-                return false;
+                return false; // return false immdediately
             }
-
-            // otherwise, update pointers
-            leftPtr++;
+            
+            // update pointers for next iteration 
+            leftPtr++; 
             rightPtr--;
         }
 
-        return true;
+        return true; // return true as string passed all checks!
     }
 };
