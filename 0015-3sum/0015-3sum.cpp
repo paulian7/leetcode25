@@ -2,58 +2,61 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         // tech: 
-            // want 3 vals that add up to 0
-            // want to ensure no duplicate triplets are found 
+            // sort, 2 pointers method (for the last 2 of the 3 vals used in 3-sum)
         
         // time & space comp: 
-            // time: o(n logn) + o(n^2)
-                // simplifies down to o(n^2) 
-                // sort() - o(nlogn) 
-                // nested loops - o(n^2) 
+            // time: 
+                // sort - o(nlogn) 
+                // 2 pointers used for last 2 vals & outer loop used for 1st val: o(n^2) 
             // space: 
-                // if you count sort: o(1) 
-                    // c++ does in-place 
-                // output array: o(m) 
-                    // m - num of triplets
+                // sorting done in-place --> o(1) 
+                // if output array is counted - o(m) 
+                    // m - being the number of triplets we're dealing w/ 
         
-        // 1. sort! --> time comp; o(n logn) :(
+        // 1. sort array first 
         sort(nums.begin(), nums.end());
 
-        vector<vector<int>> result; // will hold our final answer of triplets
+        // 2. declare vector to hold our result 
+        vector<vector<int>> result;
 
-        // 2. start iterating thr 
+        // 3. start iterating thr the array 
         for(int i = 0; i < nums.size(); i++)
         {
-            // deal w/ the first val in our triplet first 
-            if(i > 0 && nums[i] == nums[i - 1]) continue; // skip to next iteration bc dup
+            // deal w/ the first val in the triplet 
+                // always skip to the next iteration if we're dealing w/ a duplicate
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
 
-            // otherwise, deal w/ our other 2 vals now 
-                // will be executing the 2 pointers method here to do so 
+            // otherwise, deal w/ the other 2 vals now... 
+                // START executing the TWO POINTERS METHOD
             int leftPtr = i + 1; 
             int rightPtr = nums.size() - 1; 
             while(leftPtr < rightPtr)
             {
-                // get the curr triplet val 
+                // get curr val of our triplet 
                 int currSum = nums[i] + nums[leftPtr] + nums[rightPtr]; 
 
-                // adjust the pointers accordingly (based on the currSum)
+                // adjust the pointers accordingly now (based on the currSum)
                 if(currSum > 0)
                 {
-                    rightPtr--; // needs to lower down bc it's pointing at a too big val
+                    rightPtr--; // needs to lower down bc it's pointing at TOO big of a value
                 }
                 else if(currSum < 0)
                 {
-                    leftPtr++; // need to increase leftPtr bc it's pointing at too small
+                    leftPtr++; // needs to increment leftPtr bc it's pointing at TOO small of a value
                 }
                 else 
                 {
-                    // we finally have a sum of 0! add it to our result vector 
-                    result.push_back({nums[i], nums[leftPtr], nums[rightPtr]});
+                    // FOUND A TRIPLET == 0 :)
 
-                    // now update our pointers -- dont need to necessarily update both
+                    // push_back() to result vector
+                    result.push_back({nums[i], nums[leftPtr], nums[rightPtr]}); 
+
+                    // now update one of our pointers -- don't need to necessarily update both...
+                        // as our if conditions above will take care of that for us
                     leftPtr++; 
 
-                    // ensure after the update of leftPtr... we haven't hit a dup! :(
+                    // ... ensure after updating leftPtr... 
+                        // that no duplicates have been crossed 
                     while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
                     {
                         leftPtr++;
@@ -62,6 +65,6 @@ public:
             }
         }
 
-        return result; 
+        return result;
     }
 };
