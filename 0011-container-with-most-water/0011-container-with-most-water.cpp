@@ -4,8 +4,8 @@ public:
         // tech: 2 pointers! -- let's us maximize length 
 
         // time & space comp: 
-            // time: 
-            // space: 
+            // time: o(n) 
+            // space: o(1)
 
         // 0. declare var to return as result 
         int maxArea = 0; 
