@@ -1,49 +1,46 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        // tech: 
-            // 2 pointers method! 
-                // want to find largest area 
-                // can maximize length by having 2 pointers at beg & end 
-        
+        // tech: 2 pointers! -- let's us maximize length 
+
         // time & space comp: 
-            // time: o(n)
-            // space: o(1)
-        
-        // 1. declare var to return @ end 
+            // time: 
+            // space: 
+
+        // 0. declare var to return as result 
         int maxArea = 0; 
 
-        // 2. execute 2 pointers method 
+        // 1. declare & initialize 2 pointers 
         int leftPtr = 0; 
-        int rightPtr = height.size() - 1; 
+        int rightPtr = height.size() - 1;
 
+        // 2. execute 2 pointers method now -- 
         while(leftPtr < rightPtr)
         {
-            // 3. check for curr area 
-                // length * height 
-                    // want to minimize the height so no overflow occurs 
+            // check currArea
+                // length * width 
             int currArea = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]);
 
-            // 4. update maxArea accordingly 
-            maxArea = max(maxArea, currArea);
+            // update maxArea 
+            maxArea = max(currArea, maxArea);
 
-            // 5. see if we can maximize the heights now by adjusting the pointers 
+            // see if we can maximize our heights
             if(height[leftPtr] < height[rightPtr])
             {
-                leftPtr++; // update left bc left too small 
+                leftPtr++; // search for a larger height w/ left
             }
             else if(height[rightPtr] < height[leftPtr])
             {
-                rightPtr--; // update rightPtr bc right too small 
+                rightPtr--; // search for a larger height w/ right
             }
             else 
             {
-                // both heights are the same val... can just update one height then 
+                // both ptrs point to same height... just update 1 
                 leftPtr++;
             }
         }
 
-        // return result 
+        // once while-loop finishes, return final result
         return maxArea;
     }
 };
