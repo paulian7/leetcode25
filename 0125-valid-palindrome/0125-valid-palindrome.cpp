@@ -2,44 +2,46 @@ class Solution {
 public:
     bool isPalindrome(string s) {
         // tech: 
-            // palindrome - same forwards & backwards
-            // 2 pointers -     
-                // allows us to compare front & back
-                // @ the same time
-
+            // palindrome - read same forwards and backwards
+            // 2 pointers method! 
+                // can compare start && end of string @ the same time 
+            
         // time & space comp: 
-            // time: o(n)
-            // space: o(1)
+            // time: o(n) 
+                // going thr each char once -- no repeats
+            // space: o(1) 
+                // as we're just using pointers -- integer variables (nothing in comparison to hash table declarations)
         
-        // 1. create our 2 pointers 
+        // 1. declare & initialize 2 pointers 
         int leftPtr = 0; 
-        int rightPtr = s.length() - 1; 
+        int rightPtr = s.length() - 1;
 
-        // 2. start 2 pointers method 
+        // 2. start 2 ptrs method 
         while(leftPtr < rightPtr)
         {
-            // update pointers accordingly 
-            while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
+            // update pointers accordingly until equivalence check! 
+            while(!isalnum(s[leftPtr]) && leftPtr < rightPtr)
             {
                 leftPtr++; 
             }
 
-            while(rightPtr > leftPtr && !isalnum(s[rightPtr]))
+            while(!isalnum(s[rightPtr]) && rightPtr > leftPtr)
             {
-                rightPtr--;
+                rightPtr--; 
             }
 
-            // compare for equivalence 
+            // NOW - check for equivalence
             if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
-                return false;
+                return false; // not palindrome, return false right away
             }
 
-            // update pointers for next iteration
+            // otherwise, if all pass, update pointers for next iteration
             leftPtr++; 
             rightPtr--;
         }
 
-        return true; // all checks passed
+        // 3. if while-loop finishes - palindrome is true :)
+        return true;
     }
 };
