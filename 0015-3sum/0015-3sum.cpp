@@ -1,62 +1,61 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // tech: 
-            // sort, 2 pointers method (for the last 2 of the 3 vals used in 3-sum)
-        
+        // tech: sort && 2 pointers method
+
         // time & space comp: 
-            // time: 
-                // sort - o(nlogn) 
-                // 2 pointers used for last 2 vals & outer loop used for 1st val: o(n^2) 
+            // time: o(nlogn * n^2)
+                // o(nlogn) -- sort() method used 
+                // n^2 -- our nested loops being used 
+                    // 1st loop - used for 1st val within the triplet
+                    // 2nd loop - used for the last 2 values within the triplet
             // space: 
-                // sorting done in-place --> o(1) 
-                // if output array is counted - o(m) 
-                    // m - being the number of triplets we're dealing w/ 
+                // o(1) -- as sort is in-place 
+                // o(m) -- IF, we count the output array
+                    // m - being the number of triplets
         
-        // 1. sort array first 
+        // 1. sort array -- helps us to identify duplicates easier
         sort(nums.begin(), nums.end());
 
-        // 2. declare vector to hold our result 
-        vector<vector<int>> result;
+        // 2. declare vector to return our result
+        vector<vector<int>> resultTriplets;
 
-        // 3. start iterating thr the array 
+        // 3. start iterating thr our array 
         for(int i = 0; i < nums.size(); i++)
         {
-            // deal w/ the first val in the triplet 
-                // always skip to the next iteration if we're dealing w/ a duplicate
-            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            // DEAL W/ OUR FIRST ELEMENT WITHIN THE TRIPLET
+            // ensure that we're not dealing w/ duplicates first 
+            if(i > 0 && nums[i] == nums[i - 1]) continue; // continue to the NEXT ITERATION
 
-            // otherwise, deal w/ the other 2 vals now... 
-                // START executing the TWO POINTERS METHOD
+            // now -- deal w/ our next 2 vals for our triplet
             int leftPtr = i + 1; 
             int rightPtr = nums.size() - 1; 
             while(leftPtr < rightPtr)
             {
-                // get curr val of our triplet 
+                // calculate curr triplet sum we're dealing w/
                 int currSum = nums[i] + nums[leftPtr] + nums[rightPtr]; 
 
-                // adjust the pointers accordingly now (based on the currSum)
+                // adjust our currSum accordingly if needed 
                 if(currSum > 0)
                 {
-                    rightPtr--; // needs to lower down bc it's pointing at TOO big of a value
+                    // adjust rightPtr
+                    rightPtr--; 
                 }
                 else if(currSum < 0)
                 {
-                    leftPtr++; // needs to increment leftPtr bc it's pointing at TOO small of a value
+                    // adjust leftPtr 
+                    leftPtr++; 
                 }
                 else 
                 {
-                    // FOUND A TRIPLET == 0 :)
+                    // we're dealing w/ our currSum == 0 :D! 
+                    // add it to our result vector 
+                    resultTriplets.push_back({nums[i] + nums[leftPtr] + nums[rightPtr]});
 
-                    // push_back() to result vector
-                    result.push_back({nums[i], nums[leftPtr], nums[rightPtr]}); 
-
-                    // now update one of our pointers -- don't need to necessarily update both...
-                        // as our if conditions above will take care of that for us
+                    // update 1 ptr -- no need for both as if-conditions will take care of that 
                     leftPtr++; 
 
-                    // ... ensure after updating leftPtr... 
-                        // that no duplicates have been crossed 
+                    // ensure our updated ptr didn't hit into any duplicates 
                     while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
                     {
                         leftPtr++;
@@ -64,7 +63,7 @@ public:
                 }
             }
         }
-
-        return result;
+        
+        return resultTriplets;
     }
 };
