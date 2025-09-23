@@ -1,42 +1,47 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        // tech: want to check if same forwards && backwards 
-            // 2 pointers technique! -- let's us compare front && back @ the same time 
+        // tech: two pointers 
+            // let's us compare the front && end of string @ the same time 
         
         // time & space comp: 
-            // time: 
-            // space: 
+            // time: o(n) 
+                // as we're iterating from both ends of the string, all elements iterated at least once
+            // space: o(1) 
+                // no other extra data structures are created, other than the 2 integer vars we declared & initialized
+                // would be a diff story if we declared hash tables 
         
-        // 1. declare && initialize our 2 pointers 
-        int leftPtr = 0; 
-        int rightPtr = s.length() - 1; 
+        // 1. declare & initialize 2 pointers to respective ends of string 
+        int leftPtr = 0; // start of str
+        int rightPtr = s.length() - 1; // end of str 
 
         // 2. start iterating 
         while(leftPtr < rightPtr)
         {
-            // update pointers accordingly if NOT an alphanumeric char
+            // update pointers accordingly IF not alphanumeric
             while(leftPtr < rightPtr && !isalnum(s[leftPtr]))
             {
-                leftPtr++;
+                leftPtr++; // update left to be valid
             }
 
             while(rightPtr > leftPtr && !isalnum(s[rightPtr]))
             {
-                rightPtr--;
+                rightPtr--; // update right to be valid
             }
 
-            // check for equivalence once pointers are valid alphanumerics
+            // check for equivalence now 
+                // ensure that chars are LOWERCASED FIRST before checking!
             if(tolower(s[leftPtr]) != tolower(s[rightPtr]))
             {
-                return false; // return false immdediately
+                return false; // return false immediately if not == 
             }
-            
-            // update pointers for next iteration 
+
+            // UPDATE POINTERS FOR NEXT ITERATION
             leftPtr++; 
             rightPtr--;
         }
 
-        return true; // return true as string passed all checks!
+        // true -- if while-loop finishes execution 
+        return true;
     }
 };
