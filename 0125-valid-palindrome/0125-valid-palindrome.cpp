@@ -6,7 +6,7 @@ public:
         
         // time & space comp: 
             // time: o(n) 
-                // as we're iterating from both ends of the string, all elements iterated at least once
+                // as we're iterating from both ends of the string, all elements iterated at most once
             // space: o(1) 
                 // no other extra data structures are created, other than the 2 integer vars we declared & initialized
                 // would be a diff story if we declared hash tables 
