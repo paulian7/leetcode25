@@ -38,7 +38,7 @@ public:
                 if(currSum > 0)
                 {
                     // need to update rightPtr bc it points @ too big of a value
-                    rightPtr--:
+                    rightPtr--;
                 }
                 else if(currSum < 0)
                 {
