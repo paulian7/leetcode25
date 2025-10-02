@@ -1,61 +1,57 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // tech: sort && 2 pointers method
-            // want to avoid duplicates --> sort() - helps us w/ this! 
+        // tech: 
+            // don't want any duplicates --> sort 
+            // want 3 vals that add up to 0 --> can use 2 pointers to cover 2 vals
         
         // time & space comp: 
-            // time: o(nlogn) * o(n^2) 
-                // nlogn -- sort() method being used 
-                // n^2 -- 1st loop deals w/ 1st val in triplet
-                    // 2nd loop deals w/ last 2 vals (2-ptrs method used)
-            // space: o(1) 
-                // sort done in place 
-                // UNLESS - count output array
-                    // o(m) -- m, num of triplets 
+            // time: 
+                // o(n^2) -- due to nested loops 
+                // if we want to consider the sort() --> o(nlogn) 
+            // space: 
+                // o(1) if output excluded 
+                // o(m) -- otherwise if output included... m being num of triplets
         
-        // 1. declare array to return as result 
-        vector<vector<int>> resTriplets;
+        // 0. establish an array to store all our triplets that == 0
+        vector<vector<int>> result;
 
-        // 2. sort array before starting
+        // 1. sort array first -- helps us avoid any duplicates
         sort(nums.begin(), nums.end());
 
-        // 3. start executin' 
+        // 2. start iterating thr array 
         for(int i = 0; i < nums.size(); i++)
         {
-            // ensure 1st value isn't a duplicate 
-            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            // check for duplicates first 
+            if(i > 0 && nums[i] == nums[i - 1]) continue; 
 
-            // once ensured not a duplicate, set-up our 2-ptrs method execution 
+            // establish 2 pointers for our next to values
             int leftPtr = i + 1; 
             int rightPtr = nums.size() - 1;
             while(leftPtr < rightPtr)
             {
-                // grab the curr tripletSum to see where we're at! 
-                int currSum = nums[i] + nums[leftPtr] + nums[rightPtr];
+                // check current sum so far 
+                int currSum = nums[i] + nums[leftPtr] + nums[rightPtr]; 
 
-                // update pointers accordingly if != 0 and add to result if == 0
+                // adjust sum accordingly or add triplet 
                 if(currSum > 0)
                 {
-                    // need to update rightPtr bc it points @ too big of a value
-                    rightPtr--;
+                    rightPtr--; 
                 }
                 else if(currSum < 0)
                 {
-                    // need to update leftPtr bc it points @ too SMALL of a value
                     leftPtr++;
                 }
                 else 
                 {
-                    // WHEN CURRSUM == 0 :D
+                    // currSum == 0 :) --> want to add as a triplet 
+                    result.push_back({nums[i], nums[leftPtr], nums[rightPtr]});
 
-                    // add to res vector 
-                    resTriplets.push_back({nums[i], nums[leftPtr], nums[rightPtr]});
-
-                    // update 1 ptr... no need for both as that'll be taken care of by our if-conditions above
+                    // want to update pointers 
+                        // only have to update 1 bc our if-conditions above will adjust everything else accord.
                     leftPtr++; 
 
-                    // ensure leftPtr didn't hit us into a duplicate
+                    // want to ensure that we haven't hit into a duplicate w/ leftPtr 
                     while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
                     {
                         leftPtr++;
@@ -64,6 +60,6 @@ public:
             }
         }
 
-        return resTriplets;
+        return result;
     }
 };
