@@ -1,49 +1,47 @@
 class Solution {
 public:
     bool isValid(string s) {
-        // tech: stacks & hash table
-            // stacks -- to ensure paren. all closed correctly 
-            // hash tables -- helps us reference the corr matching pairs w/ one another
-        
+        // tech: 
+            // want to close things && have things in order 
+            // dealing w/ pairs 
+            // stack && hash table 
+
         // time & space comp: 
-            // time:
-            // space: 
+            // time: o(n)
+            // space: o(n)
         
         // 1. declare stack 
-        stack<char> parenStack;
+        stack<char> cStack;
 
-        // 2. declare hash table to be used as reference 
-        unordered_map<char, char> closeToOpen = {
+        // 2. declare hash table to use as reference 
+        unordered_map<char, char> hashTab = {
             {')', '('}, 
             {'}', '{'}, 
-            {']', '['}, 
-        }; 
+            {']', '['}
+        };
 
         // 3. iterate thr string 
         for(char c : s)
         {
-            // check what paren (close or open) we're dealing w/
-            if(closeToOpen.count(c)) // check for closing paren 
+            // check if dealing w/ close or open paren 
+            if(hashTab.count(c)) // check if deal w/ closing paren
             {
-                if(!parenStack.empty() && parenStack.top() == closeToOpen[c])
+                if(!cStack.empty() && cStack.top() == hashTab[c])
                 {
-                    // pop open paren from top of stack
-                    // bc we've found a matching pair!
-                    parenStack.pop(); 
+                    cStack.pop(); 
                 }
                 else 
                 {
-                    return false; // unsuccessful matching :(
+                    return false; 
                 }
             }
             else 
             {
-                // dealing w/ open paren --> so add to stack to later be popped
-                parenStack.push(c);
+                // dealing w/ open paren --> just push to stack to later HOPEFULLY be closed 
+                cStack.push(c);
             }
         }
 
-        // 4. IF stack is EMPTY --> we've closed everything, so return true! 
-        return parenStack.empty();
+        return cStack.empty();
     }
 };
