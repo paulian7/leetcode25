@@ -2,59 +2,51 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         // tech: 
-            // don't want any duplicates --> sort 
-            // want 3 vals that add up to 0 --> can use 2 pointers to cover 2 vals
+            // want 3 vals adding up to a specific sum (i.e 0) 
+            // can utilize 2 pointers here 
         
         // time & space comp: 
-            // time: 
-                // o(n^2) -- due to nested loops 
-                // if we want to consider the sort() --> o(nlogn) 
+            // time: simplifies down to o(n^2)
+                // o(nlogn) -- bc use sort()
+                // o(n^2) -- bc of the nested loops
             // space: 
-                // o(1) if output excluded 
-                // o(m) -- otherwise if output included... m being num of triplets
+                // o(m) -- if we want to count the triplets in output array
         
-        // 0. establish an array to store all our triplets that == 0
-        vector<vector<int>> result;
-
-        // 1. sort array first -- helps us avoid any duplicates
+        // 1. sort -- want to avoid duplicates 
         sort(nums.begin(), nums.end());
 
-        // 2. start iterating thr array 
+        // 2. iterate thr array -- also declaring array for our result 
+        vector<vector<int>> result;
         for(int i = 0; i < nums.size(); i++)
         {
-            // check for duplicates first 
+            // deal w/ 1st val -- ensure no duplicates 
             if(i > 0 && nums[i] == nums[i - 1]) continue; 
 
-            // establish 2 pointers for our next to values
+            // else, set up 2-pointers method 
             int leftPtr = i + 1; 
-            int rightPtr = nums.size() - 1;
+            int rightPtr = nums.size() - 1; 
             while(leftPtr < rightPtr)
             {
-                // check current sum so far 
+                // check condition 
                 int currSum = nums[i] + nums[leftPtr] + nums[rightPtr]; 
-
-                // adjust sum accordingly or add triplet 
                 if(currSum > 0)
                 {
                     rightPtr--; 
                 }
                 else if(currSum < 0)
                 {
-                    leftPtr++;
+                    leftPtr++; 
                 }
                 else 
                 {
-                    // currSum == 0 :) --> want to add as a triplet 
+                    // currSum is actually equal to 0 --> so add to result 
                     result.push_back({nums[i], nums[leftPtr], nums[rightPtr]});
 
-                    // want to update pointers 
-                        // only have to update 1 bc our if-conditions above will adjust everything else accord.
+                    // update pointer now 
                     leftPtr++; 
-
-                    // want to ensure that we haven't hit into a duplicate w/ leftPtr 
                     while(leftPtr < rightPtr && nums[leftPtr] == nums[leftPtr - 1])
                     {
-                        leftPtr++;
+                        leftPtr++; 
                     }
                 }
             }
