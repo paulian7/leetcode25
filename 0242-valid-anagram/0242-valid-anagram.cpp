@@ -2,31 +2,35 @@ class Solution {
 public:
     bool isAnagram(string s, string t) {
         // tech: 
-            // anagram - consists of same char freq 
-            // hash tables - key: char, val: freq of char 
+            // anagrams - both strings are made up of the same characters 
+            // hash tables perfect to use! 
+                // can store key-value pairs for us 
+                    // key: characters 
+                    // val: freq of that resp character
         
         // time & space comp: 
-            // time: o(n + m) -- iterating thr 2 strings
-            // space: o(1) -- limited to just 26 distinct chars
+            // time: o(n + m)
+            // space: o(1)
         
-        // 0. edge case -- check if same length first 
+        // 1. edge case - checking for length
         if(s.length() != t.length())
         {
             return false;
         }
 
-        // 1. create hash tables for each string
+        // 2. declare hash tables to rep each resp string
         unordered_map<char, int> hashS; 
-        unordered_map<char, int> hashT; 
-        
-        // 2. iterate thr chars 
+        unordered_map<char, int> hashT;
+
+        // 3. populate hash tables 
         for(int i = 0; i < s.length(); i++)
         {
             hashS[s[i]]++; 
-            hashT[t[i]]++; 
+            hashT[t[i]]++;
         }
 
-        // 3. check for equivalence 
-        return hashS == hashT; 
+        // 4. compare the 2 hash tables if they're equivalent now
+            // yes? -- both are anagrams of one another :)
+        return hashS == hashT;
     }
 };
