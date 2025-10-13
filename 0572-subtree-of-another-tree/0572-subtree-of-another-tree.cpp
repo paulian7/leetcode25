@@ -36,7 +36,7 @@ public:
         // 3. else, check subtrees thr recursion
             // check if subtree is found in LEFT SUBTREE 
             // check if subtree is found in RIGHT SUBTREE
-        return isSubtree(root -> left, subRoot) || isSubTree(root -> right, subRoot);
+        return isSubtree(root -> left, subRoot) || isSubtree(root -> right, subRoot);
     }
 
 private: 
