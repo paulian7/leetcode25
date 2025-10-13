@@ -12,34 +12,44 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        // 1. cover base case 
+        // tech: recursion & helper functions 
+
+        // time & space comp: 
+            // time: o(m * n)
+                // m -- number of nodes in subRoot 
+                // n -- number of nodes in root 
+            // space: o(m + n)
+
+        // 1. w/ recursion, start off by covering BASE CASE 
         if(root == nullptr)
         {
-            return false; 
+            return false;
         }
 
-        // check if identical from the root (i.e from the start) 
+        // 2. checking if identical from the start (aka root)
+            // helper function comes into play here!
         if(isIdentical(root, subRoot))
         {
-            return true; 
+            return true;
         }
 
-        // else, check further into the subtrees 
+        // 3. isn't identical from the start, so check subtrees w/ the use of recursive calls
+            // check if subtree is found in LEFT SUBTREE
+            // check if subtree is found in RIGHT SUBTREE
         return isSubtree(root -> left, subRoot) || isSubtree(root -> right, subRoot);
     }
 
-    // create a helper function 
-    bool isIdentical(TreeNode* node1, TreeNode* node2)
+private: 
+    // HELPER FUNCTION -- checks whether or not 2 nodes in question are similar 
+    bool isIdentical(TreeNode *node1, TreeNode *node2) 
     {
-        // 1. cover base cases 
-            // empty node's :(  
-        if((node1 == nullptr) || (node2 == nullptr))
+        // 1. cover base case -- bc this too is a recursive function 
+        if(!node1 || !node2)
         {
             return node1 == nullptr && node2 == nullptr;
         }
 
-        // our recursive call starts here 
-            // know both trees are nonempty, but need to check their subtrees too
+        // 2. otherwise, perform recursive 
         return node1 -> val == node2 -> val && isIdentical(node1 -> left, node2 -> left) && isIdentical(node1 -> right, node2 -> right);
     }
 };
