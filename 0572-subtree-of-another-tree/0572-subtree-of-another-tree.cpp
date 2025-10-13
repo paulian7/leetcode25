@@ -12,44 +12,46 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        // tech: recursion & helper functions 
+        // tech: recursion && helper functions 
 
         // time & space comp: 
             // time: o(m * n)
-                // m -- number of nodes in subRoot 
-                // n -- number of nodes in root 
+                // m -- num of nodes in subRoot 
+                // n -- num of nodes in root 
             // space: o(m + n)
-
-        // 1. w/ recursion, start off by covering BASE CASE 
-        if(root == nullptr)
+        
+        // 1. w/ recursion, start off by covering BASE CASE
+        if(!root) // aka root == nullptr
         {
             return false;
         }
 
-        // 2. checking if identical from the start (aka root)
-            // helper function comes into play here!
+        // 2. checking if identical from the start (aka root) 
+            // helper func comes into play 
         if(isIdentical(root, subRoot))
         {
             return true;
         }
 
-        // 3. isn't identical from the start, so check subtrees w/ the use of recursive calls
-            // check if subtree is found in LEFT SUBTREE
+        // 3. else, check subtrees thr recursion
+            // check if subtree is found in LEFT SUBTREE 
             // check if subtree is found in RIGHT SUBTREE
-        return isSubtree(root -> left, subRoot) || isSubtree(root -> right, subRoot);
+        return isSubtree(root -> left, subRoot) || isSubTree(root -> right, subRoot);
     }
 
 private: 
-    // HELPER FUNCTION -- checks whether or not 2 nodes in question are similar 
+    // helper function -- checks whether or not nodes similar 
     bool isIdentical(TreeNode *node1, TreeNode *node2) 
     {
-        // 1. cover base case -- bc this too is a recursive function 
+        // 1. cover base case -- bc this func too is using recursion 
         if(!node1 || !node2)
         {
             return node1 == nullptr && node2 == nullptr;
         }
 
-        // 2. otherwise, perform recursive 
-        return node1 -> val == node2 -> val && isIdentical(node1 -> left, node2 -> left) && isIdentical(node1 -> right, node2 -> right);
+        // 2. otherwise, continue to perform recursive calls 
+            // check first if curr nodes from both curr tree && subtree == 
+            // then recursive call on LEFT SUBTREE then RIGHT SUBTREE
+        return node1 -> val == node2 -> val && isIdentical(node1 -> left, node2 -> left) && isIdentical(node1 -> right, node2 -> right); 
     }
 };
