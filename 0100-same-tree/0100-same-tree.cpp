@@ -13,32 +13,30 @@ class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
         // tech: 
-            // need SAME values AND same structure
-            // depth first search -- 
-                // very handy for recursion 
+            // ?: need same VALUES and STRUCTURE
+            // depth first search (dfs) -- very useful for recursion 
         
         // time & space comp: 
             // time: o(p + q)
-                // worst case, need. to iterate thr every single node in both trees
+                // worst case, need to iterate thr every single node in both trees
             // space: o(n) 
-
-        // 1. RECURSIVE - BASE CASE
-            // empty trees technically equal
-        if(!p && !q)
+        
+        // 1. RECURSIVE BASE CASE -- 
+            // empty trees --> so technically equal 
+        if(!p && !q) 
         {
             return true;
         }
 
-        // 2. split problem up
-        if(p && q && p -> val == q -> val)
+        // 2. else, split the problem up
+        if((p && q) && (p -> val == q -> val))
         {
-            // perform recursive call 
+            // perform recursive call here 
             return isSameTree(p -> left, q -> left) && isSameTree(p -> right, q -> right);
         }
         else 
         {
             return false;
         }
-        
     }
 };
