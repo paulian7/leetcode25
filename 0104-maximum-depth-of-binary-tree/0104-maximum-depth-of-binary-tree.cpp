@@ -12,24 +12,22 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // tech: 2 possible ways 
-            // recursive dfs -- X 
-            // iterative bfs 
-        
+        // tech: binary tree -> recursive depth first search (dfs) 
+
         // time & space comp: 
             // time: o(n)
-            // space: o(n) 
+            // space: o(n)
                 // balanced tree - o(n)
                 // unbalanced tree - o(n)
-
-        // 1. RECURSIVE DFS -- base case 
+        
+        // 1. establish a base case for recursion 
             // when there's no root 
-        if(!root) 
+        if(!root)
         {
-            return 0;
+            return 0; 
         }
 
-        // 2. split into subproblems to perform recursive calls 
+        // 2. split into subproblems to perform recursive calls on left && right subtrees 
         return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
     }
 };
