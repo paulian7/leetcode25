@@ -52,6 +52,11 @@ public:
         // set local variable to return as "area" 
         int currArea = 1; 
         // iterate thr all 4 possible directions w/ this cell 
+            // by recursively calling dfs on all 4 neighbors
+                // each call checks if in bounds..
+                // .. if a 1 
+                // ... if yes, then marks visited,
+                // .. then explore all its neighbors
         for(int i = 0; i < 4; i++)
         {
             currArea += dfs(grid, r + directions[i][0], c + directions[i][1]);
