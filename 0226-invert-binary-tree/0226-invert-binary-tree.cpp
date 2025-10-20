@@ -18,6 +18,8 @@ public:
         // time & space comp: 
             // time: o(n) - goin thr each node 
             // space: o(n) - for recursion stack
+                // in case, all nodes fall in left / right subtree
+                // (tree is right or left skewed)
         
         // 1. declare base case for recursion 
         if(!root)
