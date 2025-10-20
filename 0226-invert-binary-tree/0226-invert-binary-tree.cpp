@@ -12,27 +12,26 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        // tech: recursion w/ the basis of DFS 
-            // DFS - depth first search... 
-                // where we traverse thr left THEN right subtree(s) 
+        // tech: recursion && depth first search (dfs) 
+            // dfs - traversing thr left -> then right subtree(s)
 
         // time & space comp: 
-            // time: o(n)
-            // space: o(n) -- for recursion stack
+            // time: o(n) - goin thr each node 
+            // space: o(n) - for recursion stack
         
-        // 1. create base case for recursion 
-        if(!root) 
+        // 1. declare base case for recursion 
+        if(!root)
         {
-            return nullptr;
+            return nullptr;  
         }
 
-        // 2. otherwise, perform swap op (takes o(1) time) on first set of children
+        // 2. otherwise, perform swap operation on children 
+            // takes o(1) time 
         swap(root -> left, root -> right); 
 
-        // 3. NOW, perform recursive calls on each subtree (left && right)
-            // DFS - rmbr goes thr left, then right subtree 
+        // 3. perform recursive calls on each subtree respectively (left, then right) 
         invertTree(root -> left); 
-        invertTree(root -> right);
+        invertTree(root -> right); 
 
         // 4. return new inverted tree by returning root 
         return root;
