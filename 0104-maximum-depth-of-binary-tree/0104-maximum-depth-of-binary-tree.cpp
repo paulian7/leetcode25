@@ -12,20 +12,18 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // tech: depth first search (dfs) && recursion 
+        // tech: bfs && recursion 
 
-        // time & space comp: 
-            // time: o(n) 
-            // space: o(n), in worst case of having an unbalanced tree 
-                // o(logn) - otherwise if balanced tree
-        
-        // 1. declare base case for recursion 
+        // time & space comp: o(n)
+            // IF dealing w/ balanced tree -> space is o(logn), o(n) if unbalanced
+
+        // 1. establish base case
         if(!root)
         {
             return 0;
         }
 
-        // 2. perform recursive calls 
+        // 2. perform recursive calls on each respective subtree
         return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
     }
 };
