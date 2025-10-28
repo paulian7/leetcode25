@@ -12,46 +12,55 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        // tech: recursion && helper functions 
+        // tech: recursive depth first search (dfs) 
 
         // time & space comp: 
             // time: o(m * n)
-                // m -- num of nodes in subRoot 
-                // n -- num of nodes in root 
             // space: o(m + n)
+                // m - num of nodes in subRoot 
+                // n - num of nodes in root 
         
-        // 1. w/ recursion, start off by covering BASE CASE
-        if(!root) // aka root == nullptr
-        {
-            return false;
-        }
-
-        // 2. checking if identical from the start (aka root) 
-            // helper func comes into play 
-        if(isIdentical(root, subRoot))
+        // 1. deal w/ edge cases 
+        // == when subRoot is empty --> technically subtree yes
+        if(!subRoot)
         {
             return true;
         }
 
-        // 3. else, check subtrees thr recursion
-            // check if subtree is found in LEFT SUBTREE 
-            // check if subtree is found in RIGHT SUBTREE
-        return isSubtree(root -> left, subRoot) || isSubtree(root -> right, subRoot);
-    }
-
-private: 
-    // helper function -- checks whether or not nodes similar 
-    bool isIdentical(TreeNode *node1, TreeNode *node2) 
-    {
-        // 1. cover base case -- bc this func too is using recursion 
-        if(!node1 || !node2)
+        // == when root is empty --> no
+        if(!root)
         {
-            return node1 == nullptr && node2 == nullptr;
+            return false;
         }
 
-        // 2. otherwise, continue to perform recursive calls 
-            // check first if curr nodes from both curr tree && subtree == 
-            // then recursive call on LEFT SUBTREE then RIGHT SUBTREE
-        return node1 -> val == node2 -> val && isIdentical(node1 -> left, node2 -> left) && isIdentical(node1 -> right, node2 -> right); 
+        // 2. check if root's subtree = subRoot 
+        if(sameTree(root, subRoot))
+        {
+            return true;
+        }
+
+        // 3. else, check for subRoot in either left or right subtree of root 
+        return isSubtree(root -> left, subRoot) || 
+                isSubtree(root -> right, subRoot); 
+    }
+
+    // helper function 
+    bool sameTree(TreeNode* root, TreeNode* subRoot) {
+        // dealing w/ empty trees -> subtrees yes
+        if(!root && !subRoot)
+        {
+            return true;
+        }
+
+        // when both trees aren't empty && vals of both are the same
+        if(root && subRoot && root -> val == subRoot -> val)
+        {
+            // continue comparing the rest of the subtrees now if they're ==
+            return sameTree(root -> left, subRoot -> left) && 
+                    sameTree(root -> right, subRoot -> right);
+        }
+
+        // when one of the trees are nonempty
+        return false;
     }
 };
