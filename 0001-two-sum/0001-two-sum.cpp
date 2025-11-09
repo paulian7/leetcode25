@@ -1,36 +1,30 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        // ?: want 2 vals that add up to the target val 
-
-        // tech: hash table 
+        // tech: hash tables 
+            // can track 2 things that correlate w/ one another @ the same time 
         
         // time & space comp: 
-            // time: o(n) - one pass 
-            // space: o(n) - worst case, store all nums in hash table 
+            // time: o(n)
+            // space: o(n)
         
-        // 1. declare hash table 
-            // key: val, value: index of that val 
-        unordered_map<int, int> hashTab; 
+        // 1. declare hash table
+        unordered_map<int, int> hashTable; 
 
-        // 2. iterate thr array, one pass only 
+        // 2. iterate thr array 
         for(int i = 0; i < nums.size(); i++)
         {
-            // calc diff - is what allows us to do 1-pass only 
-                // makes possible the time comp: o(n) 
+            // check for any matching pairs.. by finding difference 
             int diff = target - nums[i]; 
-
-            // check if we've seen diff already
-            if(hashTab.find(diff) != hashTab.end())
+            if(hashTable.find(diff) != hashTable.end())
             {
-                return {i, hashTab[diff]};
+                return {i, hashTable[diff]};
             }
 
-            // otherwise, add new val to hashTab 
-            hashTab[nums[i]] = i; 
+            // else, add new key-val pair to hash table for later reference
+            hashTable[nums[i]] = i;
         }
 
-        // worst case, return nothing 
-        return {}; 
+        return {};
     }
 };
