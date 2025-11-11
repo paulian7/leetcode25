@@ -1,44 +1,36 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        // tech: want to find largest diff 
-            // buy low, sell high --> use 2 pointers!~ 
+        // tech: want to find the largest difference in one pass 
+            // but numbers are scrambled
         
         // time & space comp: 
             // time: o(n)
             // space: o(1)
+        
+        // 1. establish pointers 
+        int leftPtr = 0; // buy 
 
-        // 1. declare var to return as final result 
+        // 2. establish var to return as final result
         int maxProfit = 0; 
 
-        // 2. execute 2 pointers method
-        int buyPtr = 0; // when we buy
-        int sellPtr = 1; // when se sell 
-
-        // 3. start iterating thr
-            // rightPtr acts like our "iterator"
-        while(sellPtr < prices.size())
+        // 3. start iterating thr input array 
+        for(int rightPtr = 1; rightPtr < prices.size(); rightPtr++)
         {
-            // CONDITION -- check if a profit can be made 
-            if(prices[sellPtr] > prices[buyPtr])
+            // check for difference 
+            if(prices[rightPtr] > prices[leftPtr])
             {
-                // check currProfit 
-                int diff = prices[sellPtr] - prices[buyPtr]; 
+                int currDiff = prices[rightPtr] - prices[leftPtr]; 
 
-                // update maxProfit accordingly 
-                maxProfit = max(diff, maxProfit); 
+                maxProfit = max(maxProfit, currDiff);
             }
             else 
             {
-                // otherwise, we found an even smaller val in rightPtr
-                    // need to swap the 2 vals
-                buyPtr = sellPtr;
+                // we found small val in rightPtr -> want to swap vals
+                leftPtr = rightPtr;
             }
-
-            // always update rightPtr to prep for next iteration 
-            sellPtr++;
         }
 
-        return maxProfit; 
+        return maxProfit;
     }
 };
