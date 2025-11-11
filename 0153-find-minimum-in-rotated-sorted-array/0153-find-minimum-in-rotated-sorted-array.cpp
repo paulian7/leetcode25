@@ -26,7 +26,22 @@ public:
             if(nums[leftPtr] < nums[rightPtr])
             {
                 minVal = min(minVal, nums[leftPtr]);
+                break;
+            }
+
+            // CASE 2 -- need to perform binary search actually
+                // figure out which half to search in 
+            if(nums[midPt] >= nums[leftPtr])
+            {
+                // want to switch over to right portion... since midPt is apart of increasing vals portion 
+                leftPtr = midPt + 1; 
+            }
+            else 
+            {
+                rightPtr = midPt - 1; 
             }
         }
+
+        return minVal;
     }
 };
