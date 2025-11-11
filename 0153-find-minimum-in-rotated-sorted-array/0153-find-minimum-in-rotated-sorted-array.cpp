@@ -2,57 +2,53 @@ class Solution {
 public:
     int findMin(vector<int>& nums) {
         // tech: 
-            // array sorted, rotated.. binary search! 
+            // binary search! -- want time comp of o(logn), array sorted (but rotated))
+        
         // time & space comp: 
-            // time: o(logn) <-- time comp of binary search
+            // time: o(logn) 
             // space: o(1) 
         
-        // 1. declare & initialize our result var to return
-            // have default val to first element in array FOR NOW
-        int result = nums[0]; 
+        // 1. declare & initialize our result var to return 
+            // have smallest val be first element in arr for now 
+        int minVal = nums[0];
 
-        // 2. declare & initialize our 2 pointers to prep for binary search
-        int leftPtr = 0; // smallest val
-        int rightPtr = nums.size() - 1; // largest val
+        // 2. declare & initialize 2 pointers for BINARY SEARCH
+        int leftPtr = 0; 
+        int rightPtr = nums.size() - 1;
 
-        // 3. BEGIN BINARY SEARCH! ===
+        // 3. BEGIN BINARY SEARCH ==
         while(leftPtr <= rightPtr)
         {
-            // CASE 1 == CHECK IF ARRAY SORTED ALREADY BY DEFAULT 
+            // CASE1 == CHECK IF SUBARRAY SORTED 
             if(nums[leftPtr] < nums[rightPtr])
             {
-                result = min(result, nums[leftPtr]);
+                minVal = min(minVal, nums[leftPtr]);
                 break; // BREAKS OUT OF WHILE-LOOP ENTIRELY
             }
 
-            // CASE 2 == WHEN ARRAY HAS BEEN ROTATED..
-                // need to find midpt - what binary search does 
-                    // divides search area in half
-                    // l + (r - l) / 2 
-                        // ^ calculates the midPt 
+            // CASE 2 == WHEN ARR HAS BEEN ROTATED...
+                // need to find midPt to start performing biinary search
             int midPt = leftPtr + (rightPtr - leftPtr) / 2;
 
-            // check if midPt could poss be smallest val
-            result = min(result, nums[midPt]);
+            // check if midPt could poss be smallestVal 
+            minVal = min(minVal, nums[midPt]);
 
-            // now decide if we search LEFT or RIGHT section 
-            if(nums[midPt] >= nums[leftPtr]) 
+            // decide to search in left or right section 
+            if(nums[midPt] >= nums[leftPtr])
             {
-                // midPt is apart of left sorted portion...(the big vals)
-                // SO, we want to search the right portion 
-                    // bc they should contian the smaller vals
-                // update leftPtr then to go to the smaller vals portion 
-                leftPtr = midPt + 1;
+                // then... midPt part of left sorted portion (big vals)
+                // so want to search right portion instead 
+                    // bc they should contain the smaller vals
+                // update leftPtr to search RIGHT HALF now
+                leftPtr = midPt + 1; 
             }
             else 
             {
-                // we're dealing w/ the right sorted portion, so we want to search left
-                    // bc anything from searching right would just increase... 
-                    // and we don't want increasing vals
+                // want to search left portion 
                 rightPtr = midPt - 1;
             }
         }
-        
-        return result;
+
+        return minVal;
     }
 };
