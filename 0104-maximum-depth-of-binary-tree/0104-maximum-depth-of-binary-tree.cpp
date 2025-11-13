@@ -12,31 +12,39 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // tech: 2 possible ways 
-            // recursive dfs -- X 
-            // iterative bfs 
-        
-        // time & space comp: 
-            // time: o(n)
-                // visiting each node exactly once 
-                // n -- number of nodes
-            // space: o(logn)
-                // worst case, tree is unbalanced (ex -- each node only having a left child node)
-                    // storage to keep call stack will be o(n) 
-                // best case, tree is balanced! -- height of tree will be log(n) 
-        
-        // 1. establish a base case for recursive dfs 
-            // base case - when we have no tree (aka no root node present) 
+        // same base case: 
         if(!root)
         {
             return 0;
         }
 
-        // 2. split our overall problem into subproblems --> to put recursive calls into action --> gets result
-            // 1 + 
-                // accounts for our root node 
-            // max(depthOfLeftSubTree, depthOfRightSubTree);
-                // holds maximum length from either left or right subtree 
-        return 1 + max(maxDepth(root -> left), maxDepth(root -> right));
+        queue<TreeNode*> q; 
+        q.push(root);
+
+        int depth = 0;
+        while(!q.empty())
+        {
+            int qSize = q.size(); 
+            for(int i = 0; i < q.size(); i++)
+            {
+                TreeNode* node = q.front(); 
+                q.pop(); 
+
+                // check for any children 
+                if(node -> left)
+                {
+                    q.push(node -> left);
+                }
+                
+                if(node -> right)
+                {
+                    q.push(node -> right);
+                }
+            }
+
+            depth++; 
+        }
+
+        return depth;
     }
 };
