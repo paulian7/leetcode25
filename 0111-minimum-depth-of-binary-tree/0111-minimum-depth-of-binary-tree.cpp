@@ -11,18 +11,18 @@
  */
 class Solution {
 public:
-    // MAIN FUNCTION
-        // tech: depth first search w/ recursion 
-
-    // time & space comp: 
-        // time: o(n)
-        // space: o(n) -- space required being the recursive call stack space 
-            // max num of active stack calls == max depth of tree ==> could equal total # of nodes in tree
+    // MAIN FUNCTION == 
     int minDepth(TreeNode* root) {
+        // tech: recursive depth first search (dfs) 
+
+        // time & space comp: 
+            // time: o(n)
+            // space: o(n)
+        
         return dfs(root);
     }
 
-    // HELPER FUNCTION
+    // HELPER FUNCTION ==
     int dfs(TreeNode* root) {
         // 1. establish base case 
         if(!root)
@@ -30,17 +30,19 @@ public:
             return 0;
         }
 
-        // 2. deal w/ EDGE CASE -- if 1 of the childs are non-null
+        // 2. deal w/ edge cases now -- if 1 of the childs are non-null
         if(!root -> left)
         {
-            return 1 + dfs(root -> right); 
+            // if left child of root is NULL --> return 1 + min depth for right child of root node
+            return 1 + dfs(root -> right);
         }
         else if(!root -> right)
         {
+            // if right child of root is NULL...
             return 1 + dfs(root -> left);
         }
 
-        // 3. deal w/ OTHER edge case -- if both childs are non-null
+        // if both children exist --
         return 1 + min(dfs(root -> left), dfs(root -> right));
     }
 };
