@@ -12,55 +12,44 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        // tech: recursive depth first search (dfs) 
-        
-        // time & space comp: 
-            // time: o(m * n) 
-            // space: o(m + n)
-                // m - num of nodes in subroot 
-                // n - num of nodes in root 
-
-        // 1. cover base cases 
-            // when subroot is an empty tree --> so technically is a subroot of main tree
+        // 1. cover edge cases 
         if(!subRoot)
         {
             return true;
         }
 
-        // when main tree is empty --> no
         if(!root)
         {
             return false;
         }
 
-        // 2. check if root right off the bat matches up w/ the subtree
+        // check if root matches up w/ subroot currently 
         if(sameTree(root, subRoot))
         {
             return true;
         }
 
-        // 3. else, go search for "subRoot" in either left or right subtree of our main tree
+        // else, perofrm recursive calls on the left and right subtrees to see if subtree is in there
         return isSubtree(root -> left, subRoot) || 
-                isSubtree(root -> right, subRoot); 
+            isSubtree(root -> right, subRoot);
     }
-
-    // HELPER FUNCTION == 
+    
     bool sameTree(TreeNode* root, TreeNode* subRoot) {
-        // edge case -- dealing w/ empy trees --> ofc same 
+        // base case 
         if(!root && !subRoot)
         {
             return true;
         }
 
-        // edge case - when both trees aren't empty... check if values match up
+        // actually check 
         if((root && subRoot) && (root -> val == subRoot -> val))
         {
-            // compare left && right subtrees now of root && subroot 
             return sameTree(root -> left, subRoot -> left) && 
-                    sameTree(root -> right, subRoot -> right);
+                sameTree(root -> right, subRoot -> right);
         }
-
-        // else, return false.. like when one of the trees are nonempty 
-        return false;
+        else 
+        {
+            return false;
+        }
     }
 };
