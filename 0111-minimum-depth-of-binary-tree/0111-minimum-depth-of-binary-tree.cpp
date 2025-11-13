@@ -11,38 +11,38 @@
  */
 class Solution {
 public:
-    // MAIN FUNCTION == 
+    // MAIN FUNCTION ===
     int minDepth(TreeNode* root) {
         // tech: recursive depth first search (dfs) 
-
+        
         // time & space comp: 
             // time: o(n)
             // space: o(n)
-        
         return dfs(root);
     }
 
-    // HELPER FUNCTION ==
+    // HELPER FUNCTION == 
     int dfs(TreeNode* root) {
-        // 1. establish base case 
+        // establish base case, as always w/ recursion technique
         if(!root)
         {
             return 0;
         }
 
-        // 2. deal w/ edge cases now -- if 1 of the childs are non-null
+        // 2. deal w/ edge cases -- if 1 of the childs are non-null, but the other is
         if(!root -> left)
         {
-            // if left child of root is NULL --> return 1 + min depth for right child of root node
-            return 1 + dfs(root -> right);
+            // focus on other node 
+            return 1 + dfs(root -> right); 
         }
         else if(!root -> right)
         {
-            // if right child of root is NULL...
+            // focus on other node
             return 1 + dfs(root -> left);
         }
 
-        // if both children exist --
+        // -- edge case of if both children do exist 
+            // then want to take smallest of the two children 
         return 1 + min(dfs(root -> left), dfs(root -> right));
     }
 };
