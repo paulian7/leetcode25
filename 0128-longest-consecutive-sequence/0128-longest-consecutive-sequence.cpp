@@ -16,7 +16,7 @@ public:
         unordered_set<int> hashSet(nums.begin(), nums.end());
 
         // 2. iterate thr array 
-        for(int val : nums)
+        for(int val : hashSet)
         {
             // identify starts of sequences 
             if(hashSet.find(val - 1) == hashSet.end())
