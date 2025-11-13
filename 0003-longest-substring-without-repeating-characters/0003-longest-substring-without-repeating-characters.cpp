@@ -1,23 +1,25 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        unordered_set<char> seenChars; 
+        // substring --> sliding window 
+        // w/o duplicate chars --> hash set 
+            // can only hold unique vals
+        
+        int longest = 0; 
 
-        int longest = 0;
+        unordered_set<char> seenChars; 
 
         int leftPtr = 0;
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // check for valid window
+            // check if window is in need of updating 
             while(seenChars.find(s[rightPtr]) != seenChars.end())
             {
-                seenChars.erase(s[leftPtr]); 
+                seenChars.erase(s[leftPtr]);
                 leftPtr++;
             }
 
-            // else, add to hash set 
-            seenChars.insert(s[rightPtr]); 
-            // update length
+            seenChars.insert(s[rightPtr]);
             longest = max(longest, (rightPtr - leftPtr + 1));
         }
 
