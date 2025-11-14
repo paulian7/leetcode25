@@ -1,46 +1,35 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        // tech: 2 pointers! -- let's us maximize length 
-
-        // time & space comp: 
-            // time: o(n) 
-            // space: o(1)
-
-        // 0. declare var to return as result 
+        // declare result to return @ the end 
         int maxArea = 0; 
 
-        // 1. declare & initialize 2 pointers 
+        // declare pointers for 2 pointers method 
         int leftPtr = 0; 
-        int rightPtr = height.size() - 1;
-
-        // 2. execute 2 pointers method now -- 
+        int rightPtr = height.size() - 1; 
         while(leftPtr < rightPtr)
         {
-            // check currArea
-                // length * width 
+            // cond 
             int currArea = (rightPtr - leftPtr) * min(height[leftPtr], height[rightPtr]);
+            // update maxArea accordingly
+            maxArea = max(maxArea, currArea); 
 
-            // update maxArea 
-            maxArea = max(currArea, maxArea);
-
-            // see if we can maximize our heights
+            // update pointers accordingly 
             if(height[leftPtr] < height[rightPtr])
             {
-                leftPtr++; // search for a larger height w/ left
+                leftPtr++; 
             }
             else if(height[rightPtr] < height[leftPtr])
             {
-                rightPtr--; // search for a larger height w/ right
+                rightPtr--;
             }
             else 
             {
-                // both ptrs point to same height... just update 1 
+                // pick a random pointer to update 
                 leftPtr++;
             }
         }
 
-        // once while-loop finishes, return final result
         return maxArea;
     }
 };
