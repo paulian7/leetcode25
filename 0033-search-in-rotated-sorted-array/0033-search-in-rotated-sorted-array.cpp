@@ -1,48 +1,44 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        // tech: 
-            // sorted, rotated, time comp of o(logn) wanted 
-        
-        // time & space comp: 
-            // time: o(logn) 
-                // w/ each iteration --> we're halving the search space
-            // space: o(1) 
-        
-        // 1. declare pointers to use for binary search 
-        int leftPtr = 0; 
+        // tech: binary search!! bc...
+            // sorted 
+            // rotated 
+            // time comp of o(logn) is wanted
+
+        // 1. declare pointers for binary search 
+        int leftPtr = 0;
         int rightPtr = nums.size() - 1; 
 
-        // 2. start search 
+        // 2. start binary search algorithm
         while(leftPtr <= rightPtr)
         {
-            // calculate midPt 
-            int midPt = leftPtr + (rightPtr - leftPtr) / 2; 
+            // calc midPt 
+            int midPt = leftPtr + (rightPtr - leftPtr) / 2;
 
-            // check if midPt could possibly be our target value
+            // check if midPt could poss be our target 
             if(nums[midPt] == target)
             {
                 return midPt;
             }
 
-            // else, start looking for which half to search
+            // need to figure out which half to search into 
             if(nums[leftPtr] <= nums[midPt])
             {
-                // look into left portion - as midPt val is apart of increasing section 
+                // want to check if we can stay in this half or not 
                 if(target < nums[leftPtr] || target > nums[midPt])
                 {
-                    // check to see if we need to search in another section 
+                    // want to swap halves
                     leftPtr = midPt + 1;
                 }
                 else 
                 {
-                    // stay in this section 
+                    // can stay in this half! 
                     rightPtr = midPt - 1;
                 }
             }
             else 
             {
-                // look into right portion
                 if(target < nums[midPt] || target > nums[rightPtr])
                 {
                     rightPtr = midPt - 1;
@@ -54,7 +50,7 @@ public:
             }
         }
 
-        // 3. else, couldn't find target --> so return -1
-        return -1;
+        // 3. return -1 in the case you don't find the target at all 
+        return -1; 
     }
 };
