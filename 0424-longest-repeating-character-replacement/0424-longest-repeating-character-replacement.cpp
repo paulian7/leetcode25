@@ -2,41 +2,38 @@ class Solution {
 public:
     int characterReplacement(string s, int k) {
         // tech: substring --> sliding window
-            // containing same letter --> dealing w/ freq here --> hash table
+            // longest repeating --> frequency -> hash tables
         
         // time & space comp: 
-            // time: o(n)
-            // space: o(n)
+            // time: 
+            // space: 
+        
+        // 1. declare hash table 
+        unordered_map<char, int> hashCount; 
 
-        // 1. declare var to return as result 
-        int longest = 0;
+        // 2. declare variables to help us && result variable
+        int longest = 0; 
 
-        // 2. declare hash table to track freq 
-        unordered_map<char, int> hashTable;
+        int maxFreq = 0; 
 
-        // 3. have a variable to track largest freq 
-            // helps us do everything in one-pass 
-            // don't have to constantly check for largest frequency 
-        int maxFreq = 0;
-
-        // 4. iterate thr string now --> establishing sliding window tech
-        int leftPtr = 0; 
+        // 3. start sliding window technique 
+        int leftPtr = 0;
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // populate hash table first 
-            hashTable[s[rightPtr]]++;
+            // populate the table 
+            hashCount[s[rightPtr]]++;
 
-            // update maxFreq accordingly 
-            maxFreq = max(hashTable[s[rightPtr]], maxFreq);
+            // poss check if this char is the maxFreq right now
+            maxFreq = max(maxFreq, hashCount[s[rightPtr]]);
 
-            // check if window update is needed? 
+            // check if sliding window is still valid
             while((rightPtr - leftPtr + 1) - maxFreq > k)
             {
-                hashTable[s[leftPtr]]--; 
-
+                hashCount[s[leftPtr]]--; 
                 leftPtr++;
             }
 
+            // update length otherwise 
             longest = max(longest, (rightPtr - leftPtr + 1));
         }
 
