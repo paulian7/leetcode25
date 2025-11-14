@@ -12,20 +12,23 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        // dfs 
+        // bfs -- 
+        if(!root) return nullptr;
 
-        // 1. base case 
-        if(!root)
+        queue<TreeNode*> q;
+        q.push(root);
+
+        // start bfs 
+        while(!q.empty())
         {
-            return nullptr;
+            TreeNode* node = q.front();
+            q.pop(); 
+
+            swap(node -> left, node -> right);
+
+            if(node -> left) q.push(node -> left); 
+            if(node -> right) q.push(node -> right);
         }
-
-        // 2. op 
-        swap(root -> left, root -> right);
-
-        // 3. split into subproblems 
-        invertTree(root -> left); 
-        invertTree(root -> right); 
 
         return root;
     }
