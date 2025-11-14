@@ -6,11 +6,15 @@ public:
 
         while(leftPtr < rightPtr)
         {
-            // cond 
-            swap(s[leftPtr], s[rightPtr]); 
-            
-            // update pointers 
-            leftPtr++; 
+            // temp var 
+            char tempC = s[rightPtr];
+
+            // swap 
+            s[rightPtr] = s[leftPtr]; 
+            s[leftPtr] = tempC;
+
+            // update pointers
+            leftPtr++;
             rightPtr--;
         }
     }
