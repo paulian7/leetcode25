@@ -12,10 +12,7 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        // recursive dfs
-
-        // base case 
-        if(!root)
+        if(!root) 
         {
             return 0;
         }
