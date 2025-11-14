@@ -1,38 +1,40 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        // tech: hash sets 
-            // want to identify elements 
-            // can identify elements in (1) time in comparison to linear search in arrays
-        
-        // time & space comp: 
-            // time: o(n) 
-            // space: o(n)
+        // tech: 
+            // unsorted 
+            // identify starts of a seq --> then count up from there 
+            // identifying elements --> hash sets 
 
-        // 0. declare var to return as result
-        int longest = 0;
+        // time & space comp: 
+            // time: o(n)
+            // space: o(n)
         
-        // 1. declare hash set 
+        // 1. declare result to return 
+        int result = 0; 
+
+        // 2. declare set 
+            // can use to advantage --> finding elements take o(1) time 
+                // unlike w/ arrays where searching takes o(n) time
         unordered_set<int> hashSet(nums.begin(), nums.end());
 
-        // 2. iterate thr array 
+        // 3. iterate thr hash set now instead for easy lookups 
         for(int val : hashSet)
         {
-            // identify starts of sequences 
+            // check for start of sequences
             if(hashSet.find(val - 1) == hashSet.end())
             {
+                // found start of sequence
                 int length = 1; 
                 while(hashSet.find(val + length) != hashSet.end())
                 {
                     length++;
                 }
 
-                longest = max(longest, length);
+                result = max(result, length);
             }
         }
 
-        return longest;
-        
-
+        return result;
     }
 };
