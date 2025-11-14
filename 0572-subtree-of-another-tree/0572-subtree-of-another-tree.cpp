@@ -12,7 +12,9 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        // 1. cover edge cases 
+        // tech: recursive dfs
+
+        // 1. establish base cases
         if(!subRoot)
         {
             return true;
@@ -23,25 +25,22 @@ public:
             return false;
         }
 
-        // check if root matches up w/ subroot currently 
         if(sameTree(root, subRoot))
         {
             return true;
         }
 
-        // else, perofrm recursive calls on the left and right subtrees to see if subtree is in there
         return isSubtree(root -> left, subRoot) || 
-            isSubtree(root -> right, subRoot);
+            isSubtree(root -> right, subRoot); 
     }
-    
+
+    // helper function
     bool sameTree(TreeNode* root, TreeNode* subRoot) {
-        // base case 
         if(!root && !subRoot)
         {
             return true;
         }
 
-        // actually check 
         if((root && subRoot) && (root -> val == subRoot -> val))
         {
             return sameTree(root -> left, subRoot -> left) && 
