@@ -1,34 +1,44 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        // declare result to return @ end
-        int minVal = nums[0];
+        // tech: 
+            // binary search - rotated, sorted, time comp of logn
+        
+        // time & space comp: 
+            // time: o(logn)
+                // w/ each iteration - the search space is HALVED
+            // space: o(1) 
+        
+        // 1. declare result to return final answer
+        int minVal = nums[0]; 
 
-        // declare pointers for binary search 
-        int leftPtr = 0;
-        int rightPtr = nums.size() - 1;
+        // 2. set up pointers for binary search
+        int leftPtr = 0; 
+        int rightPtr = nums.size() - 1; 
 
-        // perform binary search 
+        // 3. execute binary search 
         while(leftPtr <= rightPtr)
         {
-            // check if we're already in a sorted part of the array 
+            // check case -
             if(nums[leftPtr] < nums[rightPtr])
             {
-                minVal = min(minVal, nums[leftPtr]); 
+                minVal = min(minVal, nums[leftPtr]);
                 break;
             }
 
-            // need to figure out which half! 
-            int midPt = leftPtr + (rightPtr - leftPtr) / 2; 
+            // else, need to find where to search 
+                // ensure that there's no integer overflow by doing it this way 
+            int midPt = leftPtr + (rightPtr - leftPtr) / 2;
+            minVal = min(minVal, nums[midPt]);
+            
             if(nums[leftPtr] <= nums[midPt])
             {
-                // apart of increasing section.... want to switch to smaller vals
-                leftPtr = midPt + 1;
+                // the increasing section --> want to swap to small section 
+                leftPtr = midPt + 1; 
             }
             else 
             {
-                // want to go left to see smaller vals
-                rightPtr = midPt - 1;
+                rightPtr = midPt - 1; 
             }
         }
 
