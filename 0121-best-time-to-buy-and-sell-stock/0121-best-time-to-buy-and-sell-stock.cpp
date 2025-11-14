@@ -1,36 +1,24 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        // tech: want to find the largest difference in one pass 
-            // but numbers are scrambled
-        
-        // time & space comp: 
-            // time: o(n)
-            // space: o(1)
-        
-        // 1. establish pointers 
-        int leftPtr = 0; // buy 
+        // declare result to return @ the end 
+        int result = 0; 
 
-        // 2. establish var to return as final result
-        int maxProfit = 0; 
-
-        // 3. start iterating thr input array 
+        int leftPtr = 0; 
         for(int rightPtr = 1; rightPtr < prices.size(); rightPtr++)
         {
-            // check for difference 
-            if(prices[rightPtr] > prices[leftPtr])
+            // check for invalid window?? 
+            if(prices[leftPtr] < prices[rightPtr])
             {
-                int currDiff = prices[rightPtr] - prices[leftPtr]; 
-
-                maxProfit = max(maxProfit, currDiff);
+                int diff = prices[rightPtr] - prices[leftPtr]; 
+                result = max(result, diff);
             }
             else 
             {
-                // we found small val in rightPtr -> want to swap vals
                 leftPtr = rightPtr;
             }
         }
 
-        return maxProfit;
+        return result;
     }
 };
