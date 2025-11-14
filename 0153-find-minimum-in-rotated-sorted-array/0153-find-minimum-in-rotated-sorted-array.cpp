@@ -1,44 +1,37 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        // tech: 
-            // binary search - rotated, sorted, time comp of logn
-        
-        // time & space comp: 
-            // time: o(logn)
-                // w/ each iteration - the search space is HALVED
-            // space: o(1) 
-        
-        // 1. declare result to return final answer
+        // tech: binary search 
+            // sorted, rotated, time comp of logn is wanted
+
+        // 1. declare result to return 
         int minVal = nums[0]; 
 
-        // 2. set up pointers for binary search
+        // 2. set up binary search 
         int leftPtr = 0; 
-        int rightPtr = nums.size() - 1; 
-
-        // 3. execute binary search 
+        int rightPtr = nums.size() - 1;
         while(leftPtr <= rightPtr)
         {
-            // check case -
+            // check if in sorted portion immediately 
             if(nums[leftPtr] < nums[rightPtr])
             {
-                minVal = min(minVal, nums[leftPtr]);
+                minVal = min(minVal, nums[leftPtr]); 
                 break;
             }
 
-            // else, need to find where to search 
-                // ensure that there's no integer overflow by doing it this way 
+            // binary search steps...
             int midPt = leftPtr + (rightPtr - leftPtr) / 2;
+            // check if midPt's val could be the smallest val
             minVal = min(minVal, nums[midPt]);
-            
+
+            // check for which portion to look into now 
             if(nums[leftPtr] <= nums[midPt])
             {
-                // the increasing section --> want to swap to small section 
-                leftPtr = midPt + 1; 
+                leftPtr = midPt + 1;
             }
             else 
             {
-                rightPtr = midPt - 1; 
+                rightPtr = midPt - 1;
             }
         }
 
