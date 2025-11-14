@@ -1,28 +1,39 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        // substring --> sliding window 
-        // w/o duplicate chars --> hash set 
-            // can only hold unique vals
+        // tech: 
+            // substring --> sliding window
+            // want to identify duplicate chars --> hash set 
+                // can use to hold only unique characters so far 
         
-        int longest = 0; 
+        // time & space comp: 
+            // time: o(n)
+            // space: o(n)
+        
+        // 1. declare result to return @ end 
+        int result = 0;
 
-        unordered_set<char> seenChars; 
+        // 2. declare hash set to hold only unique chars
+        unordered_set<char> seenChars;
 
-        int leftPtr = 0;
+        // 3. execute sliding window technique 
+        int leftPtr = 0; 
         for(int rightPtr = 0; rightPtr < s.length(); rightPtr++)
         {
-            // check if window is in need of updating 
+            // check if window is still valid
             while(seenChars.find(s[rightPtr]) != seenChars.end())
             {
+                // invalid --> we've found a duplicate within our substring
+                // need to shrink window w/ leftPtr til window becomes valid again 
                 seenChars.erase(s[leftPtr]);
                 leftPtr++;
             }
 
+            // else... 
             seenChars.insert(s[rightPtr]);
-            longest = max(longest, (rightPtr - leftPtr + 1));
+            result = max(result, (rightPtr - leftPtr + 1));
         }
 
-        return longest;
+        return result;
     }
 };
