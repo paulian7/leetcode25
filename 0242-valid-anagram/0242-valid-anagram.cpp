@@ -1,24 +1,35 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        // time: o(n + m) 
-        // space: o(1) 
+        // tech: hash tables
+        
+        // time & space comp: 
+            // time comp: o(n + m) 
+                // as we're iterating thr 2 strings respectively 
+            // space comp: o(1)
+                // since we're going thr atmost 26 chars
 
-        // edge case 
+        // 1. cover base case -- 
+            // checking whether or not both strings are the same length 
+            // bc if not same length --> can't be anagrams :(
         if(s.length() != t.length())
         {
-            return false;
+            return false; 
         }
 
-        unordered_map<char, int> hashS; 
-        unordered_map<char, int> hashT; 
+        // 2. declare and initialize hash tables for each respective string 
+        unordered_map<char, int> sTable;
+        unordered_map<char, int> tTable;
 
+        // iterate thr the strings to initialize hash table
         for(int i = 0; i < s.length(); i++)
         {
-            hashS[s[i]]++; 
-            hashT[t[i]]++; 
+            sTable[s[i]]++;
+            tTable[t[i]]++;
         }
 
-        return hashS == hashT; 
+        // 3. compare whether or not hash tables are equivalent! 
+            // equivalent --> dealing with anagrams! :D 
+        return sTable == tTable;
     }
 };
