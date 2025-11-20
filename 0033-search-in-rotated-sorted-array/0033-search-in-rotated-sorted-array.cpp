@@ -3,6 +3,7 @@ public:
     int search(vector<int>& nums, int target) {
         int leftPtr = 0; 
         int rightPtr = nums.size() - 1; 
+
         while(leftPtr <= rightPtr)
         {
             int midPt = leftPtr + (rightPtr - leftPtr) / 2;
@@ -13,9 +14,9 @@ public:
 
             if(nums[leftPtr] <= nums[midPt])
             {
-                if(target > nums[midPt] || target < nums[leftPtr])
+                if(target < nums[leftPtr] || target > nums[midPt])
                 {
-                    leftPtr = midPt + 1;
+                    leftPtr = midPt + 1; 
                 }
                 else 
                 {
@@ -24,7 +25,7 @@ public:
             }
             else 
             {
-                if(target < nums[midPt] || target > nums[rightPtr])
+                if(target > nums[rightPtr] || target < nums[midPt])
                 {
                     rightPtr = midPt - 1;
                 }
@@ -34,6 +35,7 @@ public:
                 }
             }
         }
+
         return -1;
     }
 };
