@@ -7,8 +7,11 @@ public:
             // the 3x3 it's in
         
         // time & space comp:  
-            // time:
-            // space: 
+            // time: o(n^2)
+            // space: o(1)
+                // storing atmost 243 characters, constant 
+                // if generalized nxn suduko -> o(n^2)
+                    // as n rows/col/square can grow up to size n
         
         // 1. declare hash table for entire row && col within 9x9 grid
         unordered_map<int, unordered_set<char>> row;
