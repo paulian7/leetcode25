@@ -13,10 +13,10 @@ public:
         vector<int> endTimes;
 
         // 2. populate the 2 arrays storing startTimes and endTimes resp.
-        for(const auto& i : intervals)
+        for(int i = 0; i < intervals.size(); i++)
         {
-            startTimes.push_back(i.start); // grab just the startVal
-            endTimes.push_back(i.end); // grab just the endVal
+            startTimes.push_back(intervals[i][0]); // grab just the startVal
+            endTimes.push_back(intervals[i][1]); // grab just the endVal
         }
 
         // 3. sort the 2 arrays
