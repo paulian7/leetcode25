@@ -1,20 +1,20 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        // time & space comp: 
-            // time: o(n) 
-            // space: o(n) 
+        // time: o(n)
+        // space: o(n)
 
-        unordered_set<int> seenChars; 
-
+        unordered_set<int> hashSet; 
         for(int val : nums)
         {
-            if(seenChars.find(val) != seenChars.end())
+            // check for existence
+            if(hashSet.find(val) != hashSet.end())
             {
+                // found a duplicate! 
                 return true;
             }
 
-            seenChars.insert(val);
+            hashSet.insert(val);
         }
 
         return false;
