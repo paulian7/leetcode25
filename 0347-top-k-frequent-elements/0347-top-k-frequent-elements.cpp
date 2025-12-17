@@ -2,35 +2,48 @@ class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         // tech: 
-            // dealing w/ frequency of elements --> hash tables
+            // hash tables & bucket sort 
         
         // time & space comp: 
-            // time: o(n)
+            // time: o(n) 
             // space: o(n)
         
-        // 1. declare hash table 
-        unordered_map<int, int> hashTable;
+        // 1. create and populate our hash table 
+            // time: o(n) 
+                // iterating thr each val within array and pop hashTab accordnigly 
+            // space: o(n) 
+                // the vals we're inputting into hash table 
+                // could also be all unique 
+        unordered_map<int, int> hashCount; 
 
-        // 2. populate hash table
-        for(int val : nums)
+        for(int i = 0; i < nums.size(); i++)
         {
-            hashTable[val]++;
+            hashCount[nums[i]]++; 
         }
 
-        // 3. sort vals into buckets (indices) that rep their correspond freq
-        vector<vector<int>> freqCount(nums.size() + 1); 
-        for(auto const& pair : hashTable)
+        // 2. do bucket sort 
+            // index reps a possible freq 
+            // time: o(n)
+                // iterating thr hash table and pushing appropriate vals to array
+            // space: o(n) 
+                // bc end of day, still pushing n elements to these buckets overall
+        vector<vector<int>> count(nums.size() + 1); 
+        for(auto const& pair : hashCount)
         {
-            freqCount[pair.second].push_back(pair.first);
+            count[pair.second].push_back(pair.first); 
         }
 
-        // 4. return top k freq elements 
+        // 3. want to return top k 
+            // time: o(n) --> iterating thr count 
+            // space: o(n) 
+                // worst case k == n, but usually k < n --> o(n)
         vector<int> result;
-        for(int i = freqCount.size() - 1; i > 0; i--)
+        for(int i = count.size() - 1; i > 0; i--)
         {
-            for(int val : freqCount[i])
+            for(int val : count[i])
             {
                 result.push_back(val); 
+
                 if(result.size() == k)
                 {
                     return result;
