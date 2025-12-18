@@ -27,7 +27,7 @@ public:
             }
 
             // otherwise, add new val to hashTab 
-            hashTab[nums[i]] = i; 
+            hashTab.insert({nums[i], i});
         }
 
         // worst case, return nothing 
